@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>รายงานสรุปผลการวิเคราะห์เวลาในการเดินทาง กทม. ปี 2568</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #F8FAFC; font-family: 'Sarabun', sans-serif; padding: 2rem; }
+
+  .wrap { max-width: 900px; margin: 0 auto; background: #fff; border-radius: 16px; padding: 2rem; box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+
+  /* ===== HEADER ===== */
+  .header { text-align: center; margin-bottom: 1.75rem; padding-bottom: 1.5rem; border-bottom: 2px solid #1565C0; }
+  .gov-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; letter-spacing: 1.5px; color: #1565C0; margin-bottom: 8px; font-weight: 600; }
+  .gov-tag-line { width: 24px; height: 2px; background: #1565C0; border-radius: 2px; }
+  .header-title { font-size: 22px; font-weight: 700; color: #0D1B4B; line-height: 1.4; }
+  .header-sub { font-size: 13px; color: #546E7A; margin-top: 6px; font-weight: 400; }
+
+  /* ===== SECTION HEADING ===== */
+  .section-hd { font-size: 14px; font-weight: 700; color: #0D47A1; margin-bottom: 0.85rem; padding-left: 10px; border-left: 4px solid #1E88E5; }
+
+  /* ===== KPI CARDS ===== */
+  .kpi-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
+  .kpi { border-radius: 10px; padding: 14px 12px; text-align: center; color: #fff; }
+  .kpi-1 { background: linear-gradient(135deg, #1565C0, #1E88E5); }
+  .kpi-2 { background: linear-gradient(135deg, #00695C, #00ACC1); }
+  .kpi-3 { background: linear-gradient(135deg, #E65100, #FF8F00); }
+  .kpi-4 { background: linear-gradient(135deg, #4527A0, #7B1FA2); }
+  .kpi-unit { font-size: 11px; opacity: 0.85; margin-bottom: 4px; line-height: 1.3; font-weight: 500; }
+  .kpi-val { font-size: 30px; font-weight: 700; line-height: 1.05; }
+  .kpi-lbl { font-size: 11px; opacity: 0.85; margin-top: 3px; }
+  .kpi-note { font-size: 10px; opacity: 0.75; margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.3); line-height: 1.4; }
+
+  /* ===== CONTEXT BOX (TomTom) ===== */
+  .context-box { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 1.25rem; }
+  .ctx-card { background: #E3F2FD; border-left: 4px solid #1E88E5; border-radius: 8px; padding: 12px 14px; }
+  .ctx-label { font-size: 11px; color: #1565C0; margin-bottom: 4px; line-height: 1.4; font-weight: 500; }
+  .ctx-val { font-size: 20px; font-weight: 700; color: #0D47A1; }
+  .ctx-src { font-size: 10px; color: #546E7A; margin-top: 3px; }
+
+  /* ===== DIRECTION CARDS ===== */
+  .dir-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 1.25rem; }
+  .dir-card { border-radius: 10px; padding: 14px 12px; text-align: center; }
+  .dir-in  { background: #E8F5E9; border: 1.5px solid #43A047; }
+  .dir-out { background: #E3F2FD; border: 1.5px solid #1E88E5; }
+  .dir-diff{ background: #FFF8E1; border: 1.5px solid #FFB300; }
+  .dir-val-in   { font-size: 24px; font-weight: 700; color: #2E7D32; }
+  .dir-val-out  { font-size: 24px; font-weight: 700; color: #1565C0; }
+  .dir-val-diff { font-size: 24px; font-weight: 700; color: #E65100; }
+  .dir-lbl { font-size: 11px; color: #546E7A; margin-top: 4px; line-height: 1.5; }
+
+  /* ===== CHART CARDS ===== */
+  .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+  .card { background: #fff; border: 1.5px solid #BBDEFB; border-radius: 12px; padding: 1rem 1.1rem; }
+  .card-lbl { font-size: 12px; color: #1565C0; margin-bottom: 10px; line-height: 1.5; font-weight: 600; }
+  .wide-card { background: #fff; border: 1.5px solid #BBDEFB; border-radius: 12px; padding: 1rem 1.1rem; margin-bottom: 1.25rem; }
+
+  /* ===== ROAD BAR ===== */
+  .road-bar-wrap { display: flex; flex-direction: column; gap: 5px; }
+  .road-row { display: flex; align-items: center; gap: 8px; font-size: 11.5px; }
+  .road-name { width: 110px; text-align: right; color: #37474F; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0; font-weight: 500; }
+  .road-bar-bg { flex: 1; background: #ECEFF1; border-radius: 4px; height: 18px; position: relative; overflow: hidden; }
+  .road-bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-right: 6px; justify-content: flex-end; }
+  .road-bar-fill span { font-size: 10.5px; font-weight: 700; color: #fff; }
+  .road-unit { font-size: 10px; color: #90A4AE; width: 38px; flex-shrink: 0; }
+
+  /* ===== LEGEND ===== */
+  .leg-row { display: flex; gap: 14px; flex-wrap: wrap; font-size: 11px; color: #546E7A; }
+  .leg-dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; margin-right: 4px; vertical-align: middle; }
+
+  /* ===== REFERENCES ===== */
+  .ref-box { background: #F3F8FF; border: 1px solid #BBDEFB; border-radius: 10px; padding: 10px 14px; margin-bottom: 1.25rem; }
+  .ref-title { font-size: 11px; font-weight: 700; color: #1565C0; margin-bottom: 6px; letter-spacing: 1px; }
+  .ref-list { display: flex; flex-direction: column; gap: 4px; }
+  .ref-item { font-size: 10.5px; color: #546E7A; display: flex; gap: 6px; align-items: flex-start; line-height: 1.6; }
+  .ref-num { background: #1E88E5; color: #fff; border-radius: 3px; padding: 0 5px; font-size: 10px; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+
+  /* ===== FOOTER ===== */
+  .footer { display: flex; justify-content: space-between; align-items: flex-end; padding-top: 1rem; border-top: 1.5px solid #BBDEFB; font-size: 10px; color: #90A4AE; flex-wrap: wrap; gap: 6px; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .kpi-row { grid-template-columns: 1fr 1fr; }
+    .charts-row { grid-template-columns: 1fr; }
+    .context-box { grid-template-columns: 1fr; }
+    .dir-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="gov-tag">
+      <span class="gov-tag-line"></span>
+      สำนักการจราจรและขนส่ง · กรุงเทพมหานคร · กลุ่มงานสถิติและวิจัย
+      <span class="gov-tag-line"></span>
+    </div>
+    <div class="header-title">
+      รายงานสรุปผลการวิเคราะห์เวลาในการเดินทาง<br>
+      ในพื้นที่กรุงเทพมหานคร ปี พ.ศ. 2568
+    </div>
+    <div class="header-sub">สำรวจ 52 สายทาง · ช่วงเร่งด่วนเช้า–เย็น · เปรียบเทียบข้อมูลย้อนหลัง 9 ปี (พ.ศ. 2560–2568)</div>
+  </div>
+
+  <!-- KPI -->
+  <div class="section-hd">ภาพรวมความเร็วเฉลี่ย ปี 2568</div>
+  <div class="kpi-row">
+    <div class="kpi kpi-1">
+      <div class="kpi-unit">ความเร็วเฉลี่ยรวม</div>
+      <div class="kpi-val">20.7</div>
+      <div class="kpi-lbl">กม./ชม.</div>
+      <div class="kpi-note">ค่าเฉลี่ยทุกสายทาง ทุกทิศทาง ทุกช่วงเวลา</div>
+    </div>
+    <div class="kpi kpi-2">
+      <div class="kpi-unit">ช่วงเร่งด่วนเช้า</div>
+      <div class="kpi-val">21.6</div>
+      <div class="kpi-lbl">กม./ชม.</div>
+      <div class="kpi-note">07:00 – 09:00 น.</div>
+    </div>
+    <div class="kpi kpi-3">
+      <div class="kpi-unit">ช่วงเร่งด่วนเย็น</div>
+      <div class="kpi-val">20.6</div>
+      <div class="kpi-lbl">กม./ชม.</div>
+      <div class="kpi-note">16:00 – 18:00 น.</div>
+    </div>
+    <div class="kpi kpi-4">
+      <div class="kpi-unit">สายทางสำรวจ</div>
+      <div class="kpi-val">52</div>
+      <div class="kpi-lbl">สายทาง</div>
+      <div class="kpi-note">ครอบคลุม 3 พื้นที่ ชั้นใน–กลาง–นอก</div>
+    </div>
+  </div>
+
+  <!-- TOMTOM CONTEXT -->
+  <div class="section-hd">เปรียบเทียบกับข้อมูลอ้างอิงสากล (TomTom Traffic Index 2024) <sup>[2]</sup></div>
+  <div class="context-box">
+    <div class="ctx-card">
+      <div class="ctx-label">กรุงเทพฯ อันดับที่ 161 จาก 500 เมืองทั่วโลก</div>
+      <div class="ctx-val">50%</div>
+      <div class="ctx-src">Congestion Level (ระดับการติดขัด)</div>
+    </div>
+    <div class="ctx-card">
+      <div class="ctx-label">เวลาเดินทางเฉลี่ย 10 กม. ช่วงเร่งด่วน</div>
+      <div class="ctx-val">21 นาที 51 วิ</div>
+      <div class="ctx-src">ใกล้เคียงกับผลสำรวจ กทม.</div>
+    </div>
+    <div class="ctx-card">
+      <div class="ctx-label">เวลาที่สูญเสียในการจราจรต่อปี</div>
+      <div class="ctx-val">96 ชม.</div>
+      <div class="ctx-src">ลำดับที่ 2 ของโลก (ช่วงเร่งด่วน)</div>
+    </div>
+  </div>
+
+  <!-- DIRECTION -->
+  <div class="section-hd">ทิศทางขาเข้า–ขาออก</div>
+  <div class="dir-grid">
+    <div class="dir-card dir-in">
+      <div class="dir-val-in">18.7</div>
+      <div class="dir-lbl">ขาเข้า (เฉลี่ยทุกช่วง)<br>กม./ชม.</div>
+    </div>
+    <div class="dir-card dir-out">
+      <div class="dir-val-out">23.2</div>
+      <div class="dir-lbl">ขาออก (เฉลี่ยทุกช่วง)<br>กม./ชม.</div>
+    </div>
+    <div class="dir-card dir-diff">
+      <div class="dir-val-diff">+24%</div>
+      <div class="dir-lbl">ขาออกเร็วกว่าขาเข้า<br>ทุกช่วงเวลา</div>
+    </div>
+  </div>
+
+  <!-- CHARTS ROW -->
+  <div class="charts-row">
+    <div class="card">
+      <div class="card-lbl">แนวโน้มความเร็วเฉลี่ยจำแนกตามพื้นที่ (ปี 2560–2568)</div>
+      <div style="position:relative;height:210px;"><canvas id="trendChart"></canvas></div>
+      <div class="leg-row" style="margin-top:10px;">
+        <span><span class="leg-dot" style="background:#1E88E5;"></span>ชั้นใน</span>
+        <span><span class="leg-dot" style="background:#00ACC1;"></span>ชั้นกลาง</span>
+        <span><span class="leg-dot" style="background:#FB8C00;"></span>ชั้นนอก</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-lbl">เปรียบเทียบเร่งด่วนเช้า–เย็น แยกขาเข้า–ออก (กม./ชม.)</div>
+      <div style="position:relative;height:210px;"><canvas id="peakChart"></canvas></div>
+      <div class="leg-row" style="margin-top:10px;">
+        <span><span class="leg-dot" style="background:#1E88E5;"></span>เร่งด่วนเช้า</span>
+        <span><span class="leg-dot" style="background:#F4511E;"></span>เร่งด่วนเย็น</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROAD BARS -->
+  <div class="wide-card">
+    <div class="section-hd" style="margin-bottom:12px;">5 อันดับถนนที่ช้าที่สุด vs เร็วที่สุด (ปี 2568)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <div>
+        <div style="font-size:11px;color:#E53935;font-weight:700;margin-bottom:7px;">ช้าที่สุด (กม./ชม.)</div>
+        <div class="road-bar-wrap" id="slowRoads"></div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:#1B5E20;font-weight:700;margin-bottom:7px;">เร็วที่สุด (กม./ชม.)</div>
+        <div class="road-bar-wrap" id="fastRoads"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZONE COMPARE -->
+  <div class="wide-card">
+    <div class="card-lbl">เปรียบเทียบความเร็วเฉลี่ยตามพื้นที่ ปี 2560, 2564, 2568</div>
+    <div style="position:relative;height:190px;"><canvas id="zoneCompare"></canvas></div>
+    <div class="leg-row" style="margin-top:10px;">
+      <span><span class="leg-dot" style="background:#42A5F5;"></span>ปี 2560 (ฐาน)</span>
+      <span><span class="leg-dot" style="background:#26C6DA;"></span>ปี 2564 (ช่วง COVID-19)</span>
+      <span><span class="leg-dot" style="background:#FF7043;"></span>ปี 2568 (ล่าสุด)</span>
+    </div>
+    <div style="font-size:10.5px;color:#78909C;margin-top:8px;padding-top:8px;border-top:1px solid #ECEFF1;line-height:1.7;">
+      หมายเหตุ: ปี 2564 ความเร็วสูงขึ้นผิดปกติในทุกพื้นที่ เนื่องจากมาตรการควบคุม COVID-19 ทำให้ปริมาณจราจรลดลงชั่วคราว
+      ปี 2568 ความเร็วกลับสู่ระดับใกล้เคียงปีฐาน 2560
+    </div>
+  </div>
+
+  <!-- REFERENCES -->
+  <div class="ref-box">
+    <div class="ref-title">แหล่งอ้างอิง</div>
+    <div class="ref-list">
+      <div class="ref-item">
+        <span class="ref-num">[1]</span>
+        สำนักการจราจรและขนส่ง กรุงเทพมหานคร. (2568).
+        รายงานสรุปผลการวิเคราะห์เวลาในการเดินทางในพื้นที่กรุงเทพมหานคร ปี พ.ศ. 2560–2568.
+        กองนโยบายและแผน กลุ่มงานสถิติและวิจัย.
+      </div>
+      <div class="ref-item">
+        <span class="ref-num">[2]</span>
+        TomTom International BV. (2025). TomTom Traffic Index 2024: Bangkok.
+        สืบค้นจาก https://www.tomtom.com/traffic-index/bangkok-traffic/
+        — ใช้เปรียบเทียบบริบทสากลเท่านั้น ไม่ใช่เกณฑ์ตัดสิน
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span>จัดทำโดย: กลุ่มงานสถิติและวิจัย กองนโยบายและแผน สำนักการจราจรและขนส่ง กรุงเทพมหานคร</span>
+    <span>ข้อมูล ณ ปี พ.ศ. 2568</span>
+  </div>
+
+</div><!-- /.wrap -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+  /* ===== DATA ===== */
+  const years    = ['2560','2561','2562','2563','2564','2565','2566','2567','2568'];
+  const urban    = [15.3, 16.0, 16.0, 17.0, 20.7, 17.6, 17.7, 16.8, 16.0];
+  const suburban = [23.7, 23.7, 22.9, 24.2, 29.5, 25.1, 26.7, 24.4, 24.0];
+  const rural    = [32.6, 30.3, 29.9, 31.3, 36.2, 30.1, 32.3, 29.5, 30.7];
+
+  /* ===== TREND CHART ===== */
+  new Chart(document.getElementById('trendChart'), {
+    type: 'line',
+    data: {
+      labels: years,
+      datasets: [
+        { label:'ชั้นใน',   data: urban,    borderColor:'#1E88E5', backgroundColor:'rgba(30,136,229,0.08)',  tension:0.4, pointRadius:3.5, pointBackgroundColor:'#1E88E5', fill:true, borderWidth:2.5 },
+        { label:'ชั้นกลาง', data: suburban, borderColor:'#00ACC1', backgroundColor:'rgba(0,172,193,0.07)',   tension:0.4, pointRadius:3.5, pointBackgroundColor:'#00ACC1', fill:true, borderWidth:2.5 },
+        { label:'ชั้นนอก',  data: rural,    borderColor:'#FB8C00', backgroundColor:'rgba(251,140,0,0.06)',   tension:0.4, pointRadius:3.5, pointBackgroundColor:'#FB8C00', fill:true, borderWidth:2.5 },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)} กม./ชม.` } }
+      },
+      scales: {
+        x: { grid: { color:'rgba(0,0,0,0.05)' }, ticks: { font: { size:10, family:'Sarabun' } } },
+        y: { grid: { color:'rgba(0,0,0,0.05)' }, ticks: { font: { size:10, family:'Sarabun' }, callback: v => v + ' กม.' }, min:10, max:42 }
+      }
+    }
+  });
+
+  /* ===== PEAK CHART ===== */
+  new Chart(document.getElementById('peakChart'), {
+    type: 'bar',
+    data: {
+      labels: ['ขาเข้า', 'ขาออก'],
+      datasets: [
+        { label:'เร่งด่วนเช้า', data:[18.00, 25.25], backgroundColor:'#1E88E5', borderRadius:5 },
+        { label:'เร่งด่วนเย็น', data:[19.43, 21.00], backgroundColor:'#F4511E', borderRadius:5 },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw.toFixed(2)} กม./ชม.` } }
+      },
+      scales: {
+        x: { grid: { display:false }, ticks: { font: { size:12, family:'Sarabun' } } },
+        y: { grid: { color:'rgba(0,0,0,0.05)' }, ticks: { font: { size:10, family:'Sarabun' }, callback: v => v + ' กม.' }, min:0, max:32 }
+      }
+    }
+  });
+
+  /* ===== ROAD BAR RENDERER ===== */
+  const slowRoads = [
+    { name:'สุรศักดิ์', val:9.33 },
+    { name:'สีลม',      val:9.38 },
+    { name:'ราชวิถี',   val:9.86 },
+    { name:'สามเสน',    val:10.46 },
+    { name:'พญาไท',     val:10.69 },
+  ];
+  const fastRoads = [
+    { name:'บรมราชชนนี',    val:49.87 },
+    { name:'วิภาวดีรังสิต', val:40.16 },
+    { name:'พระรามที่ 2',   val:39.44 },
+    { name:'พระรามที่ 3',   val:36.85 },
+    { name:'พระราม 9',      val:32.77 },
+  ];
+
+  function renderBars(id, data, color, maxVal) {
+    const el = document.getElementById(id);
+    data.forEach(d => {
+      const pct = (d.val / maxVal * 100).toFixed(1);
+      el.innerHTML += `
+        <div class="road-row">
+          <div class="road-name">${d.name}</div>
+          <div class="road-bar-bg">
+            <div class="road-bar-fill" style="width:${pct}%;background:${color};">
+              <span>${d.val.toFixed(1)}</span>
+            </div>
+          </div>
+          <div class="road-unit">กม./ชม.</div>
+        </div>`;
+    });
+  }
+  renderBars('slowRoads', slowRoads, '#E53935', 25);
+  renderBars('fastRoads', fastRoads, '#2E7D32', 55);
+
+  /* ===== ZONE COMPARE CHART ===== */
+  new Chart(document.getElementById('zoneCompare'), {
+    type: 'bar',
+    data: {
+      labels: ['พื้นที่ชั้นใน', 'พื้นที่ชั้นกลาง', 'พื้นที่ชั้นนอก'],
+      datasets: [
+        { label:'ปี 2560 (ฐาน)',     data:[15.3, 23.7, 32.6], backgroundColor:'#42A5F5', borderRadius:4 },
+        { label:'ปี 2564 (COVID-19)', data:[20.7, 29.5, 36.2], backgroundColor:'#26C6DA', borderRadius:4 },
+        { label:'ปี 2568 (ล่าสุด)',   data:[16.0, 24.0, 30.7], backgroundColor:'#FF7043', borderRadius:4 },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)} กม./ชม.` } }
+      },
+      scales: {
+        x: { grid: { display:false }, ticks: { font: { size:11, family:'Sarabun' } } },
+        y: { grid: { color:'rgba(0,0,0,0.05)' }, ticks: { font: { size:10, family:'Sarabun' }, callback: v => v + ' กม.' }, min:0, max:42 }
+      }
+    }
+  });
+</script>
+</body>
+</html>
