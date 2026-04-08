@@ -1,7 +1,7 @@
 # BMA Travel Time Dashboard (2568)
 
-แดชบอร์ดวิเคราะห์เวลาในการเดินทางในพื้นที่กรุงเทพมหานคร  
-จัดทำโดย กลุ่มงานสถิติและวิจัย  
+Dashboard วิเคราะห์เวลาในการเดินทางในพื้นที่กรุงเทพมหานคร  
+จัดทำโดย กลุ่มงานสถิติและวิจัย กองนโยบายและแผนงาน 
 สำนักการจราจรและขนส่ง กรุงเทพมหานคร
 
 ---
@@ -34,3 +34,4 @@
 ## 🇬🇧 English
 
 Data-driven dashboard analyzing travel time in Bangkok across 52 routes, supporting traffic management and urban mobility planning.
+©2025_PRAPAWADEE W
