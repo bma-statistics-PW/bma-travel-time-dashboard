@@ -439,7 +439,7 @@
 
 <!-- HEADER -->
 <div class="header">
-  <div class="header-badge">�� รายงานการจราจร · กรุงเทพมหานคร</div>
+  <div class="header-badge">📊 รายงานการจราจร · กรุงเทพมหานคร</div>
   <h1>รายงานสรุปผลการวิเคราะห์</h1>
   <h1><span>เวลาและความเร็วเฉลี่ยในการเดินทาง</span></h1>
   <h1>ในพื้นที่กรุงเทพมหานคร</h1>
@@ -1305,7 +1305,6 @@ document.querySelectorAll('.rank-th span.sortable').forEach(function(th) {
   th.addEventListener('click', function() {
     const tableId = 'rank-' + this.getAttribute('data-table');
     const col     = this.getAttribute('data-col'); // 'am' or 'pm'
-    const colIdx  = col === 'am' ? 2 : 3; // grid column index (0-based for data attrs)
     const key     = tableId + '-' + col;
 
     // Toggle sort direction
