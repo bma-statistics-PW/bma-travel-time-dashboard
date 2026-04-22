@@ -428,83 +428,71 @@
             </linearGradient>
           </defs>
           <rect x="64" y="28" width="718" height="214" fill="#fafbfc" rx="6"/>
+          <!-- Horizontal grid lines -->
           <line x1="64" y1="242" x2="782" y2="242" stroke="#e2e8f0" stroke-width="1"/>
           <line x1="64" y1="200" x2="782" y2="200" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,4"/>
           <line x1="64" y1="158" x2="782" y2="158" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,4"/>
           <line x1="64" y1="116" x2="782" y2="116" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,4"/>
           <line x1="64" y1="74"  x2="782" y2="74"  stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,4"/>
-          <!-- Y: scale y=242-(val-10)*4.2 -->
+          <!-- Vertical grid lines: uniform spacing step=85, x=100..780 -->
+          <line x1="100" y1="28" x2="100" y2="242" stroke="#e2e8f0" stroke-width="0.5"/>
+          <line x1="185" y1="28" x2="185" y2="242" stroke="#e2e8f0" stroke-width="0.5"/>
+          <line x1="270" y1="28" x2="270" y2="242" stroke="#e2e8f0" stroke-width="0.5"/>
+          <line x1="355" y1="28" x2="355" y2="242" stroke="#e2e8f0" stroke-width="0.5"/>
+          <line x1="440" y1="28" x2="440" y2="242" stroke="#e2e8f0" stroke-width="0.5"/>
+          <line x1="525" y1="28" x2="525" y2="242" stroke="#e2e8f0" stroke-width="0.5"/>
+          <line x1="610" y1="28" x2="610" y2="242" stroke="#e2e8f0" stroke-width="0.5"/>
+          <line x1="695" y1="28" x2="695" y2="242" stroke="#e2e8f0" stroke-width="0.5"/>
+          <line x1="780" y1="28" x2="780" y2="242" stroke="#e2e8f0" stroke-width="0.5"/>
+          <!-- Y-axis labels: y = 242-(val-10)*4.2 -->
           <text x="56" y="246" text-anchor="end" fill="#94a3b8" font-size="11" font-family="Sarabun">10</text>
           <text x="56" y="204" text-anchor="end" fill="#94a3b8" font-size="11" font-family="Sarabun">20</text>
           <text x="56" y="162" text-anchor="end" fill="#94a3b8" font-size="11" font-family="Sarabun">30</text>
           <text x="56" y="120" text-anchor="end" fill="#94a3b8" font-size="11" font-family="Sarabun">40</text>
           <text x="56" y="78"  text-anchor="end" fill="#94a3b8" font-size="11" font-family="Sarabun">50</text>
-          <!-- X: 2560→100, 2561→195, 2562→290, 2563→385, 2564→480, 2565→570, 2566→650, 2567→715, 2568→775 -->
+          <!-- X-axis labels: uniform spacing step=85, 2560→100 … 2568→780 -->
           <text x="100" y="262" text-anchor="middle" fill="#64748b" font-size="11" font-family="Sarabun">2560</text>
-          <text x="195" y="262" text-anchor="middle" fill="#64748b" font-size="11" font-family="Sarabun">2561</text>
-          <text x="290" y="262" text-anchor="middle" fill="#64748b" font-size="11" font-family="Sarabun">2562</text>
-          <text x="385" y="262" text-anchor="middle" fill="#64748b" font-size="11" font-family="Sarabun">2563</text>
-          <text x="480" y="262" text-anchor="middle" fill="#64748b" font-size="11" font-family="Sarabun">2564</text>
-          <text x="570" y="262" text-anchor="middle" fill="#64748b" font-size="11" font-family="Sarabun">2565</text>
-          <text x="650" y="262" text-anchor="middle" fill="#64748b" font-size="11" font-family="Sarabun">2566</text>
-          <text x="715" y="262" text-anchor="middle" fill="#64748b" font-size="11" font-family="Sarabun">2567</text>
-          <text x="775" y="262" text-anchor="middle" fill="#64748b" font-size="11" font-family="Sarabun">2568</text>
-          <!-- ชั้นนอก: 29.23,27.11,26.59,28.40,32.69,26.99,28.21,24.55,25.99 → y=242-(v-10)*4.2 -->
-          <!-- y: 164,173,175,167,149,174,169,179,173 -->
-          <polygon points="100,164 195,173 290,175 385,167 480,149 570,174 650,169 715,179 775,173 775,242 100,242" fill="url(#gG)"/>
-          <polyline points="100,164 195,173 290,175 385,167 480,149 570,174 650,169 715,179 775,173" fill="none" stroke="#00b894" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <text x="185" y="262" text-anchor="middle" fill="#64748b" font-size="11" font-family="Sarabun">2561</text>
+          <text x="270" y="262" text-anchor="middle" fill="#64748b" font-size="11" font-family="Sarabun">2562</text>
+          <text x="355" y="262" text-anchor="middle" fill="#64748b" font-size="11" font-family="Sarabun">2563</text>
+          <text x="440" y="262" text-anchor="middle" fill="#64748b" font-size="11" font-family="Sarabun">2564</text>
+          <text x="525" y="262" text-anchor="middle" fill="#64748b" font-size="11" font-family="Sarabun">2565</text>
+          <text x="610" y="262" text-anchor="middle" fill="#64748b" font-size="11" font-family="Sarabun">2566</text>
+          <text x="695" y="262" text-anchor="middle" fill="#64748b" font-size="11" font-family="Sarabun">2567</text>
+          <text x="780" y="262" text-anchor="middle" fill="#64748b" font-size="11" font-family="Sarabun">2568</text>
+          <!-- ชั้นนอก: 29.23,27.11,26.59,28.40,32.69,26.99,28.21,24.55,25.99 -->
+          <polygon points="100,164 185,173 270,175 355,167 440,149 525,174 610,169 695,179 780,173 780,242 100,242" fill="url(#gG)"/>
+          <polyline points="100,164 185,173 270,175 355,167 440,149 525,174 610,169 695,179 780,173" fill="none" stroke="#00b894" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
           <!-- ชั้นกลาง: 21.31,21.23,21.60,22.28,28.20,22.77,24.12,21.62,20.90 -->
-          <!-- y: 197,198,196,193,169,191,185,196,199 -->
-          <polygon points="100,197 195,198 290,196 385,193 480,169 570,191 650,185 715,196 775,199 775,242 100,242" fill="url(#oG)"/>
-          <polyline points="100,197 195,198 290,196 385,193 480,169 570,191 650,185 715,196 775,199" fill="none" stroke="#e17055" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <polygon points="100,197 185,198 270,196 355,193 440,169 525,191 610,185 695,196 780,199 780,242 100,242" fill="url(#oG)"/>
+          <polyline points="100,197 185,198 270,196 355,193 440,169 525,191 610,185 695,196 780,199" fill="none" stroke="#e17055" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
           <!-- ชั้นใน: 15.33,16.05,15.88,17.15,20.67,17.27,17.43,15.88,15.27 -->
-          <!-- y: 221,218,219,214,199,211,211,219,221 -->
-          <polygon points="100,221 195,218 290,219 385,214 480,199 570,211 650,211 715,219 775,221 775,242 100,242" fill="url(#rG)"/>
-          <polyline points="100,221 195,218 290,219 385,214 480,199 570,211 650,211 715,219 775,221" fill="none" stroke="#d63031" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-          <!-- COVID line -->
-          <line x1="480" y1="36" x2="480" y2="242" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="5,3" opacity="0.7"/>
-          <rect x="453" y="29" width="56" height="18" rx="4" fill="#fef3c7"/>
-          <text x="481" y="42" text-anchor="middle" fill="#92400e" font-size="10" font-family="Sarabun" font-weight="700">โควิด-19</text>
-          <!-- dots outer -->
-          <circle cx="100" cy="164" r="4" fill="#00b894" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="195" cy="173" r="4" fill="#00b894" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="290" cy="175" r="4" fill="#00b894" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="385" cy="167" r="4" fill="#00b894" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="480" cy="149" r="5" fill="#00b894" stroke="#fff" stroke-width="2"/>
-          <circle cx="570" cy="174" r="4" fill="#00b894" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="650" cy="169" r="4" fill="#00b894" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="715" cy="179" r="4" fill="#00b894" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="775" cy="173" r="4" fill="#00b894" stroke="#fff" stroke-width="1.5"/>
-          <!-- dots middle -->
-          <circle cx="100" cy="197" r="4" fill="#e17055" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="195" cy="198" r="4" fill="#e17055" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="290" cy="196" r="4" fill="#e17055" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="385" cy="193" r="4" fill="#e17055" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="480" cy="169" r="5" fill="#e17055" stroke="#fff" stroke-width="2"/>
-          <circle cx="570" cy="191" r="4" fill="#e17055" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="650" cy="185" r="4" fill="#e17055" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="715" cy="196" r="4" fill="#e17055" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="775" cy="199" r="4" fill="#e17055" stroke="#fff" stroke-width="1.5"/>
-          <!-- dots inner -->
-          <circle cx="100" cy="221" r="4" fill="#d63031" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="195" cy="218" r="4" fill="#d63031" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="290" cy="219" r="4" fill="#d63031" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="385" cy="214" r="4" fill="#d63031" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="480" cy="199" r="5" fill="#d63031" stroke="#fff" stroke-width="2"/>
-          <circle cx="570" cy="211" r="4" fill="#d63031" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="650" cy="211" r="4" fill="#d63031" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="715" cy="219" r="4" fill="#d63031" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="775" cy="221" r="4" fill="#d63031" stroke="#fff" stroke-width="1.5"/>
-          <!-- legend -->
-          <line x1="68" y1="288" x2="88" y2="288" stroke="#00b894" stroke-width="2.5"/>
-          <circle cx="78" cy="288" r="3.5" fill="#00b894"/>
-          <text x="93" y="292" fill="#475569" font-size="11.5" font-family="Sarabun">ชั้นนอก</text>
-          <line x1="160" y1="288" x2="180" y2="288" stroke="#e17055" stroke-width="2.5"/>
-          <circle cx="170" cy="288" r="3.5" fill="#e17055"/>
-          <text x="185" y="292" fill="#475569" font-size="11.5" font-family="Sarabun">ชั้นกลาง</text>
-          <line x1="252" y1="288" x2="272" y2="288" stroke="#d63031" stroke-width="2.5"/>
-          <circle cx="262" cy="288" r="3.5" fill="#d63031"/>
-          <text x="277" y="292" fill="#475569" font-size="11.5" font-family="Sarabun">ชั้นใน</text>
+          <polygon points="100,221 185,218 270,219 355,214 440,199 525,211 610,211 695,219 780,221 780,242 100,242" fill="url(#rG)"/>
+          <polyline points="100,221 185,218 270,219 355,214 440,199 525,211 610,211 695,219 780,221" fill="none" stroke="#d63031" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <!-- COVID-19 marker -->
+          <line x1="440" y1="36" x2="440" y2="242" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="5,3" opacity="0.7"/>
+          <rect x="413" y="29" width="56" height="18" rx="4" fill="#fef3c7"/>
+          <text x="441" y="42" text-anchor="middle" fill="#92400e" font-size="10" font-family="Sarabun" font-weight="700">โควิด-19</text>
+          <!-- Key dots: start (2560), COVID peak (2564), end (2568) -->
+          <circle cx="100" cy="164" r="4"   fill="#00b894" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="440" cy="149" r="5"   fill="#00b894" stroke="#fff" stroke-width="2"/>
+          <circle cx="780" cy="173" r="4"   fill="#00b894" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="100" cy="197" r="4"   fill="#e17055" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="440" cy="169" r="5"   fill="#e17055" stroke="#fff" stroke-width="2"/>
+          <circle cx="780" cy="199" r="4"   fill="#e17055" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="100" cy="221" r="4"   fill="#d63031" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="440" cy="199" r="5"   fill="#d63031" stroke="#fff" stroke-width="2"/>
+          <circle cx="780" cy="221" r="4"   fill="#d63031" stroke="#fff" stroke-width="1.5"/>
+          <!-- Legend (centered) -->
+          <line x1="260" y1="288" x2="280" y2="288" stroke="#00b894" stroke-width="2.5"/>
+          <circle cx="270" cy="288" r="3.5" fill="#00b894"/>
+          <text x="285" y="292" fill="#475569" font-size="11.5" font-family="Sarabun">ชั้นนอก</text>
+          <line x1="360" y1="288" x2="380" y2="288" stroke="#e17055" stroke-width="2.5"/>
+          <circle cx="370" cy="288" r="3.5" fill="#e17055"/>
+          <text x="385" y="292" fill="#475569" font-size="11.5" font-family="Sarabun">ชั้นกลาง</text>
+          <line x1="460" y1="288" x2="480" y2="288" stroke="#d63031" stroke-width="2.5"/>
+          <circle cx="470" cy="288" r="3.5" fill="#d63031"/>
+          <text x="485" y="292" fill="#475569" font-size="11.5" font-family="Sarabun">ชั้นใน</text>
         </svg>
       </div>
     </div>
