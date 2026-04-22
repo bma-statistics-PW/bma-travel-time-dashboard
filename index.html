@@ -614,12 +614,16 @@ const ANIM_STEP_MS     = 16;
 const state = { period:'all', zone:'all', dir:'all' };
 const sortState = { fast:{ col:null, asc:true }, slow:{ col:null, asc:true } };
 
+const VALID_PERIODS = new Set(['all','am','pm']);
+const VALID_ZONES   = new Set(['all','inner','middle','outer']);
+const VALID_DIRS    = new Set(['all','in','out']);
+
 function loadState(){
   try{
     const s = JSON.parse(localStorage.getItem('bma-filters')||'{}');
-    if(s.period) state.period=s.period;
-    if(s.zone)   state.zone=s.zone;
-    if(s.dir)    state.dir=s.dir;
+    if(s.period && VALID_PERIODS.has(s.period)) state.period=s.period;
+    if(s.zone   && VALID_ZONES.has(s.zone))     state.zone=s.zone;
+    if(s.dir    && VALID_DIRS.has(s.dir))       state.dir=s.dir;
   }catch(e){ console.warn('ไม่สามารถโหลดตัวกรองจาก localStorage ได้:', e.message); }
 }
 function saveState(){
@@ -630,17 +634,20 @@ function speedClass(v){
   return v<SPEED_RED_THRESHOLD?'speed-red':v<SPEED_ORANGE_THRESHOLD?'speed-orange':'speed-green';
 }
 
+const animTimers = new WeakMap();
 function animNum(el, to, dec){
+  if(animTimers.has(el)) clearInterval(animTimers.get(el));
   const from=parseFloat(el.textContent)||0;
-  if(from===to) return;
+  if(from===to){ el.textContent=to.toFixed(dec); return; }
   const dur=ANIM_DURATION_MS, step=ANIM_STEP_MS, steps=Math.ceil(dur/step);
   let i=0;
   const inc=(to-from)/steps;
   const t=setInterval(()=>{
     i++;
     el.textContent=(i>=steps?to:from+inc*i).toFixed(dec);
-    if(i>=steps) clearInterval(t);
+    if(i>=steps){ clearInterval(t); animTimers.delete(el); }
   },step);
+  animTimers.set(el,t);
 }
 
 function updateKPI(){
@@ -726,9 +733,9 @@ function filterRankRows(){
 }
 
 function updateCounter(){
-  let n=0;
-  document.querySelectorAll('#fast-rows .rank-row:not(.hidden), #slow-rows .rank-row:not(.hidden)').forEach(()=>n++);
-  document.getElementById('filter-counter').textContent='กำลังแสดง '+n+' รายการ';
+  let visibleCount=0;
+  document.querySelectorAll('#fast-rows .rank-row:not(.hidden), #slow-rows .rank-row:not(.hidden)').forEach(()=>visibleCount++);
+  document.getElementById('filter-counter').textContent='กำลังแสดง '+visibleCount+' รายการ';
 }
 
 function sortTable(tbl, col){
@@ -750,21 +757,26 @@ function sortTable(tbl, col){
   rows.forEach(r=>container.appendChild(r));
 }
 
+function csvEscape(val){
+  const s=String(val);
+  if(s.includes(',')||s.includes('"')||s.includes('\n')) return '"'+s.replace(/"/g,'""')+'"';
+  return s;
+}
 function exportCSV(){
-  const bom='﻿';
-  let csv=bom+'ประเภท,อันดับ,ถนน,โซน,ความเร็วเช้า (กม./ชม.),ความเร็วเย็น (กม./ชม.)
-';
+  const bom='\uFEFF';
+  let csv=bom+'ประเภท,อันดับ,ถนน,โซน,ความเร็วเช้า (กม./ชม.),ความเร็วเย็น (กม./ชม.)\n';
   ROADS.forEach(r=>{
     const zl=r.zone==='inner'?'ชั้นใน':r.zone==='middle'?'ชั้นกลาง':'ชั้นนอก';
     const tl=r.type==='fast'?'เร็วสุด':'ช้าสุด';
-    csv+=[tl,r.rank,r.road,zl,r.am,r.pm].join(',')+'\n';
+    csv+=[tl,r.rank,csvEscape(r.road),zl,r.am,r.pm].join(',')+'\n';
   });
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
   a.href=url; a.download='bma-road-rankings-2568.csv';
   document.body.appendChild(a); a.click();
-  document.body.removeChild(a); URL.revokeObjectURL(url);
+  document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url), 150);
 }
 
 function animateBars(){
@@ -811,7 +823,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.querySelectorAll('.rank-th .sortable').forEach(el=>{
     const h=()=>sortTable(el.dataset.table, el.dataset.col);
     el.addEventListener('click',h);
-    el.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); h(); } });
+    el.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); h(); } else if(e.key===' '){ h(); } });
   });
 
   document.getElementById('btn-export').addEventListener('click',exportCSV);
