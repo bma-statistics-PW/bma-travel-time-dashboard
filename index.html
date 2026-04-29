@@ -237,57 +237,6 @@
     background: #eff6ff;
   }
 
-  .quality-card {
-    background: #f8fafc;
-    border: 1px solid #dbe6f1;
-    border-left: 5px solid #0ea5e9;
-    border-radius: 10px;
-    padding: 12px 14px;
-  }
-
-  .quality-title {
-    font-size: 14px;
-    font-weight: 800;
-    color: #0f172a;
-    margin-bottom: 8px;
-  }
-
-  .quality-sub {
-    font-size: 12px;
-    color: #64748b;
-    margin-bottom: 10px;
-  }
-
-  .qc-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
-  }
-
-  .qc-item {
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    background: #ffffff;
-    padding: 9px 10px;
-    font-size: 12px;
-    color: #334155;
-  }
-
-  .qc-item strong {
-    color: #0f172a;
-  }
-
-  .qc-pass {
-    display: inline-block;
-    margin-top: 4px;
-    font-size: 11px;
-    color: #166534;
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    border-radius: 999px;
-    padding: 2px 8px;
-  }
-
   .compare-card {
     background: #ffffff;
     border: 1px solid #dbe6f1;
@@ -768,10 +717,6 @@
       grid-template-columns: 1fr;
     }
 
-    .qc-grid {
-      grid-template-columns: 1fr;
-    }
-
     .header-titles h1 {
       font-size: 18px;
     }
@@ -821,33 +766,6 @@
     <a href="#zone-details-card">รายละเอียดพื้นที่</a>
     <a href="#trend-line">กราฟแนวโน้ม</a>
   </nav>
-
-  <section class="quality-card" aria-label="การตรวจสอบคุณภาพข้อมูล">
-    <div class="quality-title">มาตรฐานข้อมูลและผลตรวจสอบความถูกต้อง</div>
-    <div class="quality-sub">ตรวจสอบเชิงสูตรและความครบถ้วนของข้อมูลที่แสดงบน dashboard ก่อนเผยแพร่</div>
-    <div class="qc-grid">
-      <div class="qc-item">
-        <strong>สูตรเวลาเดินทาง 10 กม.</strong><br>
-        ตรวจด้วยสูตร 10/ความเร็ว x 60 นาที และปัดทศนิยม 1 ตำแหน่ง
-        <div class="qc-pass">ผ่าน: ค่าบนตารางสอดคล้องสูตร</div>
-      </div>
-      <div class="qc-item">
-        <strong>จำนวนเขตพื้นที่</strong><br>
-        ชั้นใน 15 + ชั้นกลาง 20 + ชั้นนอก 15 = 50 เขต
-        <div class="qc-pass">ผ่าน: จำนวนรวมถูกต้อง</div>
-      </div>
-      <div class="qc-item">
-        <strong>ความต่อเนื่องของปีข้อมูล</strong><br>
-        แสดงปี 2560-2568 ต่อเนื่อง รวม 9 ปี สำหรับกราฟแนวโน้ม
-        <div class="qc-pass">ผ่าน: ช่วงปีครบถ้วน</div>
-      </div>
-      <div class="qc-item">
-        <strong>มาตรฐานหน่วยแสดงผล</strong><br>
-        สจส. ใช้ กม./ชม. และนาที/10 กม. ส่วน TomTom ใช้ Congestion (%) และ นาที:วินาที
-        <div class="qc-pass">ผ่าน: หน่วยแยกชัดเจน</div>
-      </div>
-    </div>
-  </section>
 
   <section id="tomtom-index" class="tomtom-section" aria-label="TomTom Traffic Index 2025">
     <div class="tomtom-head">
