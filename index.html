@@ -544,6 +544,34 @@
     color: var(--text-muted);
     gap: 8px;
   }
+  .card-year-badge {
+    font-size: 11px;
+    color: #94a3b8;
+    text-align: center;
+    margin-top: -6px;
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+  }
+  .card-direction-section { margin-top: 4px; }
+  .card-direction-label {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .card-dir-in  { color: #2563eb; }
+  .card-dir-out { color: #7c3aed; }
+  .card-direction-section .card-value {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+  .card-divider {
+    border: none;
+    border-top: 2px solid #E2E8F0;
+    margin: 10px 0;
+  }
 
   .scenario-card {
     margin-top: 18px;
@@ -980,47 +1008,91 @@
   </section>
 
   <section class="cards-grid">
-    <div class="data-card card-inner" data-zone="inner" data-direction="in">
-      <div class="card-title">พื้นที่ชั้นใน ขาเข้า</div>
-      <div class="card-value"><span class="kpi-speed" data-zone="inner" data-direction="in">15.27</span> <span class="card-unit">กม./ชม.</span></div>
-      <div class="card-stats"><span data-extreme-label="min" data-zone="inner" data-direction="in">ต่ำสุด (พญาไท)</span> <span data-extreme-speed="min" data-zone="inner" data-direction="in">9.78</span></div>
-      <div class="card-stats"><span data-extreme-label="max" data-zone="inner" data-direction="in">สูงสุด (วิภาวดีรังสิต)</span> <span data-extreme-speed="max" data-zone="inner" data-direction="in">42.10</span></div>
+
+    <!-- พื้นที่ชั้นใน -->
+    <div class="data-card card-inner" data-zone="inner">
+      <div class="card-title">พื้นที่ชั้นใน</div>
+      <div class="card-year-badge">ข้อมูลปี 2568</div>
+
+      <div class="card-direction-section">
+        <div class="card-direction-label card-dir-in">▲ ขาเข้า</div>
+        <div class="card-value card-direction-section">
+          <span class="kpi-speed" data-zone="inner" data-direction="in">15.27</span>
+          <span class="card-unit">กม./ชม.</span>
+        </div>
+        <div class="card-stats"><span data-extreme-label="min" data-zone="inner" data-direction="in">ต่ำสุด (พญาไท)</span> <span data-extreme-speed="min" data-zone="inner" data-direction="in">9.78</span></div>
+        <div class="card-stats"><span data-extreme-label="max" data-zone="inner" data-direction="in">สูงสุด (วิภาวดีรังสิต)</span> <span data-extreme-speed="max" data-zone="inner" data-direction="in">42.10</span></div>
+      </div>
+
+      <div class="card-divider"></div>
+
+      <div class="card-direction-section">
+        <div class="card-direction-label card-dir-out">▼ ขาออก</div>
+        <div class="card-value card-direction-section">
+          <span class="kpi-speed" data-zone="inner" data-direction="out">17.16</span>
+          <span class="card-unit">กม./ชม.</span>
+        </div>
+        <div class="card-stats"><span data-extreme-label="min" data-zone="inner" data-direction="out">ต่ำสุด (ราชวิถี)</span> <span data-extreme-speed="min" data-zone="inner" data-direction="out">7.62</span></div>
+        <div class="card-stats"><span data-extreme-label="max" data-zone="inner" data-direction="out">สูงสุด (วิภาวดีรังสิต)</span> <span data-extreme-speed="max" data-zone="inner" data-direction="out">59.25</span></div>
+      </div>
     </div>
 
-    <div class="data-card card-inner" data-zone="inner" data-direction="out">
-      <div class="card-title">พื้นที่ชั้นใน ขาออก</div>
-      <div class="card-value"><span class="kpi-speed" data-zone="inner" data-direction="out">17.16</span> <span class="card-unit">กม./ชม.</span></div>
-      <div class="card-stats"><span data-extreme-label="min" data-zone="inner" data-direction="out">ต่ำสุด (ราชวิถี)</span> <span data-extreme-speed="min" data-zone="inner" data-direction="out">7.62</span></div>
-      <div class="card-stats"><span data-extreme-label="max" data-zone="inner" data-direction="out">สูงสุด (วิภาวดีรังสิต)</span> <span data-extreme-speed="max" data-zone="inner" data-direction="out">59.25</span></div>
+    <!-- พื้นที่ชั้นกลาง -->
+    <div class="data-card card-middle" data-zone="middle">
+      <div class="card-title">พื้นที่ชั้นกลาง</div>
+      <div class="card-year-badge">ข้อมูลปี 2568</div>
+
+      <div class="card-direction-section">
+        <div class="card-direction-label card-dir-in">▲ ขาเข้า</div>
+        <div class="card-value card-direction-section">
+          <span class="kpi-speed" data-zone="middle" data-direction="in">20.90</span>
+          <span class="card-unit">กม./ชม.</span>
+        </div>
+        <div class="card-stats"><span data-extreme-label="min" data-zone="middle" data-direction="in">ต่ำสุด (เพชรเกษม)</span> <span data-extreme-speed="min" data-zone="middle" data-direction="in">5.58</span></div>
+        <div class="card-stats"><span data-extreme-label="max" data-zone="middle" data-direction="in">สูงสุด (พระรามที่ 3)</span> <span data-extreme-speed="max" data-zone="middle" data-direction="in">42.90</span></div>
+      </div>
+
+      <div class="card-divider"></div>
+
+      <div class="card-direction-section">
+        <div class="card-direction-label card-dir-out">▼ ขาออก</div>
+        <div class="card-value card-direction-section">
+          <span class="kpi-speed" data-zone="middle" data-direction="out">27.14</span>
+          <span class="card-unit">กม./ชม.</span>
+        </div>
+        <div class="card-stats"><span data-extreme-label="min" data-zone="middle" data-direction="out">ต่ำสุด (เพชรเกษม)</span> <span data-extreme-speed="min" data-zone="middle" data-direction="out">7.68</span></div>
+        <div class="card-stats"><span data-extreme-label="max" data-zone="middle" data-direction="out">สูงสุด (วิภาวดีรังสิต)</span> <span data-extreme-speed="max" data-zone="middle" data-direction="out">47.31</span></div>
+      </div>
     </div>
 
-    <div class="data-card card-middle" data-zone="middle" data-direction="in">
-      <div class="card-title">พื้นที่ชั้นกลาง ขาเข้า</div>
-      <div class="card-value"><span class="kpi-speed" data-zone="middle" data-direction="in">20.90</span> <span class="card-unit">กม./ชม.</span></div>
-      <div class="card-stats"><span data-extreme-label="min" data-zone="middle" data-direction="in">ต่ำสุด (เพชรเกษม)</span> <span data-extreme-speed="min" data-zone="middle" data-direction="in">5.58</span></div>
-      <div class="card-stats"><span data-extreme-label="max" data-zone="middle" data-direction="in">สูงสุด (พระรามที่ 3)</span> <span data-extreme-speed="max" data-zone="middle" data-direction="in">42.90</span></div>
+    <!-- พื้นที่ชั้นนอก -->
+    <div class="data-card card-outer" data-zone="outer">
+      <div class="card-title">พื้นที่ชั้นนอก</div>
+      <div class="card-year-badge">ข้อมูลปี 2568</div>
+
+      <div class="card-direction-section">
+        <div class="card-direction-label card-dir-in">▲ ขาเข้า</div>
+        <div class="card-value card-direction-section">
+          <span class="kpi-speed" data-zone="outer" data-direction="in">25.99</span>
+          <span class="card-unit">กม./ชม.</span>
+        </div>
+        <div class="card-stats"><span data-extreme-label="min" data-zone="outer" data-direction="in">ต่ำสุด (พหลโยธิน (ส่วนปลาย))</span> <span data-extreme-speed="min" data-zone="outer" data-direction="in">18.53</span></div>
+        <div class="card-stats"><span data-extreme-label="max" data-zone="outer" data-direction="in">สูงสุด (บรมราชชนนี)</span> <span data-extreme-speed="max" data-zone="outer" data-direction="in">39.93</span></div>
+      </div>
+
+      <div class="card-divider"></div>
+
+      <div class="card-direction-section">
+        <div class="card-direction-label card-dir-out">▼ ขาออก</div>
+        <div class="card-value card-direction-section">
+          <span class="kpi-speed" data-zone="outer" data-direction="out">35.37</span>
+          <span class="card-unit">กม./ชม.</span>
+        </div>
+        <div class="card-stats"><span data-extreme-label="min" data-zone="outer" data-direction="out">ต่ำสุด (พหลโยธิน (ส่วนปลาย))</span> <span data-extreme-speed="min" data-zone="outer" data-direction="out">19.17</span></div>
+        <div class="card-stats"><span data-extreme-label="max" data-zone="outer" data-direction="out">สูงสุด (บรมราชชนนี)</span> <span data-extreme-speed="max" data-zone="outer" data-direction="out">59.80</span></div>
+      </div>
     </div>
 
-    <div class="data-card card-middle" data-zone="middle" data-direction="out">
-      <div class="card-title">พื้นที่ชั้นกลาง ขาออก</div>
-      <div class="card-value"><span class="kpi-speed" data-zone="middle" data-direction="out">27.14</span> <span class="card-unit">กม./ชม.</span></div>
-      <div class="card-stats"><span data-extreme-label="min" data-zone="middle" data-direction="out">ต่ำสุด (เพชรเกษม)</span> <span data-extreme-speed="min" data-zone="middle" data-direction="out">7.68</span></div>
-      <div class="card-stats"><span data-extreme-label="max" data-zone="middle" data-direction="out">สูงสุด (วิภาวดีรังสิต)</span> <span data-extreme-speed="max" data-zone="middle" data-direction="out">47.31</span></div>
-    </div>
-
-    <div class="data-card card-outer" data-zone="outer" data-direction="in">
-      <div class="card-title">พื้นที่ชั้นนอก ขาเข้า</div>
-      <div class="card-value"><span class="kpi-speed" data-zone="outer" data-direction="in">25.99</span> <span class="card-unit">กม./ชม.</span></div>
-      <div class="card-stats"><span data-extreme-label="min" data-zone="outer" data-direction="in">ต่ำสุด (พหลโยธิน (ส่วนปลาย))</span> <span data-extreme-speed="min" data-zone="outer" data-direction="in">18.53</span></div>
-      <div class="card-stats"><span data-extreme-label="max" data-zone="outer" data-direction="in">สูงสุด (บรมราชชนนี)</span> <span data-extreme-speed="max" data-zone="outer" data-direction="in">39.93</span></div>
-    </div>
-
-    <div class="data-card card-outer" data-zone="outer" data-direction="out">
-      <div class="card-title">พื้นที่ชั้นนอก ขาออก</div>
-      <div class="card-value"><span class="kpi-speed" data-zone="outer" data-direction="out">35.37</span> <span class="card-unit">กม./ชม.</span></div>
-      <div class="card-stats"><span data-extreme-label="min" data-zone="outer" data-direction="out">ต่ำสุด (พหลโยธิน (ส่วนปลาย))</span> <span data-extreme-speed="min" data-zone="outer" data-direction="out">19.17</span></div>
-      <div class="card-stats"><span data-extreme-label="max" data-zone="outer" data-direction="out">สูงสุด (บรมราชชนนี)</span> <span data-extreme-speed="max" data-zone="outer" data-direction="out">59.80</span></div>
-    </div>
   </section>
 
   <section id="trend-line" class="line-card" aria-label="กราฟเส้นเปรียบเทียบปี 2560-2568">
