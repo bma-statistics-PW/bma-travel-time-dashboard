@@ -11,6 +11,14 @@ ZONE_ROWS = {
     "outer": 5,
 }
 
+ZONE_SHEETS = {
+    "inner": "urban_2560-2568",
+    "middle": "suburban_2560-2568",
+    "outer": "rural_2560-2568",
+}
+
+LATEST_INBOUND_COL = 19
+
 
 def to_float(value):
     if pd.isna(value):
@@ -20,6 +28,24 @@ def to_float(value):
         if value == "-" or value == "":
             return None
     return float(value)
+
+
+def build_zone_extremes(xlsx_path: Path, sheet_name: str):
+    sheet = pd.read_excel(xlsx_path, sheet_name=sheet_name, header=None)
+    rows = sheet.iloc[3:, [1, LATEST_INBOUND_COL]].copy()
+    rows.columns = ["road", "speed_2568_in"]
+    rows["speed_2568_in"] = pd.to_numeric(rows["speed_2568_in"], errors="coerce")
+    rows = rows.dropna(subset=["road", "speed_2568_in"])
+
+    slowest = rows.loc[rows["speed_2568_in"].idxmin()]
+    fastest = rows.loc[rows["speed_2568_in"].idxmax()]
+
+    return {
+        "min_road_2568_in": str(slowest["road"]).strip(),
+        "min_speed_2568_in": round(float(slowest["speed_2568_in"]), 2),
+        "max_road_2568_in": str(fastest["road"]).strip(),
+        "max_speed_2568_in": round(float(fastest["speed_2568_in"]), 2),
+    }
 
 
 def build_dashboard_json(xlsx_path: Path):
@@ -32,6 +58,7 @@ def build_dashboard_json(xlsx_path: Path):
     for zone, row_idx in ZONE_ROWS.items():
         inbound_by_year = {}
         outbound_by_year = {}
+        zone_extremes = build_zone_extremes(xlsx_path, ZONE_SHEETS[zone])
 
         col = 1
         for year in years:
@@ -56,6 +83,7 @@ def build_dashboard_json(xlsx_path: Path):
             "travel_time_10km_2568_out": round((10 / speed_2568_out) * 60, 1),
             "inbound_by_year": {k: round(v, 2) if v is not None else None for k, v in inbound_by_year.items()},
             "outbound_by_year": {k: round(v, 2) if v is not None else None for k, v in outbound_by_year.items()},
+            **zone_extremes,
         }
 
     for year in years:
