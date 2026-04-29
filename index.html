@@ -545,6 +545,54 @@
     gap: 8px;
   }
 
+  .scenario-card {
+    margin-top: 18px;
+    border: 1px solid #f5c2c7;
+    background: linear-gradient(145deg, #fff7f8, #fff0f2);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .scenario-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #8e1b2a;
+    margin-bottom: 4px;
+  }
+  .scenario-sub {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 12px;
+  }
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .scenario-item {
+    border: 1px solid #f1d0d5;
+    border-radius: 8px;
+    background: #ffffff;
+    padding: 10px;
+  }
+  .scenario-zone {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .scenario-item[data-zone='inner'] .scenario-zone { color: #d63031; }
+  .scenario-item[data-zone='middle'] .scenario-zone { color: #e17055; }
+  .scenario-item[data-zone='outer'] .scenario-zone { color: #00b894; }
+  .scenario-kpi {
+    font-size: 13px;
+    color: #334155;
+    margin-bottom: 4px;
+  }
+  .scenario-note {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #7c2d12;
+  }
+
   /* 6. DATA TABLE: ตารางสไตล์ Minimalist สะอาดตา */
   .section-title {
     font-size: 18px;
@@ -668,7 +716,8 @@
 
     .cards-grid,
     .zone-district-grid,
-    .bottom-grid {
+    .bottom-grid,
+    .scenario-grid {
       grid-template-columns: 1fr 1fr;
     }
 
@@ -713,7 +762,8 @@
     .tomtom-grid,
     .cards-grid,
     .zone-district-grid,
-    .bottom-grid {
+    .bottom-grid,
+    .scenario-grid {
       grid-template-columns: 1fr;
     }
 
@@ -1028,6 +1078,32 @@
     </div>
   </section>
 
+  <section class="scenario-card" aria-label="วิเคราะห์กรณีไม่มีมาตรการแก้ไขจราจร">
+    <div class="scenario-title">วิเคราะห์แนวโน้มกรณีไม่มีมาตรการ (Business as Usual)</div>
+    <div class="scenario-sub">คาดการณ์ปีถัดไปจากแนวโน้ม 3 ปีล่าสุดของความเร็วเฉลี่ยช่วงเร่งด่วนเช้า</div>
+    <div id="scenarioGrid" class="scenario-grid">
+      <div class="scenario-item" data-zone="inner">
+        <div class="scenario-zone">พื้นที่ชั้นใน</div>
+        <div class="scenario-kpi">ปี 2569 คาดการณ์: <strong data-bau="speed">-</strong> กม./ชม.</div>
+        <div class="scenario-kpi">เวลาเดินทาง 10 กม.: <strong data-bau="time">-</strong> นาที</div>
+        <div class="scenario-kpi">การเปลี่ยนแปลงต่อปี: <strong data-bau="delta">-</strong> กม./ชม.</div>
+      </div>
+      <div class="scenario-item" data-zone="middle">
+        <div class="scenario-zone">พื้นที่ชั้นกลาง</div>
+        <div class="scenario-kpi">ปี 2569 คาดการณ์: <strong data-bau="speed">-</strong> กม./ชม.</div>
+        <div class="scenario-kpi">เวลาเดินทาง 10 กม.: <strong data-bau="time">-</strong> นาที</div>
+        <div class="scenario-kpi">การเปลี่ยนแปลงต่อปี: <strong data-bau="delta">-</strong> กม./ชม.</div>
+      </div>
+      <div class="scenario-item" data-zone="outer">
+        <div class="scenario-zone">พื้นที่ชั้นนอก</div>
+        <div class="scenario-kpi">ปี 2569 คาดการณ์: <strong data-bau="speed">-</strong> กม./ชม.</div>
+        <div class="scenario-kpi">เวลาเดินทาง 10 กม.: <strong data-bau="time">-</strong> นาที</div>
+        <div class="scenario-kpi">การเปลี่ยนแปลงต่อปี: <strong data-bau="delta">-</strong> กม./ชม.</div>
+      </div>
+    </div>
+    <div id="scenarioNote" class="scenario-note">หมายเหตุ: เป็นการคาดการณ์เชิงแนวโน้ม (trend projection) เพื่อใช้เตือนความเสี่ยง ไม่ใช่แบบจำลองจราจรเชิงโครงข่ายเต็มรูปแบบ</div>
+  </section>
+
   <section>
     <div class="section-title">ตารางเปรียบเทียบความเร็วเฉลี่ย (ปี 2560 - 2568)</div>
     <table class="modern-table">
@@ -1110,6 +1186,8 @@
     var filterStatus = document.getElementById('filterStatus');
     var cards = Array.prototype.slice.call(document.querySelectorAll('.data-card'));
     var tableRows = Array.prototype.slice.call(document.querySelectorAll('.modern-table tbody tr'));
+    var scenarioItems = Array.prototype.slice.call(document.querySelectorAll('.scenario-item'));
+    var scenarioNote = document.getElementById('scenarioNote');
 
     function applyFilters() {
       var zoneValue = zoneFilter.value;
@@ -1133,6 +1211,7 @@
 
       var zoneText = zoneValue === 'all' ? 'ทุกโซน' : zoneFilter.options[zoneFilter.selectedIndex].text;
       filterStatus.textContent = 'แสดงผล ' + visibleRows + ' รายการในตาราง | โซน: ' + zoneText;
+      updateScenarioVisibility(zoneValue);
     }
 
     zoneFilter.addEventListener('change', applyFilters);
@@ -1201,9 +1280,11 @@
         .then(function (json) {
           bindZoneDataFromJson(json);
           buildLineDataFromJson(json);
+          renderNoMeasureScenario();
           applyFilters();
         })
         .catch(function () {
+          renderNoMeasureScenario();
           applyFilters();
         });
     }
@@ -1228,6 +1309,57 @@
     var lineTipInner = document.getElementById('line-tip-inner');
     var lineHits = Array.prototype.slice.call(document.querySelectorAll('.line-hit'));
     var lineDots = Array.prototype.slice.call(document.querySelectorAll('.line-dot'));
+
+    function toFixed2(value) {
+      return Number(value).toFixed(2);
+    }
+
+    function getBauProjection(zoneKey) {
+      var n = lineData.length;
+      if (n < 3) return null;
+      var latest = Number(lineData[n - 1][zoneKey]);
+      var prev2 = Number(lineData[n - 3][zoneKey]);
+      var avgDeltaPerYear = (latest - prev2) / 2;
+      var projected = Math.max(5, latest + avgDeltaPerYear);
+      return {
+        speed: projected,
+        time: 600 / projected,
+        delta: avgDeltaPerYear
+      };
+    }
+
+    function renderNoMeasureScenario() {
+      var zoneMap = { inner: 'inner', middle: 'mid', outer: 'outer' };
+      var strongestDrop = null;
+
+      scenarioItems.forEach(function (item) {
+        var zone = item.getAttribute('data-zone');
+        var key = zoneMap[zone];
+        var projection = getBauProjection(key);
+        if (!projection) return;
+
+        item.querySelector('[data-bau="speed"]').textContent = toFixed2(projection.speed);
+        item.querySelector('[data-bau="time"]').textContent = toFixed2(projection.time);
+        item.querySelector('[data-bau="delta"]').textContent = (projection.delta >= 0 ? '+' : '') + toFixed2(projection.delta);
+
+        if (!strongestDrop || projection.delta < strongestDrop.delta) {
+          strongestDrop = { zone: zone, delta: projection.delta };
+        }
+      });
+
+      if (strongestDrop) {
+        var zoneLabel = strongestDrop.zone === 'inner' ? 'พื้นที่ชั้นใน' : (strongestDrop.zone === 'middle' ? 'พื้นที่ชั้นกลาง' : 'พื้นที่ชั้นนอก');
+        scenarioNote.textContent = 'หมายเหตุ: แนวโน้ม BAU ชี้ว่าพื้นที่เสี่ยงทรุดตัวเร็วสุดคือ ' + zoneLabel +
+          ' (' + toFixed2(strongestDrop.delta) + ' กม./ชม. ต่อปี) หากไม่มีมาตรการเพิ่มเติม';
+      }
+    }
+
+    function updateScenarioVisibility(zoneValue) {
+      scenarioItems.forEach(function (item) {
+        var visible = zoneValue === 'all' || item.getAttribute('data-zone') === zoneValue;
+        item.classList.toggle('is-hidden', !visible);
+      });
+    }
 
     function showLineTip(idx) {
       var d = lineData[idx];
