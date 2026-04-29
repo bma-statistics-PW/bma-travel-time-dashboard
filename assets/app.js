@@ -227,7 +227,7 @@
       tt.setAttribute('x', x(i)); tt.setAttribute('y', yB + 22);
       tt.setAttribute('text-anchor', 'middle');
       tt.setAttribute('fill', '#64748b'); tt.setAttribute('font-size', '11');
-      tt.setAttribute('font-family', 'IBM Plex Sans Thai');
+      tt.setAttribute('font-family', 'Sarabun');
       tt.textContent = lang() === 'th' ? yr : (yr - 543);
       svg.appendChild(tt);
     });
@@ -279,7 +279,7 @@
     ct.setAttribute('x', covX); ct.setAttribute('y', yT + 9);
     ct.setAttribute('text-anchor', 'middle');
     ct.setAttribute('fill', '#92400e'); ct.setAttribute('font-size', '10');
-    ct.setAttribute('font-weight', '700'); ct.setAttribute('font-family', 'IBM Plex Sans Thai');
+    ct.setAttribute('font-weight', '700'); ct.setAttribute('font-family', 'Sarabun');
     ct.textContent = 'COVID-19';
     svg.appendChild(ct);
 
@@ -315,16 +315,16 @@
     tip.setAttribute('pointer-events', 'none');
     tip.innerHTML = `
       <rect x="0" y="0" width="${TIP_W}" height="${TIP_H}" rx="8" fill="#0f2942"/>
-      <text id="tip-year" x="10" y="18" font-size="11" font-weight="700" fill="#f0c060" font-family="IBM Plex Sans Thai"></text>
+      <text id="tip-year" x="10" y="18" font-size="11" font-weight="700" fill="#f0c060" font-family="Sarabun"></text>
       <line x1="10" y1="24" x2="${TIP_W - 14}" y2="24" stroke="rgba(255,255,255,.25)"/>
       <circle cx="18" cy="40" r="4" fill="#00b894"/>
-      <text x="28" y="44" font-size="10" fill="rgba(255,255,255,.75)" font-family="IBM Plex Sans Thai">${labelOuter}</text>
+      <text x="28" y="44" font-size="10" fill="rgba(255,255,255,.75)" font-family="Sarabun">${labelOuter}</text>
       <text id="tip-outer" x="${TIP_W - 14}" y="44" text-anchor="end" font-size="11" font-weight="700" fill="#00b894" font-family="IBM Plex Mono"></text>
       <circle cx="18" cy="58" r="4" fill="#e17055"/>
-      <text x="28" y="62" font-size="10" fill="rgba(255,255,255,.75)" font-family="IBM Plex Sans Thai">${labelMid}</text>
+      <text x="28" y="62" font-size="10" fill="rgba(255,255,255,.75)" font-family="Sarabun">${labelMid}</text>
       <text id="tip-mid" x="${TIP_W - 14}" y="62" text-anchor="end" font-size="11" font-weight="700" fill="#e17055" font-family="IBM Plex Mono"></text>
       <circle cx="18" cy="76" r="4" fill="#d63031"/>
-      <text x="28" y="80" font-size="10" fill="rgba(255,255,255,.75)" font-family="IBM Plex Sans Thai">${labelInner}</text>
+      <text x="28" y="80" font-size="10" fill="rgba(255,255,255,.75)" font-family="Sarabun">${labelInner}</text>
       <text id="tip-inn" x="${TIP_W - 14}" y="80" text-anchor="end" font-size="11" font-weight="700" fill="#d63031" font-family="IBM Plex Mono"></text>`;
     svg.appendChild(tip);
 

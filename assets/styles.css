@@ -1,7 +1,7 @@
 /* ════════════════════════════════════════════════════════════════════
    BMA Travel Time Dashboard — Stylesheet (v4 · Editorial + i18n + a11y)
    © Prapawadee_W.
-   Editorial type system inspired by FT/WEF · BMA brand colors preserved
+   Sarabun as primary font (headings + body) · IBM Plex Mono for numbers
    ════════════════════════════════════════════════════════════════════ */
 
 :root{
@@ -20,9 +20,9 @@
   --middle-color:#e17055;
   --outer-color:#00b894;
 
-  /* ─── Editorial type system ─── */
-  --font-serif:'Noto Serif Display','IBM Plex Sans Thai','Sarabun',Georgia,serif;
-  --font-sans:'IBM Plex Sans Thai','Sarabun',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  /* ─── Type system ─── */
+  --font-serif:'Sarabun',sans-serif;
+  --font-sans:'Sarabun',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   --font-mono:'IBM Plex Mono','SFMono-Regular',Consolas,Monaco,monospace;
 
   /* ─── Spacing ─── */
