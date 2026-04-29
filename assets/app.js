@@ -543,8 +543,19 @@
   }
   const expandBtn = $('#rtExpandAll');
   const collapseBtn = $('#rtCollapseAll');
-  if (expandBtn) expandBtn.addEventListener('click', () => $$('.zone-acc').forEach(a => a.open = true));
+  function lazyRenderZone(zoneKey) {
+    const tbody = $(`tbody[data-tbody="${zoneKey}"]`);
+    if (tbody && tbody.children.length === 0) renderZoneTable(zoneKey);
+  }
+
+  if (expandBtn) expandBtn.addEventListener('click', () => {
+    $$('.zone-acc').forEach(a => { a.open = true; lazyRenderZone(a.dataset.zone); });
+  });
   if (collapseBtn) collapseBtn.addEventListener('click', () => $$('.zone-acc').forEach(a => a.open = false));
+
+  $$('.zone-acc').forEach(acc => {
+    acc.addEventListener('toggle', () => { if (acc.open) lazyRenderZone(acc.dataset.zone); });
+  });
 
   // ────────────────────────────────────────────────────────────────
   // Reveal on scroll
