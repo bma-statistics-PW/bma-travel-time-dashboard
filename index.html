@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="th" data-lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#0A2E5C">
+
+<!-- ════════════════ SEO Meta ════════════════ -->
+<title>BMA Travel Time Dashboard 2017–2025 · Bangkok Floating Car Method | รายงานอัตราเร็วเฉลี่ย กทม.</title>
+<meta name="description" content="Bangkok Travel Time & average speed Dashboard 2017–2025 — 51 main roads, Floating Car Method survey by Traffic and Transportation Department, BMA. Compared with TomTom Traffic Index 2025.">
+<meta name="keywords" content="Bangkok traffic, BMA, travel time, floating car method, TomTom Traffic Index, Bangkok Metropolitan Administration, urban transport, อัตราเร็วเฉลี่ย, สำนักการจราจรและขนส่ง, กรุงเทพมหานคร">
+<meta name="author" content="Prapawadee W., Statistics and Research Group, Policy and Planning Division, Traffic and Transportation Department, Bangkok Metropolitan Administration">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="th_TH">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:title" content="Bangkok Travel Time Dashboard 2017–2025 — BMA Floating Car Survey">
+<meta property="og:description" content="Annual average speed analysis on 51 main roads in Bangkok, surveyed by the Traffic and Transportation Department (BMA) using Floating Car Method, 2017–2025.">
+<meta property="og:url" content="https://bma-statistics-pw.github.io/BMA-travel-time-dashboard-TH/">
+<meta property="og:site_name" content="BMA Traffic Statistics">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bangkok Travel Time Dashboard 2017–2025">
+<meta name="twitter:description" content="51 main roads · Floating Car Method · Compared with TomTom Traffic Index 2025">
+
+<!-- Canonical & hreflang -->
+<link rel="canonical" href="https://bma-statistics-pw.github.io/BMA-travel-time-dashboard-TH/">
+<link rel="alternate" hreflang="th" href="https://bma-statistics-pw.github.io/BMA-travel-time-dashboard-TH/?lang=th">
+<link rel="alternate" hreflang="en" href="https://bma-statistics-pw.github.io/BMA-travel-time-dashboard-TH/?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://bma-statistics-pw.github.io/BMA-travel-time-dashboard-TH/">
+
+<!-- ════════════════ Fonts ════════════════ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Editorial: Noto Serif Display for headlines, IBM Plex Sans Thai for body, IBM Plex Mono for numbers -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+
+<!-- ════════════════ Schema.org JSON-LD ════════════════ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Dataset",
+      "name": "Bangkok Travel Time and average speed dataset (2017–2025)",
+      "alternateName": "รายงานข้อมูลเวลาและอัตราเร็วเฉลี่ยในการเดินทาง กรุงเทพมหานคร 2560–2568",
+      "description": "Annual average speed survey on 51 main roads in Bangkok, classified into inner / middle / outer urban zones, during morning (07:00–09:00) and evening (16:00–18:00) rush hours, inbound and outbound. Surveyed by Floating Car Method.",
+      "url": "https://bma-statistics-pw.github.io/BMA-travel-time-dashboard-TH/",
+      "keywords": "traffic, travel time, average speed, Floating Car Method, Bangkok, urban transport",
+      "creator": {
+        "@type": "GovernmentOrganization",
+        "name": "Traffic and Transportation Department, Bangkok Metropolitan Administration",
+        "alternateName": "สำนักการจราจรและขนส่ง กรุงเทพมหานคร",
+        "department": {
+          "@type": "Organization",
+          "name": "Statistics and Research Group, Policy and Planning Division"
+        }
+      },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Bangkok, Thailand",
+        "geo": { "@type": "GeoCoordinates", "latitude": 13.7563, "longitude": 100.5018 }
+      },
+      "temporalCoverage": "2017/2025",
+      "variableMeasured": [
+        { "@type": "PropertyValue", "name": "average speed", "unitText": "km/h" },
+        { "@type": "PropertyValue", "name": "Travel time", "unitText": "min/10 km" }
+      ],
+      "measurementTechnique": "Floating Car Method",
+      "license": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "@type": "WebSite",
+      "name": "BMA Travel Time Dashboard",
+      "url": "https://bma-statistics-pw.github.io/BMA-travel-time-dashboard-TH/",
+      "inLanguage": ["th-TH", "en-US"],
+      "publisher": {
+        "@type": "GovernmentOrganization",
+        "name": "Bangkok Metropolitan Administration"
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a href="#main" class="skip-link" data-i18n="skip">ข้ามไปยังเนื้อหาหลัก</a>
+
+<div class="utility-bar" role="banner">
+  <div class="utility-inner">
+    <div class="utility-left">
+      <span class="util-org" data-i18n="utilOrg">Bangkok Metropolitan Administration</span>
+      <span class="util-sep">·</span>
+      <span class="util-dept" data-i18n="utilDept">Traffic and Transportation Department</span>
+    </div>
+    <div class="utility-right">
+      <button id="themeToggle" class="util-btn" type="button" aria-label="Toggle dark mode" title="สลับโหมด">
+        <span class="theme-icon">◐</span>
+      </button>
+      <div class="lang-toggle" role="group" aria-label="Language switcher">
+        <button class="lang-btn active" data-lang="th" type="button" aria-pressed="true">ไทย</button>
+        <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="a4-canvas">
+<header class="report-hero" role="banner">
+  <div class="hero-eyebrow" data-i18n="heroEyebrow">📋 รายงานการจราจร · กรุงเทพมหานคร</div>
+  <h1 class="hero-title">
+    <span class="hero-line-1" data-i18n="heroTitle1">รายงานสรุปผลการวิเคราะห์</span>
+    <span class="hero-line-2 hl" data-i18n="heroTitle2">เวลาและอัตราเร็วเฉลี่ยในการเดินทาง</span>
+    <span class="hero-line-3" data-i18n="heroTitle3">ในพื้นที่กรุงเทพมหานคร</span>
+  </h1>
+  <p class="hero-meta" data-i18n="heroMeta">ช่วงเวลาเร่งด่วน · ปี พ.ศ. 2560–2568 · 51 สายถนน · 3 โซนพื้นที่</p>
+  <p class="hero-method" data-i18n-html="heroMethod">วิธีการสำรวจ: <strong>Floating Car Method</strong></p>
+  <p class="hero-org" data-i18n="heroOrg">กลุ่มงานสถิติและวิจัย · กองนโยบายและแผนงาน · สำนักการจราจรและขนส่ง · กรุงเทพมหานคร</p>
+</header>
+
+<main id="main" class="a4-body" tabindex="-1">
+<section class="intro-box reveal" aria-labelledby="introHead">
+  <h2 id="introHead" class="sr-only" data-i18n="introHead">บทนำ</h2>
+  <p data-i18n-html="introText"><strong>สำนักการจราจรและขนส่ง กรุงเทพมหานคร</strong> ได้ดำเนินการสำรวจข้อมูลเวลาในการเดินทางด้วยวิธี <strong>Floating Car Method</strong>
+  เพื่อวิเคราะห์แนวโน้มอัตราเร็วเฉลี่ยบนโครงข่ายถนน <strong>51 สายหลัก</strong> ในช่วงเวลาเร่งด่วน
+  โดยจำแนกตามลักษณะทางกายภาพของพื้นที่ออกเป็น 3 โซน ได้แก่ พื้นที่ชั้นใน ชั้นกลาง และชั้นนอก
+  เพื่อประกอบการกำหนดทิศทางนโยบายการจราจรและพัฒนาระบบขนส่งสาธารณะ</p>
+</section>
+
+<section class="method-card reveal" aria-labelledby="methodHead">
+  <div class="method-icon" aria-hidden="true">🚗</div>
+  <div class="method-body">
+    <h2 id="methodHead" class="method-title" data-i18n="methodTitle">Floating Car Method</h2>
+    <p class="method-desc" data-i18n="methodDesc">สำรวจข้อมูลด้วย <strong>Floating Car Method</strong> บนเส้นทางที่กำหนด บันทึกเวลาและระยะทางช่วงต้น–ช่วงปลาย ทุกเที่ยวเดินทาง แล้วคำนวณอัตราเร็วเฉลี่ยในการเดินทาง ในช่วงเร่งด่วนเช้า (07:00–09:00) และเร่งด่วนเย็น (16:00–18:00) แยกขาเข้า–ขาออก ทำให้ได้ค่าที่สะท้อนสภาพจราจรจริงของผู้ใช้รถบนถนนสายหลัก</p>
+    <div class="method-meta">
+      <span class="method-pill" data-i18n="mp1">📍 51 สายถนน</span>
+      <span class="method-pill" data-i18n="mp2">🌅 เร่งด่วนเช้า 07:00–09:00</span>
+      <span class="method-pill" data-i18n="mp3">🌆 เร่งด่วนเย็น 16:00–18:00</span>
+      <span class="method-pill" data-i18n="mp4">↔️ ขาเข้า/ขาออก</span>
+    </div>
+  </div>
+</section>
+
+<nav class="std-nav" aria-label="Section quick links">
+  <a href="#tomtom-index" data-i18n="navTomtom">TomTom Index</a>
+  <a href="#compare-sjs-tomtom" data-i18n="navCompare">เปรียบเทียบ</a>
+  <a href="#zone-details-card" data-i18n="navZones">รายละเอียดพื้นที่</a>
+  <a href="#trend-line" data-i18n="navTrend">กราฟแนวโน้ม</a>
+  <a href="#road-table-section" data-i18n="navTable">ตาราง 51 สาย</a>
+  <a href="#scenario-bau" data-i18n="navBau">คาดการณ์ BAU</a>
+</nav>
+
+<section id="tomtom-index" class="tomtom-section reveal" aria-labelledby="tomtomHead">
+  <div class="section-eyebrow" data-i18n="tomtomEyebrow">TomTom Traffic Index 2025</div>
+  <h2 class="section-heading" id="tomtomHead" data-i18n="tomtomHeading">มุมมองระดับโลก: กรุงเทพฯ ในดัชนีการจราจร TomTom</h2>
+  <p class="section-sub" data-i18n="tomtomSub">ข้อมูลจาก GPS ครอบคลุมระยะทางกว่า 3.65 ล้านล้าน กม. ทั่วโลก ปี ค.ศ. 2025</p>
+  <div class="tomtom-card">
+    <div class="tomtom-brand" aria-hidden="true">TOM<br>TOM<br><span style="letter-spacing:0.04em">TRAFFIC</span><br>INDEX</div>
+    <div class="tomtom-body">
+      <div class="tomtom-city" data-i18n="tomtomCity">🌐 กรุงเทพมหานคร — TomTom Traffic Index 2025</div>
+      <div class="tomtom-stats-grid">
+        <div class="tomtom-stat"><div class="tomtom-value">10th</div><div class="tomtom-label" data-i18n="tt1l">อันดับโลก<br>ด้านความแออัดการจราจร<br>(Congestion)</div></div>
+        <div class="tomtom-stat"><div class="tomtom-value">67.9%</div><div class="tomtom-label" data-i18n="tt2l">Congestion Level</div><div class="tomtom-sub-label" data-i18n="tt2s">สูงขึ้น +1.3 pp จากปี 2024</div></div>
+        <div class="tomtom-stat"><div class="tomtom-value">22:59</div><div class="tomtom-label" data-i18n="tt3l">นาที / 10 กม. (เฉลี่ย)</div><div class="tomtom-sub-label" data-i18n="tt3s">+36 วินาที จากปี 2024</div></div>
+        <div class="tomtom-stat"><div class="tomtom-value">25:45</div><div class="tomtom-label" data-i18n="tt4l">นาที / 10 กม.<br>เร่งด่วนเช้า · Congestion 88.4%</div></div>
+        <div class="tomtom-stat"><div class="tomtom-value">31:25</div><div class="tomtom-label" data-i18n="tt5l">นาที / 10 กม.<br>เร่งด่วนเย็น · Congestion 126.5%</div></div>
+      </div>
+      <div class="tomtom-stats-row2">
+        <div class="tomtom-stat"><div class="tomtom-value">115</div><div class="tomtom-label" data-i18n="tt6l">ชั่วโมง / ปี</div><div class="tomtom-sub-label" data-i18n="tt6s">เวลาสูญเสียช่วงเร่งด่วน (≈ 4 วัน 19 ชม.)</div></div>
+      </div>
+      <p class="tomtom-note" data-i18n-html="tomtomNote">⚠️ <strong>กรุงเทพฯ ติดอันดับ 10 ของโลกด้าน Congestion</strong> ใช้เวลาเดินทางมากกว่าช่วง freeflow <strong>67.9%</strong> — ข้อมูล TomTom มาจาก GPS Big Data ครอบคลุมถนนทุกสายรวมทางด่วน 24 ชม. 365 วัน จึงไม่สามารถเปรียบเทียบโดยตรงกับข้อมูล สจส. ที่สำรวจเฉพาะ 51 ถนนหลักด้วย Floating Car Method ในช่วงเร่งด่วนเท่านั้น</p>
+    </div>
+  </div>
+</section>
+
+<section id="compare-sjs-tomtom" class="compare-card reveal" aria-labelledby="cmpHead">
+  <h2 class="compare-title" id="cmpHead" data-i18n="cmpTitle">📊 เปรียบเทียบเชิงตัวเลข: สจส. ปี 2568 และ TomTom Traffic Index 2025</h2>
+  <div class="ctable-wrap">
+  <table class="compare-table">
+    <caption class="sr-only" data-i18n="cmpCaption">เปรียบเทียบตัวเลขระหว่าง สจส. และ TomTom Traffic Index 2025</caption>
+    <thead>
+      <tr>
+        <th scope="col" data-i18n="cmpThIndicator">ตัวชี้วัด</th>
+        <th scope="col" data-i18n-html="cmpThInner">สจส. ชั้นใน<br><small>28 ถนน</small></th>
+        <th scope="col" data-i18n-html="cmpThMiddle">สจส. ชั้นกลาง<br><small>20 ถนน</small></th>
+        <th scope="col" data-i18n-html="cmpThOuter">สจส. ชั้นนอก<br><small>7 ถนน</small></th>
+        <th scope="col" data-i18n-html="cmpThTomTom">TomTom 2025<br><small>City area</small></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row"><div class="row-label" data-i18n="rMethod">วิธีการสำรวจ</div><div class="row-sub">Method</div></th>
+        <td colspan="3"><span class="chip cb">Floating Car Method</span></td>
+        <td><span class="chip cr">GPS Big Data (Probe)</span></td>
+      </tr>
+      <tr>
+        <th scope="row"><div class="row-label" data-i18n="rSpeedIn">อัตราเร็วเฉลี่ย (กม./ชม.)</div><div class="row-sub" data-i18n="rSpeedInSub">เร่งด่วน · ขาเข้า (เฉลี่ยเช้า–เย็น)</div></th>
+        <td><span class="chip cr">15.27</span></td><td><span class="chip cb">20.90</span></td>
+        <td><span class="chip cg">25.99</span></td><td><span class="chip cr">23.3*</span></td>
+      </tr>
+      <tr>
+        <th scope="row"><div class="row-label" data-i18n="rSpeedOut">อัตราเร็วเฉลี่ย (กม./ชม.)</div><div class="row-sub" data-i18n="rSpeedOutSub">เร่งด่วน · ขาออก (เฉลี่ยเช้า–เย็น)</div></th>
+        <td><span class="chip cr">17.16</span></td><td><span class="chip cb">27.14</span></td>
+        <td><span class="chip cg">35.37</span></td><td><span class="chip cr">19.1**</span></td>
+      </tr>
+      <tr>
+        <th scope="row"><div class="row-label" data-i18n="rTtIn">เวลาเดินทาง 10 กม.</div><div class="row-sub" data-i18n="rTtInSub">เร่งด่วน · ขาเข้า</div></th>
+        <td><span class="chip cr"><span data-i18n="m393">39.3 นาที</span></span></td>
+        <td><span class="chip cb"><span data-i18n="m287">28.7 นาที</span></span></td>
+        <td><span class="chip cg"><span data-i18n="m231">23.1 นาที</span></span></td>
+        <td><span class="chip cr">25:45</span></td>
+      </tr>
+      <tr>
+        <th scope="row"><div class="row-label" data-i18n="rTtOut">เวลาเดินทาง 10 กม.</div><div class="row-sub" data-i18n="rTtOutSub">เร่งด่วน · ขาออก</div></th>
+        <td><span class="chip cr"><span data-i18n="m350">35.0 นาที</span></span></td>
+        <td><span class="chip cb"><span data-i18n="m221">22.1 นาที</span></span></td>
+        <td><span class="chip cg"><span data-i18n="m170">17.0 นาที</span></span></td>
+        <td><span class="cn">—</span>
+      </tr>
+      <tr>
+        <th scope="row"><div class="row-label" data-i18n="rCongestion">ระดับความแออัด</div><div class="row-sub">Congestion Level</div></th>
+        <td colspan="3"><span class="cn" data-i18n="rCongestionNa">ไม่ได้วัดในรูปแบบนี้</span></td>
+        <td><span class="chip cr">67.9%</span></td>
+      </tr>
+      <tr>
+        <th scope="row"><div class="row-label" data-i18n="rScope">ขอบเขตการสำรวจ</div></th>
+        <td><span class="cn" data-i18n="rScope1">28 ถนน เร่งด่วนเช้า–เย็น</span></td>
+        <td><span class="cn" data-i18n="rScope2">20 ถนน เร่งด่วนเช้า–เย็น</span></td>
+        <td><span class="cn" data-i18n="rScope3">7 ถนน เร่งด่วนเช้า–เย็น</span></td>
+        <td><span class="cn" data-i18n="rScope4">ทุกสาย + ทางด่วน 24 ชม.</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<aside class="source-note reveal" aria-labelledby="srcHead">
+  <h2 id="srcHead" class="sr-only">Source Notes</h2>
+  <p data-i18n-html="sourceNote"><strong>* หมายเหตุ:</strong> ข้อมูล <strong>สจส.</strong> สำรวจเฉพาะ 51 ถนนสายหลักด้วย <strong>Floating Car Method</strong> ในช่วงเร่งด่วนเช้า–เย็น แยกขาเข้า–ขาออก · ตัวเลขในตารางเป็นค่าเฉลี่ยเร่งด่วน (เฉลี่ยเช้า+เย็น) ตามที่ปรากฏใน Report sheet ของรายงานต้นฉบับ · เวลาเดินทาง คำนวณจาก 10÷อัตราเร็วเฉลี่ย×60 นาที<br><strong>** ข้อมูล TomTom</strong> มาจาก GPS Big Data ครอบคลุมถนนทุกสายตลอด 24 ชั่วโมง · (*) อัตราเร็ว TomTom เช้า คำนวณจากเวลาเดินทาง 10 กม. (25:45 นาที) · (**) อัตราเร็ว TomTom เย็น 19.1 กม./ชม. เป็นค่า average speed ช่วง Evening rush hour โดยตรง</p>
+</aside>
+
+<section id="zone-details-card" class="zone-district-card reveal" aria-labelledby="zdHead">
+  <div class="zone-district-header">
+    <h2 id="zdHead" data-i18n="zdHeader">🗺️ รายละเอียดพื้นที่ชั้นใน · ชั้นกลาง · ชั้นนอก</h2>
+    <span class="zd-badge" data-i18n="zdBadge">3 กลุ่ม · 50 เขต</span>
+  </div>
+  <div class="zone-district-grid">
+    <div class="zd-item inner">
+      <h3 class="zd-title inner" data-i18n-html="zdInnerTitle">พื้นที่ชั้นใน <span class="zd-count inner">15 เขต</span></h3>
+      <p class="zd-desc" data-i18n="zdInnerDesc">บริเวณรอบเกาะรัตนโกสินทร์</p>
+      <p class="zd-districts" data-i18n="zdInnerList">คลองสาน, ดินแดง, ดุสิต, ธนบุรี, บางกอกน้อย, บางกอกใหญ่, บางพลัด, บางรัก, ปทุมวัน, ป้อมปราบศัตรูพ่าย, พญาไท, พระนคร, ราชเทวี, สาทร, สัมพันธวงศ์</p>
+    </div>
+    <div class="zd-item middle">
+      <h3 class="zd-title middle" data-i18n-html="zdMidTitle">พื้นที่ชั้นกลาง <span class="zd-count middle">20 เขต</span></h3>
+      <p class="zd-desc" data-i18n="zdMidDesc">ตั้งแต่รอบเกาะรัตนโกสินทร์ถึงบริเวณถนนวงแหวน</p>
+      <p class="zd-districts" data-i18n="zdMidList">คลองเตย, คันนายาว, จตุจักร, จอมทอง, บางกะปิ, บางเขน, บางคอแหลม, บางซื่อ, บึงกุ่ม, พระโขนง, ภาษีเจริญ, ยานนาวา, ราษฎร์บูรณะ, ลาดพร้าว, วังทองหลาง, วัฒนา, สะพานสูง, สวนหลวง, หลักสี่, ห้วยขวาง</p>
+    </div>
+    <div class="zd-item outer">
+      <h3 class="zd-title outer" data-i18n-html="zdOutTitle">พื้นที่ชั้นนอก <span class="zd-count outer">15 เขต</span></h3>
+      <p class="zd-desc" data-i18n="zdOutDesc">รอบนอกถนนวงแหวน</p>
+      <p class="zd-districts" data-i18n="zdOutList">คลองสามวา, ดอนเมือง, ตลิ่งชัน, ทวีวัฒนา, ทุ่งครุ, บางขุนเทียน, บางนา, บางบอน, บางแค, ประเวศ, มีนบุรี, ลาดกระบัง, สายไหม, หนองจอก, หนองแขม</p>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="ctrlHead" class="reveal">
+  <h2 id="ctrlHead" class="sr-only" data-i18n="ctrlHead">Interactive controls</h2>
+  <div class="control-panel">
+    <div class="control-group">
+      <label class="control-label" for="zoneFilter" data-i18n="ctrlZone">กรองตามโซนพื้นที่</label>
+      <select id="zoneFilter" class="control-select">
+        <option value="all" data-i18n="optAllZones">ทุกโซนพื้นที่</option>
+        <option value="inner" data-i18n="optInner">พื้นที่ชั้นใน</option>
+        <option value="middle" data-i18n="optMiddle">พื้นที่ชั้นกลาง</option>
+        <option value="outer" data-i18n="optOuter">พื้นที่ชั้นนอก</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="trendFilter" data-i18n="ctrlTrend">กรองแนวโน้ม</label>
+      <select id="trendFilter" class="control-select">
+        <option value="all" data-i18n="optAllTrend">ทุกแนวโน้ม</option>
+        <option value="down" data-i18n="optTrendDown">เฉพาะแนวโน้มลดลง</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="tableSearch" data-i18n="ctrlSearch">ค้นหาในตาราง</label>
+      <input id="tableSearch" class="control-input" type="search" data-i18n-attr="placeholder:ctrlSearchPh" placeholder="พิมพ์คำค้นหา เช่น ชั้นกลาง, สุขุมวิท">
+    </div>
+    <button id="resetFilters" class="control-btn" type="button" data-i18n="ctrlReset">รีเซ็ตตัวกรอง</button>
+    <button id="printReport" class="control-btn primary" type="button" data-i18n="ctrlPrint">🖨️ พิมพ์รายงาน</button>
+  </div>
+  <div id="filterStatus" class="filter-status" aria-live="polite" data-i18n="filterStatus">กำลังแสดงข้อมูลทั้งหมด</div>
+</section>
+
+<section class="cards-grid" aria-label="Zone speed summary 2025">
+  <article class="data-card card-inner reveal" data-zone="inner">
+    <h3 class="card-title" data-i18n="cardTitleInner">พื้นที่ชั้นใน</h3>
+    <div class="card-year-badge" data-i18n="cardYearBadge">ข้อมูลปี 2568 · เร่งด่วน (เฉลี่ยเช้า+เย็น)</div>
+    <div class="card-direction-section">
+      <div class="card-direction-label card-dir-in" data-i18n="dirIn">▲ ขาเข้า</div>
+      <div class="card-value">
+        <span class="kpi-speed" data-zone="inner" data-direction="in">15.27</span>
+        <span class="card-unit" data-i18n="unitKmh">กม./ชม.</span>
+      </div>
+      <div class="card-stats"><span data-extreme-label="min" data-zone="inner" data-direction="in">ต่ำสุด (พญาไท)</span> <span data-extreme-speed="min" data-zone="inner" data-direction="in">9.78</span></div>
+      <div class="card-stats"><span data-extreme-label="max" data-zone="inner" data-direction="in">สูงสุด (วิภาวดีรังสิต)</span> <span data-extreme-speed="max" data-zone="inner" data-direction="in">42.10</span></div>
+    </div>
+    <hr class="card-divider">
+    <div class="card-direction-section">
+      <div class="card-direction-label card-dir-out" data-i18n="dirOut">▼ ขาออก</div>
+      <div class="card-value">
+        <span class="kpi-speed" data-zone="inner" data-direction="out">17.16</span>
+        <span class="card-unit" data-i18n="unitKmh">กม./ชม.</span>
+      </div>
+      <div class="card-stats"><span data-extreme-label="min" data-zone="inner" data-direction="out">ต่ำสุด (ราชวิถี)</span> <span data-extreme-speed="min" data-zone="inner" data-direction="out">7.62</span></div>
+      <div class="card-stats"><span data-extreme-label="max" data-zone="inner" data-direction="out">สูงสุด (วิภาวดีรังสิต)</span> <span data-extreme-speed="max" data-zone="inner" data-direction="out">59.25</span></div>
+    </div>
+  </article>
+
+  <article class="data-card card-middle reveal" data-zone="middle">
+    <h3 class="card-title" data-i18n="cardTitleMiddle">พื้นที่ชั้นกลาง</h3>
+    <div class="card-year-badge" data-i18n="cardYearBadge">ข้อมูลปี 2568 · เร่งด่วน (เฉลี่ยเช้า+เย็น)</div>
+    <div class="card-direction-section">
+      <div class="card-direction-label card-dir-in" data-i18n="dirIn">▲ ขาเข้า</div>
+      <div class="card-value">
+        <span class="kpi-speed" data-zone="middle" data-direction="in">20.90</span>
+        <span class="card-unit" data-i18n="unitKmh">กม./ชม.</span>
+      </div>
+      <div class="card-stats"><span data-extreme-label="min" data-zone="middle" data-direction="in">ต่ำสุด (เพชรเกษม)</span> <span data-extreme-speed="min" data-zone="middle" data-direction="in">5.58</span></div>
+      <div class="card-stats"><span data-extreme-label="max" data-zone="middle" data-direction="in">สูงสุด (พระรามที่ 3)</span> <span data-extreme-speed="max" data-zone="middle" data-direction="in">42.90</span></div>
+    </div>
+    <hr class="card-divider">
+    <div class="card-direction-section">
+      <div class="card-direction-label card-dir-out" data-i18n="dirOut">▼ ขาออก</div>
+      <div class="card-value">
+        <span class="kpi-speed" data-zone="middle" data-direction="out">27.14</span>
+        <span class="card-unit" data-i18n="unitKmh">กม./ชม.</span>
+      </div>
+      <div class="card-stats"><span data-extreme-label="min" data-zone="middle" data-direction="out">ต่ำสุด (เพชรเกษม)</span> <span data-extreme-speed="min" data-zone="middle" data-direction="out">7.68</span></div>
+      <div class="card-stats"><span data-extreme-label="max" data-zone="middle" data-direction="out">สูงสุด (วิภาวดีรังสิต)</span> <span data-extreme-speed="max" data-zone="middle" data-direction="out">47.31</span></div>
+    </div>
+  </article>
+
+  <article class="data-card card-outer reveal" data-zone="outer">
+    <h3 class="card-title" data-i18n="cardTitleOuter">พื้นที่ชั้นนอก</h3>
+    <div class="card-year-badge" data-i18n="cardYearBadge">ข้อมูลปี 2568 · เร่งด่วน (เฉลี่ยเช้า+เย็น)</div>
+    <div class="card-direction-section">
+      <div class="card-direction-label card-dir-in" data-i18n="dirIn">▲ ขาเข้า</div>
+      <div class="card-value">
+        <span class="kpi-speed" data-zone="outer" data-direction="in">25.99</span>
+        <span class="card-unit" data-i18n="unitKmh">กม./ชม.</span>
+      </div>
+      <div class="card-stats"><span data-extreme-label="min" data-zone="outer" data-direction="in">ต่ำสุด (พหลโยธิน ส่วนปลาย)</span> <span data-extreme-speed="min" data-zone="outer" data-direction="in">18.53</span></div>
+      <div class="card-stats"><span data-extreme-label="max" data-zone="outer" data-direction="in">สูงสุด (บรมราชชนนี)</span> <span data-extreme-speed="max" data-zone="outer" data-direction="in">39.93</span></div>
+    </div>
+    <hr class="card-divider">
+    <div class="card-direction-section">
+      <div class="card-direction-label card-dir-out" data-i18n="dirOut">▼ ขาออก</div>
+      <div class="card-value">
+        <span class="kpi-speed" data-zone="outer" data-direction="out">35.37</span>
+        <span class="card-unit" data-i18n="unitKmh">กม./ชม.</span>
+      </div>
+      <div class="card-stats"><span data-extreme-label="min" data-zone="outer" data-direction="out">ต่ำสุด (พหลโยธิน ส่วนปลาย)</span> <span data-extreme-speed="min" data-zone="outer" data-direction="out">19.17</span></div>
+      <div class="card-stats"><span data-extreme-label="max" data-zone="outer" data-direction="out">สูงสุด (บรมราชชนนี)</span> <span data-extreme-speed="max" data-zone="outer" data-direction="out">59.80</span></div>
+    </div>
+  </article>
+</section>
+
+<section id="trend-line" class="line-card reveal" aria-labelledby="trendHead">
+  <div class="line-toolbar">
+    <div>
+      <h2 class="line-title" id="trendHead" data-i18n="trendTitle">กราฟเส้นเปรียบเทียบอัตราเร็วเฉลี่ย ปี 2560–2568</h2>
+      <p class="line-sub" data-i18n="trendSub">หน่วย: กม./ชม. · ขาเข้า · เลื่อนเพื่อดูค่า · เปรียบเทียบ 3 โซน</p>
+    </div>
+    <div class="dir-toggle" role="group" aria-label="Direction toggle">
+      <button class="dir-btn active" data-dir="in" type="button" aria-pressed="true" data-i18n="dirInShort">ขาเข้า</button>
+      <button class="dir-btn" data-dir="out" type="button" aria-pressed="false" data-i18n="dirOutShort">ขาออก</button>
+    </div>
+  </div>
+  <div class="line-wrap">
+    <svg id="trend-chart" width="100%" viewBox="0 0 860 290" role="img" aria-label="Annual average speed trend 2017–2025"></svg>
+  </div>
+  <div class="line-legend">
+    <span class="legend-item"><span class="legend-dot" style="background:#00b894"></span><span data-i18n="legOuter">พื้นที่ชั้นนอก</span></span>
+    <span class="legend-item"><span class="legend-dot" style="background:#e17055"></span><span data-i18n="legMiddle">พื้นที่ชั้นกลาง</span></span>
+    <span class="legend-item"><span class="legend-dot" style="background:#d63031"></span><span data-i18n="legInner">พื้นที่ชั้นใน</span></span>
+  </div>
+</section>
+
+<section id="road-table-section" class="reveal" aria-labelledby="roadTableHead">
+  <h2 class="section-title" id="roadTableHead" data-i18n="roadTableTitle">ตารางข้อมูลอัตราเร็วรายถนน 51 สาย ปี 2568</h2>
+  <p class="rt-intro" data-i18n-html="rtIntro">คลิก <span class="rt-icon-hint">▼</span> เพื่อขยายดูรายละเอียดรายถนน · มี mini-chart 4 ทิศ และ heatmap แสดงระดับอัตราเร็ว</p>
+
+  <div class="rt-toolbar">
+    <input id="rtSearch" class="control-input" type="search" data-i18n-attr="placeholder:rtSearchPh" placeholder="🔍 ค้นหาชื่อถนน หรือช่วงถนน..." aria-label="Search roads">
+    <button id="rtExpandAll" class="control-btn" type="button" data-i18n="rtExpandAll">📂 เปิดทั้งหมด</button>
+    <button id="rtCollapseAll" class="control-btn" type="button" data-i18n="rtCollapseAll">📁 ปิดทั้งหมด</button>
+  </div>
+
+  <div class="zone-accordion" id="zoneAccordion">
+    <details class="zone-acc inner" data-zone="inner">
+      <summary class="zone-summary">
+        <div class="zone-summary-left">
+          <span class="zone-icon" aria-hidden="true">🏙️</span>
+          <div class="zone-summary-text">
+            <div class="zone-summary-title"><span data-i18n="zaInner">พื้นที่ชั้นใน</span> <span class="zone-summary-count" data-count="inner">27 ถนน</span></div>
+            <div class="zone-summary-meta"><span data-i18n="zaAvgIn">เฉลี่ยขาเข้าเช้า</span> <strong data-avg="inner-am-in">15.17</strong> <span data-i18n="unitKmh">กม./ชม.</span> · <span data-i18n="zaRange">ช่วง</span> <span data-range="inner">10–25</span></div>
+          </div>
+        </div>
+        <div class="zone-summary-right">
+          <div class="zone-stat-mini">
+            <div class="zsm-row"><span class="zsm-dot am-in"></span><span class="zsm-val" data-stat="inner-am-in">15.17</span></div>
+            <div class="zsm-row"><span class="zsm-dot am-out"></span><span class="zsm-val" data-stat="inner-am-out">18.38</span></div>
+            <div class="zsm-row"><span class="zsm-dot pm-in"></span><span class="zsm-val" data-stat="inner-pm-in">14.35</span></div>
+            <div class="zsm-row"><span class="zsm-dot pm-out"></span><span class="zsm-val" data-stat="inner-pm-out">14.70</span></div>
+          </div>
+          <span class="zone-chevron" aria-hidden="true">▼</span>
+        </div>
+      </summary>
+      <div class="zone-acc-body">
+        <div class="rt-wrap">
+          <table class="rt-table" data-zone-table="inner">
+            <thead>
+              <tr>
+                <th rowspan="2" class="sortable" data-sort="seq">#</th>
+                <th rowspan="2" class="sortable th-left" data-sort="name" data-i18n="thRoad">ชื่อถนน / ช่วง</th>
+                <th rowspan="2" class="sortable" data-sort="length_km" data-i18n-html="thLen">ระยะทาง<br><small>(กม.)</small></th>
+                <th colspan="2" class="th-group am" data-i18n="thAmRush">🌅 เร่งด่วนเช้า</th>
+                <th colspan="2" class="th-group pm" data-i18n="thPmRush">🌆 เร่งด่วนเย็น</th>
+                <th rowspan="2" data-i18n="thMini">📊 Mini-chart</th>
+              </tr>
+              <tr>
+                <th class="sortable" data-sort="speed_am_in" data-i18n="thIn">ขาเข้า</th>
+                <th class="sortable" data-sort="speed_am_out" data-i18n="thOut">ขาออก</th>
+                <th class="sortable" data-sort="speed_pm_in" data-i18n="thIn">ขาเข้า</th>
+                <th class="sortable" data-sort="speed_pm_out" data-i18n="thOut">ขาออก</th>
+              </tr>
+            </thead>
+            <tbody data-tbody="inner"></tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <details class="zone-acc middle" data-zone="middle">
+      <summary class="zone-summary">
+        <div class="zone-summary-left">
+          <span class="zone-icon" aria-hidden="true">🌆</span>
+          <div class="zone-summary-text">
+            <div class="zone-summary-title"><span data-i18n="zaMiddle">พื้นที่ชั้นกลาง</span> <span class="zone-summary-count" data-count="middle">17 ถนน</span></div>
+            <div class="zone-summary-meta"><span data-i18n="zaAvgIn">เฉลี่ยขาเข้าเช้า</span> <strong data-avg="middle-am-in">20.32</strong> <span data-i18n="unitKmh">กม./ชม.</span> · <span data-i18n="zaRange">ช่วง</span> <span data-range="middle">9–45</span></div>
+          </div>
+        </div>
+        <div class="zone-summary-right">
+          <div class="zone-stat-mini">
+            <div class="zsm-row"><span class="zsm-dot am-in"></span><span class="zsm-val" data-stat="middle-am-in">20.32</span></div>
+            <div class="zsm-row"><span class="zsm-dot am-out"></span><span class="zsm-val" data-stat="middle-am-out">28.69</span></div>
+            <div class="zsm-row"><span class="zsm-dot pm-in"></span><span class="zsm-val" data-stat="middle-pm-in">23.43</span></div>
+            <div class="zsm-row"><span class="zsm-dot pm-out"></span><span class="zsm-val" data-stat="middle-pm-out">26.39</span></div>
+          </div>
+          <span class="zone-chevron" aria-hidden="true">▼</span>
+        </div>
+      </summary>
+      <div class="zone-acc-body">
+        <div class="rt-wrap">
+          <table class="rt-table" data-zone-table="middle">
+            <thead>
+              <tr>
+                <th rowspan="2" class="sortable" data-sort="seq">#</th>
+                <th rowspan="2" class="sortable th-left" data-sort="name" data-i18n="thRoad">ชื่อถนน / ช่วง</th>
+                <th rowspan="2" class="sortable" data-sort="length_km" data-i18n-html="thLen">ระยะทาง<br><small>(กม.)</small></th>
+                <th colspan="2" class="th-group am" data-i18n="thAmRush">🌅 เร่งด่วนเช้า</th>
+                <th colspan="2" class="th-group pm" data-i18n="thPmRush">🌆 เร่งด่วนเย็น</th>
+                <th rowspan="2" data-i18n="thMini">📊 Mini-chart</th>
+              </tr>
+              <tr>
+                <th class="sortable" data-sort="speed_am_in" data-i18n="thIn">ขาเข้า</th>
+                <th class="sortable" data-sort="speed_am_out" data-i18n="thOut">ขาออก</th>
+                <th class="sortable" data-sort="speed_pm_in" data-i18n="thIn">ขาเข้า</th>
+                <th class="sortable" data-sort="speed_pm_out" data-i18n="thOut">ขาออก</th>
+              </tr>
+            </thead>
+            <tbody data-tbody="middle"></tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <details class="zone-acc outer" data-zone="outer">
+      <summary class="zone-summary">
+        <div class="zone-summary-left">
+          <span class="zone-icon" aria-hidden="true">🌳</span>
+          <div class="zone-summary-text">
+            <div class="zone-summary-title"><span data-i18n="zaOuter">พื้นที่ชั้นนอก</span> <span class="zone-summary-count" data-count="outer">7 ถนน</span></div>
+            <div class="zone-summary-meta"><span data-i18n="zaAvgIn">เฉลี่ยขาเข้าเช้า</span> <strong data-avg="outer-am-in">24.23</strong> <span data-i18n="unitKmh">กม./ชม.</span> · <span data-i18n="zaRange">ช่วง</span> <span data-range="outer">15–40</span></div>
+          </div>
+        </div>
+        <div class="zone-summary-right">
+          <div class="zone-stat-mini">
+            <div class="zsm-row"><span class="zsm-dot am-in"></span><span class="zsm-val" data-stat="outer-am-in">24.23</span></div>
+            <div class="zsm-row"><span class="zsm-dot am-out"></span><span class="zsm-val" data-stat="outer-am-out">38.17</span></div>
+            <div class="zsm-row"><span class="zsm-dot pm-in"></span><span class="zsm-val" data-stat="outer-pm-in">28.21</span></div>
+            <div class="zsm-row"><span class="zsm-dot pm-out"></span><span class="zsm-val" data-stat="outer-pm-out">32.89</span></div>
+          </div>
+          <span class="zone-chevron" aria-hidden="true">▼</span>
+        </div>
+      </summary>
+      <div class="zone-acc-body">
+        <div class="rt-wrap">
+          <table class="rt-table" data-zone-table="outer">
+            <thead>
+              <tr>
+                <th rowspan="2" class="sortable" data-sort="seq">#</th>
+                <th rowspan="2" class="sortable th-left" data-sort="name" data-i18n="thRoad">ชื่อถนน / ช่วง</th>
+                <th rowspan="2" class="sortable" data-sort="length_km" data-i18n-html="thLen">ระยะทาง<br><small>(กม.)</small></th>
+                <th colspan="2" class="th-group am" data-i18n="thAmRush">🌅 เร่งด่วนเช้า</th>
+                <th colspan="2" class="th-group pm" data-i18n="thPmRush">🌆 เร่งด่วนเย็น</th>
+                <th rowspan="2" data-i18n="thMini">📊 Mini-chart</th>
+              </tr>
+              <tr>
+                <th class="sortable" data-sort="speed_am_in" data-i18n="thIn">ขาเข้า</th>
+                <th class="sortable" data-sort="speed_am_out" data-i18n="thOut">ขาออก</th>
+                <th class="sortable" data-sort="speed_pm_in" data-i18n="thIn">ขาเข้า</th>
+                <th class="sortable" data-sort="speed_pm_out" data-i18n="thOut">ขาออก</th>
+              </tr>
+            </thead>
+            <tbody data-tbody="outer"></tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+  </div>
+
+  <div class="rt-legend-bottom">
+    <span class="lg-section" data-i18n="legSpeedLevel">ระดับอัตราเร็ว:</span>
+    <span class="lg-item"><em class="lg lg-fast"></em> <span data-i18n="legFast">🟢 ≥ 30 กม./ชม.</span></span>
+    <span class="lg-item"><em class="lg lg-mid"></em> <span data-i18n="legMid">🔵 20–30</span></span>
+    <span class="lg-item"><em class="lg lg-slow"></em> <span data-i18n="legSlow">🟡 10–20</span></span>
+    <span class="lg-item"><em class="lg lg-jam"></em> <span data-i18n="legJam">🔴 &lt; 10</span></span>
+    <span class="lg-section" data-i18n="legMiniLabel">Mini-chart:</span>
+    <span class="lg-item"><span class="zsm-dot am-in"></span><span data-i18n="legAmIn">เช้าเข้า</span></span>
+    <span class="lg-item"><span class="zsm-dot am-out"></span><span data-i18n="legAmOut">เช้าออก</span></span>
+    <span class="lg-item"><span class="zsm-dot pm-in"></span><span data-i18n="legPmIn">เย็นเข้า</span></span>
+    <span class="lg-item"><span class="zsm-dot pm-out"></span><span data-i18n="legPmOut">เย็นออก</span></span>
+  </div>
+</section>
+
+<section id="scenario-bau" class="scenario-card reveal" aria-labelledby="bauHead">
+  <h2 class="scenario-title" id="bauHead" data-i18n="bauTitle">📉 วิเคราะห์แนวโน้มกรณีไม่มีมาตรการ (Business as Usual)</h2>
+  <p class="scenario-sub" data-i18n="bauSub">คาดการณ์ปีถัดไปจากแนวโน้ม 3 ปีล่าสุดของอัตราเร็วเฉลี่ยช่วงเร่งด่วน · ขาเข้า</p>
+  <div id="scenarioGrid" class="scenario-grid">
+    <div class="scenario-item" data-zone="inner">
+      <h3 class="scenario-zone" data-i18n="bauInner">พื้นที่ชั้นใน</h3>
+      <p class="scenario-kpi"><span data-i18n="bauProj">ปี 2569 คาดการณ์</span>: <strong data-bau="speed">-</strong> <span data-i18n="unitKmh">กม./ชม.</span></p>
+      <p class="scenario-kpi"><span data-i18n="bauTime">เวลาเดินทาง 10 กม.</span>: <strong data-bau="time">-</strong> <span data-i18n="unitMin">นาที</span></p>
+      <p class="scenario-kpi"><span data-i18n="bauDelta">การเปลี่ยนแปลงต่อปี</span>: <strong data-bau="delta">-</strong> <span data-i18n="unitKmh">กม./ชม.</span></p>
+    </div>
+    <div class="scenario-item" data-zone="middle">
+      <h3 class="scenario-zone" data-i18n="bauMiddle">พื้นที่ชั้นกลาง</h3>
+      <p class="scenario-kpi"><span data-i18n="bauProj">ปี 2569 คาดการณ์</span>: <strong data-bau="speed">-</strong> <span data-i18n="unitKmh">กม./ชม.</span></p>
+      <p class="scenario-kpi"><span data-i18n="bauTime">เวลาเดินทาง 10 กม.</span>: <strong data-bau="time">-</strong> <span data-i18n="unitMin">นาที</span></p>
+      <p class="scenario-kpi"><span data-i18n="bauDelta">การเปลี่ยนแปลงต่อปี</span>: <strong data-bau="delta">-</strong> <span data-i18n="unitKmh">กม./ชม.</span></p>
+    </div>
+    <div class="scenario-item" data-zone="outer">
+      <h3 class="scenario-zone" data-i18n="bauOuter">พื้นที่ชั้นนอก</h3>
+      <p class="scenario-kpi"><span data-i18n="bauProj">ปี 2569 คาดการณ์</span>: <strong data-bau="speed">-</strong> <span data-i18n="unitKmh">กม./ชม.</span></p>
+      <p class="scenario-kpi"><span data-i18n="bauTime">เวลาเดินทาง 10 กม.</span>: <strong data-bau="time">-</strong> <span data-i18n="unitMin">นาที</span></p>
+      <p class="scenario-kpi"><span data-i18n="bauDelta">การเปลี่ยนแปลงต่อปี</span>: <strong data-bau="delta">-</strong> <span data-i18n="unitKmh">กม./ชม.</span></p>
+    </div>
+  </div>
+  <p id="scenarioNote" class="scenario-note" data-i18n="bauNote">หมายเหตุ: เป็นการคาดการณ์เชิงแนวโน้ม (trend projection) เพื่อใช้เตือนความเสี่ยง ไม่ใช่แบบจำลองจราจรเชิงโครงข่ายเต็มรูปแบบ</p>
+</section>
+
+<section class="reveal" aria-labelledby="cmpYearsHead">
+  <h2 class="section-title" id="cmpYearsHead" data-i18n="cmpYearsTitle">ตารางเปรียบเทียบอัตราเร็วเฉลี่ย ปี 2560 และ 2568 (ขาเข้า)</h2>
+  <table class="modern-table">
+    <thead>
+      <tr>
+        <th data-i18n="thZoneGroup">กลุ่มพื้นที่</th>
+        <th data-i18n="th2560">ปี 2560 (กม./ชม.)</th>
+        <th data-i18n="th2568">ปี 2568 (กม./ชม.)</th>
+        <th data-i18n="thDelta">ผลต่าง (กม./ชม.)</th>
+        <th data-i18n="thPct">ร้อยละการเปลี่ยนแปลง</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr data-zone="inner" data-trend="down">
+        <td style="font-weight:600" data-i18n="zaInnerShort">ชั้นใน</td>
+        <td data-field="speed_2560_in">15.33</td>
+        <td data-field="speed_2568_in">15.27</td>
+        <td class="text-trend-down" data-field="delta_in">▼ -0.06</td>
+        <td class="text-trend-down" data-field="pct_in">-0.39%</td>
+      </tr>
+      <tr data-zone="middle" data-trend="down">
+        <td style="font-weight:600" data-i18n="zaMidShort">ชั้นกลาง</td>
+        <td data-field="speed_2560_in">21.31</td>
+        <td data-field="speed_2568_in">20.90</td>
+        <td class="text-trend-down" data-field="delta_in">▼ -0.41</td>
+        <td class="text-trend-down" data-field="pct_in">-1.92%</td>
+      </tr>
+      <tr data-zone="outer" data-trend="down">
+        <td style="font-weight:600" data-i18n="zaOutShort">ชั้นนอก</td>
+        <td data-field="speed_2560_in">29.23</td>
+        <td data-field="speed_2568_in">25.99</td>
+        <td class="text-trend-down" data-field="delta_in">▼ -3.24</td>
+        <td class="text-trend-down" data-field="pct_in">-11.08%</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="bottom-grid reveal" aria-label="Findings and recommendations">
+  <div>
+    <h2 class="section-title" data-i18n="findingsTitle">ข้อค้นพบเชิงสถิติที่สำคัญ</h2>
+    <ul class="insight-list">
+      <li data-i18n-html="finding1"><strong>พื้นที่ชั้นใน:</strong> เผชิญภาวะจราจรหนาแน่นต่อเนื่อง — ขาเข้าเช้า 15.27 กม./ชม. ใช้เวลา 39.3 นาที/10 กม.</li>
+      <li data-i18n-html="finding2"><strong>พื้นที่ชั้นกลาง:</strong> ลดลง 1.92% จากปี 2560 — ถนนเพชรเกษมช่วงราชพฤกษ์–วงเวียนใหญ่ ลดลงรุนแรง</li>
+      <li data-i18n-html="finding3"><strong>พื้นที่ชั้นนอก:</strong> ลดลงมากที่สุด <strong>11.08%</strong> สะท้อนการขยายตัวของชุมชนรอบนอก</li>
+      <li data-i18n-html="finding4"><strong>ปี 2564 (โควิด-19):</strong> อัตราเร็วสูงสุดในรอบ 9 ปีทุกโซน เพราะปริมาณรถลด</li>
+      <li data-i18n-html="finding5"><strong>ขาออกเร็วกว่าขาเข้าทุกโซน:</strong> เช้า +5.8 กม./ชม. · เย็น +2.6 กม./ชม.</li>
+    </ul>
+  </div>
+  <div>
+    <h2 class="section-title" data-i18n="policyTitle">ข้อเสนอแนะเชิงนโยบาย</h2>
+    <ul class="policy-list">
+      <li data-i18n="policy1">เร่งรัดการพัฒนาโครงข่ายระบบขนส่งสาธารณะสายรอง (Feeder)</li>
+      <li data-i18n="policy2">บูรณาการจุดเชื่อมต่อระบบขนส่งสาธารณะ (Multi-modal)</li>
+      <li data-i18n="policy3">ประยุกต์ใช้ระบบเทคโนโลยี Smart Traffic, AI, ATC</li>
+      <li data-i18n-html="policy4">ส่งเสริมการพัฒนาพื้นที่จุดจอดแล้วจร (Park &amp; Ride)</li>
+      <li data-i18n="policy5">มาตรการเฉพาะพื้นที่ชั้นนอก: เพิ่มความถี่ขนส่งสาธารณะรอบเมือง</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div>
+    <strong data-i18n="footerOrgL1">สำนักการจราจรและขนส่ง กรุงเทพมหานคร</strong><br>
+    <span data-i18n="footerOrgL2">กลุ่มงานสถิติและวิจัย กองนโยบายและแผนงาน</span><br>
+    <span data-i18n-html="footerMethod">วิธีการสำรวจ: <strong>Floating Car Method</strong></span>
+  </div>
+  <div class="footer-right">
+    <span data-i18n="footerAsOf">ข้อมูล ณ วันที่ 31 ธันวาคม 2568</span><br>
+    <span data-i18n-html="footerAuthor">วิเคราะห์และจัดทำโดย <strong>© Prapawadee_W.</strong></span><br>
+    <a href="https://www.tomtom.com/traffic-index/bangkok-traffic/" target="_blank" rel="noopener noreferrer" data-i18n="footerTomTom">TomTom Traffic Index 2025 ↗</a>
+  </div>
+</footer>
+
+</div>
+
+<button id="to-top" class="to-top" aria-label="Back to top" type="button">↑</button>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
