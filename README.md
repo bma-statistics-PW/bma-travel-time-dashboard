@@ -92,13 +92,40 @@ Google Fonts: Sarabun (Thai + Latin)
 
 ---
 
+## 🔄 Data Pipeline (XLSX -> JSON)
+
+The dashboard supports loading real data from `data/dashboard-data.json`.
+
+1. Put the source workbook in a local path (example: `source.xlsx`)
+2. Run converter script:
+
+```bash
+python scripts/xlsx_to_json.py --input C:\path\to\source.xlsx --output data/dashboard-data.json
+```
+
+3. Commit and push `data/dashboard-data.json`
+4. GitHub Pages will render the updated values automatically
+
+Current JSON fields used by the dashboard:
+
+- `zones.inner|middle|outer.speed_2560_in`
+- `zones.inner|middle|outer.speed_2568_in`
+- `zones.inner|middle|outer.delta_in`
+- `zones.inner|middle|outer.pct_in`
+- `trend_inbound[]` (for line-chart tooltip values)
+
+---
+
 ## 📁 Repository Structure
 
 ```
-BMA-Travel-Speed-Analysis/
-├── index.html              ← Thai version (GitHub Pages entry point)
-├── index-en.html           ← English version (international audience)
-└── README.md               ← This file
+BMA-travel-time-dashboard-TH/
+├── index.html                  ← GitHub Pages entry point
+├── data/
+│   └── dashboard-data.json     ← Generated data payload for dashboard
+├── scripts/
+│   └── xlsx_to_json.py         ← XLSX to JSON converter
+└── README.md
 ```
 
 ---

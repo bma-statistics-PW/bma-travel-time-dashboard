@@ -933,21 +933,21 @@
   <section class="cards-grid">
     <div class="data-card card-inner" data-zone="inner">
       <div class="card-title">พื้นที่ชั้นใน</div>
-      <div class="card-value">15.27 <span class="card-unit">กม./ชม.</span></div>
+      <div class="card-value"><span class="kpi-speed" data-zone="inner">15.27</span> <span class="card-unit">กม./ชม.</span></div>
       <div class="card-stats"><span>ต่ำสุด (สีลม)</span> <span>8.18</span></div>
       <div class="card-stats"><span>สูงสุด (วิภาวดีฯ)</span> <span>50.83</span></div>
     </div>
 
     <div class="data-card card-middle" data-zone="middle">
       <div class="card-title">พื้นที่ชั้นกลาง</div>
-      <div class="card-value">20.90 <span class="card-unit">กม./ชม.</span></div>
+      <div class="card-value"><span class="kpi-speed" data-zone="middle">20.90</span> <span class="card-unit">กม./ชม.</span></div>
       <div class="card-stats"><span>ต่ำสุด</span> <span>7.11</span></div>
       <div class="card-stats"><span>สูงสุด</span> <span>42.14</span></div>
     </div>
 
     <div class="data-card card-outer" data-zone="outer">
       <div class="card-title">พื้นที่ชั้นนอก</div>
-      <div class="card-value">28.81 <span class="card-unit">กม./ชม.</span></div>
+      <div class="card-value"><span class="kpi-speed" data-zone="outer">25.99</span> <span class="card-unit">กม./ชม.</span></div>
       <div class="card-stats"><span>ต่ำสุด</span> <span>15.66</span></div>
       <div class="card-stats"><span>สูงสุด</span> <span>42.96</span></div>
     </div>
@@ -1043,24 +1043,24 @@
       <tbody>
         <tr data-zone="inner" data-trend="down">
           <td style="font-weight: 600;">ชั้นใน</td>
-          <td>15.33</td>
-          <td>15.27</td>
-          <td class="text-trend-down">▼ -0.06</td>
-          <td class="text-trend-down">-0.39%</td>
+          <td data-field="speed_2560_in">15.33</td>
+          <td data-field="speed_2568_in">15.27</td>
+          <td class="text-trend-down" data-field="delta_in">▼ -0.06</td>
+          <td class="text-trend-down" data-field="pct_in">-0.39%</td>
         </tr>
         <tr data-zone="middle" data-trend="down">
           <td style="font-weight: 600;">ชั้นกลาง</td>
-          <td>21.31</td>
-          <td>20.90</td>
-          <td class="text-trend-down">▼ -0.41</td>
-          <td class="text-trend-down">-1.92%</td>
+          <td data-field="speed_2560_in">21.31</td>
+          <td data-field="speed_2568_in">20.90</td>
+          <td class="text-trend-down" data-field="delta_in">▼ -0.41</td>
+          <td class="text-trend-down" data-field="pct_in">-1.92%</td>
         </tr>
         <tr data-zone="outer" data-trend="down">
           <td style="font-weight: 600;">ชั้นนอก</td>
-          <td>29.23</td>
-          <td>25.99</td>
-          <td class="text-trend-down">▼ -3.24</td>
-          <td class="text-trend-down">-11.08%</td>
+          <td data-field="speed_2560_in">29.23</td>
+          <td data-field="speed_2568_in">25.99</td>
+          <td class="text-trend-down" data-field="delta_in">▼ -3.24</td>
+          <td class="text-trend-down" data-field="pct_in">-11.08%</td>
         </tr>
       </tbody>
     </table>
@@ -1148,6 +1148,66 @@
       window.print();
     });
 
+    function formatNum(value) {
+      return Number(value).toFixed(2).replace(/\.00$/, '');
+    }
+
+    function bindZoneDataFromJson(data) {
+      if (!data || !data.zones) return;
+
+      Object.keys(data.zones).forEach(function (zoneKey) {
+        var zone = data.zones[zoneKey];
+
+        var cardVal = document.querySelector('.kpi-speed[data-zone="' + zoneKey + '"]');
+        if (cardVal) cardVal.textContent = formatNum(zone.speed_2568_in);
+
+        var row = document.querySelector('.modern-table tbody tr[data-zone="' + zoneKey + '"]');
+        if (!row) return;
+
+        var c2560 = row.querySelector('[data-field="speed_2560_in"]');
+        var c2568 = row.querySelector('[data-field="speed_2568_in"]');
+        var cdelta = row.querySelector('[data-field="delta_in"]');
+        var cpct = row.querySelector('[data-field="pct_in"]');
+
+        if (c2560) c2560.textContent = formatNum(zone.speed_2560_in);
+        if (c2568) c2568.textContent = formatNum(zone.speed_2568_in);
+        if (cdelta) cdelta.textContent = (zone.delta_in < 0 ? '▼ ' : '▲ ') + formatNum(zone.delta_in);
+        if (cpct) cpct.textContent = formatNum(zone.pct_in) + '%';
+
+        row.setAttribute('data-trend', zone.delta_in < 0 ? 'down' : 'up');
+      });
+    }
+
+    function buildLineDataFromJson(data) {
+      if (!data || !Array.isArray(data.trend_inbound)) return;
+      var x = [100, 188, 276, 364, 452, 540, 628, 716, 804];
+      lineData = data.trend_inbound.map(function (d, i) {
+        return {
+          year: String(d.year),
+          x: x[i] || x[x.length - 1],
+          inner: Number(d.inner),
+          mid: Number(d.middle),
+          outer: Number(d.outer)
+        };
+      });
+    }
+
+    function loadDashboardData() {
+      return fetch('data/dashboard-data.json', { cache: 'no-store' })
+        .then(function (res) {
+          if (!res.ok) throw new Error('failed to load data');
+          return res.json();
+        })
+        .then(function (json) {
+          bindZoneDataFromJson(json);
+          buildLineDataFromJson(json);
+          applyFilters();
+        })
+        .catch(function () {
+          applyFilters();
+        });
+    }
+
     var lineData = [
       { year: '2560', x: 100, outer: 29.23, mid: 21.31, inner: 15.33 },
       { year: '2561', x: 188, outer: 27.11, mid: 21.23, inner: 16.05 },
@@ -1215,7 +1275,7 @@
       hit.addEventListener('touchend', hideLineTip);
     });
 
-    applyFilters();
+    loadDashboardData();
   })();
 </script>
 
