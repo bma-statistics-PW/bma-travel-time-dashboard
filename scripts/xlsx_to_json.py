@@ -18,6 +18,7 @@ ZONE_SHEETS = {
 }
 
 LATEST_INBOUND_COL = 19
+LATEST_OUTBOUND_COL = 20
 
 
 def to_float(value):
@@ -32,19 +33,29 @@ def to_float(value):
 
 def build_zone_extremes(xlsx_path: Path, sheet_name: str):
     sheet = pd.read_excel(xlsx_path, sheet_name=sheet_name, header=None)
-    rows = sheet.iloc[3:, [1, LATEST_INBOUND_COL]].copy()
-    rows.columns = ["road", "speed_2568_in"]
+    rows = sheet.iloc[3:, [1, LATEST_INBOUND_COL, LATEST_OUTBOUND_COL]].copy()
+    rows.columns = ["road", "speed_2568_in", "speed_2568_out"]
     rows["speed_2568_in"] = pd.to_numeric(rows["speed_2568_in"], errors="coerce")
-    rows = rows.dropna(subset=["road", "speed_2568_in"])
+    rows["speed_2568_out"] = pd.to_numeric(rows["speed_2568_out"], errors="coerce")
+    rows = rows.dropna(subset=["road"])
 
-    slowest = rows.loc[rows["speed_2568_in"].idxmin()]
-    fastest = rows.loc[rows["speed_2568_in"].idxmax()]
+    inbound = rows.dropna(subset=["speed_2568_in"])
+    outbound = rows.dropna(subset=["speed_2568_out"])
+
+    slowest_in = inbound.loc[inbound["speed_2568_in"].idxmin()]
+    fastest_in = inbound.loc[inbound["speed_2568_in"].idxmax()]
+    slowest_out = outbound.loc[outbound["speed_2568_out"].idxmin()]
+    fastest_out = outbound.loc[outbound["speed_2568_out"].idxmax()]
 
     return {
-        "min_road_2568_in": str(slowest["road"]).strip(),
-        "min_speed_2568_in": round(float(slowest["speed_2568_in"]), 2),
-        "max_road_2568_in": str(fastest["road"]).strip(),
-        "max_speed_2568_in": round(float(fastest["speed_2568_in"]), 2),
+        "min_road_2568_in": str(slowest_in["road"]).strip(),
+        "min_speed_2568_in": round(float(slowest_in["speed_2568_in"]), 2),
+        "max_road_2568_in": str(fastest_in["road"]).strip(),
+        "max_speed_2568_in": round(float(fastest_in["speed_2568_in"]), 2),
+        "min_road_2568_out": str(slowest_out["road"]).strip(),
+        "min_speed_2568_out": round(float(slowest_out["speed_2568_out"]), 2),
+        "max_road_2568_out": str(fastest_out["road"]).strip(),
+        "max_speed_2568_out": round(float(fastest_out["speed_2568_out"]), 2),
     }
 
 
