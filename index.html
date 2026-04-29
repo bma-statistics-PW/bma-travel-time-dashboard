@@ -1,4 +1,1033 @@
-<section>
-    <h2>Source Note</h2>
-    <p>In our analysis, we focus on the methods employed by สจส. for their survey. This includes the use of the Floating Car Method (FCM), where vehicles are equipped with GPS devices that continuously record their location and speed along predetermined routes. This approach differs significantly from TomTom's GPS-based aggregated data collection method, allowing for a more detailed and accurate representation of travel behavior.</p>
-</section>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>รายงานวิเคราะห์ข้อมูลความเร็วการเดินทาง - BMA</title>
+
+<style>
+  /* 1. STANDARD VARIABLES: กำหนดพาเลตต์สีและฟอนต์ให้แก้ไขง่าย */
+  :root {
+    --primary-color: #0A2E5C; /* สีกรมท่า (ความเป็นทางการ/ความน่าเชื่อถือ) */
+    --secondary-color: #1F4E79; /* สีน้ำเงินอ่อนลงมาสำหรับส่วนรอง */
+    --accent-color: #D4AF37; /* สีทอง (ดึงดูดสายตาสำหรับจุดสำคัญ) */
+    --bg-light: #F4F7F9; /* สีพื้นหลังเอกสาร */
+    --text-dark: #2C3E50; /* สีข้อความหลัก (ไม่ใช้ดำสนิทเพื่อให้อ่านสบายตา) */
+    --text-muted: #647687; /* สีข้อความรอง */
+
+    /* สีสำหรับ Data Status */
+    --status-red: #C0392B;
+    --status-orange: #D35400;
+    --status-green: #27AE60;
+
+    --font-family: 'Sarabun', sans-serif;
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap');
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: var(--font-family);
+    background-color: #E2E8F0;
+    color: var(--text-dark);
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  /* 2. A4 CANVAS: โครงสร้างกระดาษมาตรฐาน */
+  .a4-canvas {
+    width: 210mm;
+    min-height: 297mm;
+    background: #FFFFFF;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    border-top: 10px solid var(--primary-color);
+    padding: 40px 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  /* 3. HEADER: ส่วนหัวที่ดูเป็นทางการ */
+  .header {
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+  }
+  .header-titles h1 {
+    font-size: 24px;
+    color: var(--primary-color);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .header-titles h2 {
+    font-size: 16px;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-top: 4px;
+  }
+  .header-badge {
+    background: var(--primary-color);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* 4. INTRO SECTION: นำเข้าสู่เนื้อหา */
+  .intro-box {
+    background: var(--bg-light);
+    border-left: 4px solid var(--accent-color);
+    padding: 16px 20px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-dark);
+  }
+
+  .control-panel {
+    background: #f8fafc;
+    border: 1px solid #dbe6f1;
+    border-radius: 10px;
+    padding: 14px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1.4fr auto auto;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .control-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .control-input,
+  .control-select,
+  .control-btn {
+    height: 38px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-family: var(--font-family);
+    font-size: 14px;
+    padding: 0 10px;
+    background: #fff;
+    color: var(--text-dark);
+  }
+
+  .control-btn {
+    cursor: pointer;
+    background: #fff;
+    font-weight: 600;
+  }
+
+  .control-btn.primary {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+  }
+
+  .filter-status {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  .is-hidden {
+    display: none !important;
+  }
+
+  .tomtom-section {
+    background: linear-gradient(135deg, #fff7f7 0%, #ffffff 100%);
+    border: 1px solid #ffd7d7;
+    border-left: 5px solid #df1b12;
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  .tomtom-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .tomtom-title {
+    color: #b91c1c;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .tomtom-rank {
+    background: #df1b12;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .tomtom-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .tomtom-stat {
+    border: 1px solid #ffd7d7;
+    border-radius: 8px;
+    padding: 10px;
+    background: #fff;
+  }
+
+  .tomtom-value {
+    color: #b91c1c;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .tomtom-label {
+    color: #647687;
+    font-size: 12px;
+  }
+
+  .tomtom-note {
+    margin-top: 10px;
+    color: #7f1d1d;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .compare-card {
+    background: #ffffff;
+    border: 1px solid #dbe6f1;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  }
+
+  .compare-title {
+    padding: 12px 14px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #0a2e5c;
+    background: #f1f5f9;
+    border-bottom: 1px solid #dbe6f1;
+  }
+
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .compare-table th,
+  .compare-table td {
+    border-right: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .compare-table th:last-child,
+  .compare-table td:last-child {
+    border-right: none;
+  }
+
+  .compare-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .compare-table th {
+    background: #f8fafc;
+    color: #475569;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .compare-table td:first-child,
+  .compare-table th:first-child {
+    text-align: left;
+  }
+
+  .chip {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .cr {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+  }
+
+  .cb {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+  }
+
+  .cg {
+    background: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+  }
+
+  .cn {
+    color: #94a3b8;
+    font-size: 12px;
+  }
+
+  .row-label {
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  .row-sub {
+    font-size: 11px;
+    color: #64748b;
+  }
+
+  .source-note {
+    background: #f8fafc;
+    border: 1px solid #dbe6f1;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 12px;
+    color: #475569;
+    line-height: 1.7;
+  }
+
+  .line-card {
+    background: #ffffff;
+    border: 1px solid #dbe6f1;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    padding: 14px;
+  }
+
+  .line-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0a2e5c;
+    margin-bottom: 4px;
+  }
+
+  .line-sub {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 10px;
+  }
+
+  .line-wrap {
+    overflow-x: auto;
+  }
+
+  .line-legend {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: #475569;
+    margin-top: 8px;
+  }
+
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* 5. DATA CARDS: ใช้ CSS Grid แบ่งสัดส่วน 3 คอลัมน์ */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .data-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  }
+  .card-inner::before,
+  .card-middle::before,
+  .card-outer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    border-radius: 8px 8px 0 0;
+  }
+  .card-inner::before { background-color: var(--status-red); }
+  .card-middle::before { background-color: var(--status-orange); }
+  .card-outer::before { background-color: var(--status-green); }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .card-value {
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  .card-unit {
+    font-size: 16px;
+    font-weight: 400;
+    color: #647687;
+  }
+  .card-inner .card-value { color: var(--status-red); }
+  .card-middle .card-value { color: var(--status-orange); }
+  .card-outer .card-value { color: var(--status-green); }
+
+  .card-stats {
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px dashed #CBD5E1;
+    padding-top: 8px;
+    margin-top: 8px;
+    color: var(--text-muted);
+    gap: 8px;
+  }
+
+  /* 6. DATA TABLE: ตารางสไตล์ Minimalist สะอาดตา */
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: '■';
+    color: var(--accent-color);
+    font-size: 14px;
+  }
+
+  .modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+  .modern-table th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 500;
+    padding: 12px;
+    text-align: center;
+  }
+  .modern-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #E2E8F0;
+  }
+  .modern-table tr:last-child td {
+    border-bottom: 2px solid var(--primary-color);
+  }
+  .modern-table tr:nth-child(even) {
+    background-color: var(--bg-light);
+  }
+  .text-trend-down {
+    color: var(--status-red);
+    font-weight: 600;
+  }
+
+  /* 7. BOTTOM GRID: แบ่งข้อค้นพบและนโยบายเป็น 2 ฝั่ง */
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+  }
+
+  .insight-list, .policy-list {
+    list-style: none;
+  }
+  .insight-list li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .insight-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--status-orange);
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  .policy-list li {
+    background: var(--bg-light);
+    border: 1px solid #E2E8F0;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .policy-list li::before {
+    content: '✓';
+    color: var(--status-green);
+    font-weight: bold;
+  }
+
+  /* 8. FOOTER */
+  .footer {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid #E2E8F0;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 1024px) {
+    body {
+      padding: 1rem;
+    }
+
+    .a4-canvas {
+      width: 100%;
+      min-height: auto;
+      padding: 32px 24px;
+    }
+
+    .cards-grid,
+    .bottom-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .control-panel {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .header,
+    .footer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .control-panel {
+      grid-template-columns: 1fr;
+    }
+
+    .tomtom-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .header-titles h1 {
+      font-size: 20px;
+    }
+
+    .header-titles h2,
+    .modern-table,
+    .intro-box,
+    .insight-list li,
+    .policy-list li {
+      font-size: 14px;
+    }
+
+    .modern-table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="a4-canvas">
+
+  <header class="header">
+    <div class="header-titles">
+      <h1>รายงานการวิเคราะห์ข้อมูลเวลาในการเดินทาง<br>และอัตราเร็วเฉลี่ย</h1>
+      <h2>Analysis of Travel Time and Average Travel Speed (2017–2025)</h2>
+    </div>
+    <div class="header-badge">Executive Summary</div>
+  </header>
+
+  <section class="intro-box">
+    <strong>สำนักงานการจราจรและขนส่ง</strong> ได้ดำเนินการสำรวจข้อมูลเวลาในการเดินทาง เพื่อวิเคราะห์แนวโน้มอัตราเร็วเฉลี่ยบนโครงข่ายถนนในช่วงเวลาเร่งด่วน โดยจำแนกตามลักษณะทางกายภาพของพื้นที่ออกเป็น 3 โซน ได้แก่ พื้นที่ชั้นใน ชั้นกลาง และชั้นนอก เพื่อประกอบการกำหนดทิศทางนโยบายการจราจร
+  </section>
+
+  <section class="tomtom-section" aria-label="TomTom Traffic Index 2025">
+    <div class="tomtom-head">
+      <div class="tomtom-title">TomTom Traffic Index 2025: กรุงเทพมหานคร</div>
+      <div class="tomtom-rank">อันดับโลกด้าน Congestion: 10th</div>
+    </div>
+    <div class="tomtom-grid">
+      <div class="tomtom-stat">
+        <div class="tomtom-value">67.9%</div>
+        <div class="tomtom-label">Congestion Level (+1.3 pp จากปี 2024)</div>
+      </div>
+      <div class="tomtom-stat">
+        <div class="tomtom-value">22:59</div>
+        <div class="tomtom-label">นาที/10 กม. (ค่าเฉลี่ยทั้งวัน)</div>
+      </div>
+      <div class="tomtom-stat">
+        <div class="tomtom-value">115 ชม./ปี</div>
+        <div class="tomtom-label">เวลาที่เสียในช่วงเร่งด่วน</div>
+      </div>
+    </div>
+    <div class="tomtom-note">
+      ข้อมูล TomTom แสดงภาพรวมระดับเมืองจาก GPS Big Data ตลอด 24 ชั่วโมง และยังคงแสดงแยกจากผลสำรวจภาคสนามของ สจส. เพื่อใช้ประกอบการวิเคราะห์ร่วมกัน
+    </div>
+  </section>
+
+  <section class="compare-card" aria-label="เปรียบเทียบข้อมูล สจส. และ TomTom">
+    <div class="compare-title">เปรียบเทียบเชิงตัวเลข: สจส. ปี 2568 และ TomTom Traffic Index 2025</div>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>ตัวชี้วัด</th>
+          <th>สจส. ชั้นใน<br><small style="font-weight:400">28 ถนน</small></th>
+          <th>สจส. ชั้นกลาง<br><small style="font-weight:400">20 ถนน</small></th>
+          <th>สจส. ชั้นนอก<br><small style="font-weight:400">7 ถนน</small></th>
+          <th>TomTom 2025<br><small style="font-weight:400">City area</small></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="row-label">วิธีการสำรวจ</div>
+            <div class="row-sub">Method</div>
+          </td>
+          <td colspan="3"><span class="chip cb">Floating Car Method</span></td>
+          <td><span class="chip cr">GPS Big Data (Probe)</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="row-label">ความเร็วเฉลี่ย (กม./ชม.)</div>
+            <div class="row-sub">เร่งด่วนเช้า</div>
+          </td>
+          <td><span class="chip cr">15.27</span></td>
+          <td><span class="chip cb">20.90</span></td>
+          <td><span class="chip cg">25.99</span></td>
+          <td><span class="chip cr">23.3*</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="row-label">ความเร็วเฉลี่ย (กม./ชม.)</div>
+            <div class="row-sub">เร่งด่วนเย็น</div>
+          </td>
+          <td><span class="chip cr">14.58</span></td>
+          <td><span class="chip cb">23.56</span></td>
+          <td><span class="chip cg">28.21</span></td>
+          <td><span class="chip cr">19.1**</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="row-label">เวลาเดินทาง 10 กม.</div>
+            <div class="row-sub">เร่งด่วนเช้า</div>
+          </td>
+          <td><span class="chip cr">39.3 นาที</span></td>
+          <td><span class="chip cb">28.7 นาที</span></td>
+          <td><span class="chip cg">23.1 นาที</span></td>
+          <td><span class="chip cr">25:45 นาที</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="row-label">เวลาเดินทาง 10 กม.</div>
+            <div class="row-sub">เร่งด่วนเย็น</div>
+          </td>
+          <td><span class="chip cr">41.1 นาที</span></td>
+          <td><span class="chip cb">25.4 นาที</span></td>
+          <td><span class="chip cg">21.2 นาที</span></td>
+          <td><span class="chip cr">31:25 นาที</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="row-label">ระดับความแออัด</div>
+            <div class="row-sub">Congestion Level</div>
+          </td>
+          <td colspan="3"><span class="cn">ไม่ได้วัดในรูปแบบนี้</span></td>
+          <td><span class="chip cr">67.9%</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="row-label">ขอบเขตการสำรวจ</div>
+          </td>
+          <td><span class="cn">28 ถนน เร่งด่วนเช้า-เย็น</span></td>
+          <td><span class="cn">20 ถนน เร่งด่วนเช้า-เย็น</span></td>
+          <td><span class="cn">7 ถนน เร่งด่วนเช้า-เย็น</span></td>
+          <td><span class="cn">ถนนทุกสาย + ทางด่วน ตลอด 24 ชม.</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="source-note" aria-label="หมายเหตุแหล่งข้อมูล">
+    * ข้อมูล สจส. สำรวจเฉพาะ 50 ถนนสายหลักด้วย Floating Car Method ในช่วงเร่งด่วนเช้าและเย็น<br>
+    ** ข้อมูล TomTom มาจาก GPS Big Data ครอบคลุมถนนทุกสายตลอด 24 ชั่วโมง จึงใช้เปรียบเทียบเพื่อเห็นภาพรวมเท่านั้น
+  </section>
+
+  <section aria-label="Interactive controls">
+    <div class="control-panel">
+      <div class="control-group">
+        <label class="control-label" for="zoneFilter">กรองตามโซนพื้นที่</label>
+        <select id="zoneFilter" class="control-select" aria-label="กรองโซนพื้นที่">
+          <option value="all">ทุกโซนพื้นที่</option>
+          <option value="inner">พื้นที่ชั้นใน</option>
+          <option value="middle">พื้นที่ชั้นกลาง</option>
+          <option value="outer">พื้นที่ชั้นนอก</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="trendFilter">กรองแนวโน้ม</label>
+        <select id="trendFilter" class="control-select" aria-label="กรองแนวโน้ม">
+          <option value="all">ทุกแนวโน้ม</option>
+          <option value="down">เฉพาะแนวโน้มลดลง</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="tableSearch">ค้นหาในตาราง</label>
+        <input id="tableSearch" class="control-input" type="search" placeholder="พิมพ์คำค้นหา เช่น ชั้นกลาง" aria-label="ค้นหาในตาราง" />
+      </div>
+      <button id="resetFilters" class="control-btn" type="button">รีเซ็ตตัวกรอง</button>
+      <button id="printReport" class="control-btn primary" type="button">พิมพ์รายงาน</button>
+    </div>
+    <div id="filterStatus" class="filter-status" aria-live="polite">กำลังแสดงข้อมูลทั้งหมด</div>
+  </section>
+
+  <section class="cards-grid">
+    <div class="data-card card-inner" data-zone="inner">
+      <div class="card-title">พื้นที่ชั้นใน</div>
+      <div class="card-value">16.53 <span class="card-unit">กม./ชม.</span></div>
+      <div class="card-stats"><span>ต่ำสุด (สีลม)</span> <span>8.18</span></div>
+      <div class="card-stats"><span>สูงสุด (วิภาวดีฯ)</span> <span>50.83</span></div>
+    </div>
+
+    <div class="data-card card-middle" data-zone="middle">
+      <div class="card-title">พื้นที่ชั้นกลาง</div>
+      <div class="card-value">24.27 <span class="card-unit">กม./ชม.</span></div>
+      <div class="card-stats"><span>ต่ำสุด</span> <span>7.11</span></div>
+      <div class="card-stats"><span>สูงสุด</span> <span>42.14</span></div>
+    </div>
+
+    <div class="data-card card-outer" data-zone="outer">
+      <div class="card-title">พื้นที่ชั้นนอก</div>
+      <div class="card-value">28.81 <span class="card-unit">กม./ชม.</span></div>
+      <div class="card-stats"><span>ต่ำสุด</span> <span>15.66</span></div>
+      <div class="card-stats"><span>สูงสุด</span> <span>42.96</span></div>
+    </div>
+  </section>
+
+  <section class="line-card" aria-label="กราฟเส้นเปรียบเทียบปี 2560-2568">
+    <div class="line-title">กราฟเส้นเปรียบเทียบความเร็วเฉลี่ย ปี 2560-2568</div>
+    <div class="line-sub">หน่วย: กม./ชม. (เร่งด่วนเช้า) · เปรียบเทียบพื้นที่ชั้นใน ชั้นกลาง และชั้นนอก</div>
+    <div class="line-wrap">
+      <svg width="100%" viewBox="0 0 860 290" role="img" aria-label="กราฟเส้นแสดงความเร็วเฉลี่ยปี 2560-2568">
+        <rect x="56" y="18" width="780" height="200" rx="8" fill="#f8fafc"></rect>
+
+        <line x1="56" y1="218" x2="836" y2="218" stroke="#cbd5e1" stroke-width="1"></line>
+        <line x1="56" y1="178" x2="836" y2="178" stroke="#e2e8f0" stroke-dasharray="4,4"></line>
+        <line x1="56" y1="138" x2="836" y2="138" stroke="#e2e8f0" stroke-dasharray="4,4"></line>
+        <line x1="56" y1="98" x2="836" y2="98" stroke="#e2e8f0" stroke-dasharray="4,4"></line>
+        <line x1="56" y1="58" x2="836" y2="58" stroke="#e2e8f0" stroke-dasharray="4,4"></line>
+
+        <text x="48" y="222" text-anchor="end" fill="#94a3b8" font-size="11">10</text>
+        <text x="48" y="182" text-anchor="end" fill="#94a3b8" font-size="11">20</text>
+        <text x="48" y="142" text-anchor="end" fill="#94a3b8" font-size="11">30</text>
+        <text x="48" y="102" text-anchor="end" fill="#94a3b8" font-size="11">40</text>
+        <text x="48" y="62" text-anchor="end" fill="#94a3b8" font-size="11">50</text>
+
+        <polyline points="100,153 188,166 276,169 364,158 452,131 540,168 628,160 716,178 804,169"
+          fill="none" stroke="#00b894" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></polyline>
+        <polyline points="100,173 188,173 276,171 364,168 452,150 540,166 628,160 716,171 804,175"
+          fill="none" stroke="#e17055" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></polyline>
+        <polyline points="100,197 188,192 276,194 364,187 452,169 540,184 628,183 716,194 804,198"
+          fill="none" stroke="#d63031" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></polyline>
+
+        <circle class="line-dot" data-idx="0" cx="100" cy="153" r="4" fill="#00b894"></circle><circle class="line-dot" data-idx="1" cx="188" cy="166" r="4" fill="#00b894"></circle><circle class="line-dot" data-idx="2" cx="276" cy="169" r="4" fill="#00b894"></circle><circle class="line-dot" data-idx="3" cx="364" cy="158" r="4" fill="#00b894"></circle><circle class="line-dot" data-idx="4" cx="452" cy="131" r="4" fill="#00b894"></circle><circle class="line-dot" data-idx="5" cx="540" cy="168" r="4" fill="#00b894"></circle><circle class="line-dot" data-idx="6" cx="628" cy="160" r="4" fill="#00b894"></circle><circle class="line-dot" data-idx="7" cx="716" cy="178" r="4" fill="#00b894"></circle><circle class="line-dot" data-idx="8" cx="804" cy="169" r="4" fill="#00b894"></circle>
+        <circle class="line-dot" data-idx="0" cx="100" cy="173" r="4" fill="#e17055"></circle><circle class="line-dot" data-idx="1" cx="188" cy="173" r="4" fill="#e17055"></circle><circle class="line-dot" data-idx="2" cx="276" cy="171" r="4" fill="#e17055"></circle><circle class="line-dot" data-idx="3" cx="364" cy="168" r="4" fill="#e17055"></circle><circle class="line-dot" data-idx="4" cx="452" cy="150" r="4" fill="#e17055"></circle><circle class="line-dot" data-idx="5" cx="540" cy="166" r="4" fill="#e17055"></circle><circle class="line-dot" data-idx="6" cx="628" cy="160" r="4" fill="#e17055"></circle><circle class="line-dot" data-idx="7" cx="716" cy="171" r="4" fill="#e17055"></circle><circle class="line-dot" data-idx="8" cx="804" cy="175" r="4" fill="#e17055"></circle>
+        <circle class="line-dot" data-idx="0" cx="100" cy="197" r="4" fill="#d63031"></circle><circle class="line-dot" data-idx="1" cx="188" cy="192" r="4" fill="#d63031"></circle><circle class="line-dot" data-idx="2" cx="276" cy="194" r="4" fill="#d63031"></circle><circle class="line-dot" data-idx="3" cx="364" cy="187" r="4" fill="#d63031"></circle><circle class="line-dot" data-idx="4" cx="452" cy="169" r="4" fill="#d63031"></circle><circle class="line-dot" data-idx="5" cx="540" cy="184" r="4" fill="#d63031"></circle><circle class="line-dot" data-idx="6" cx="628" cy="183" r="4" fill="#d63031"></circle><circle class="line-dot" data-idx="7" cx="716" cy="194" r="4" fill="#d63031"></circle><circle class="line-dot" data-idx="8" cx="804" cy="198" r="4" fill="#d63031"></circle>
+
+        <line id="line-guide" x1="0" y1="18" x2="0" y2="218" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" opacity="0"></line>
+        <line x1="452" y1="18" x2="452" y2="218" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="5,3" opacity="0.85"></line>
+        <rect x="422" y="22" width="60" height="18" rx="4" fill="#fef3c7"></rect>
+        <text x="452" y="35" text-anchor="middle" fill="#92400e" font-size="10" font-weight="700">COVID-19</text>
+
+        <g id="line-tip" opacity="0" pointer-events="none">
+          <rect id="line-tip-bg" x="0" y="0" width="154" height="86" rx="8" fill="#0f2942"></rect>
+          <text id="line-tip-year" x="10" y="18" font-size="11" font-weight="700" fill="#f0c060">ปี พ.ศ. 2560</text>
+          <line x1="10" y1="24" x2="144" y2="24" stroke="rgba(255,255,255,0.25)"></line>
+          <text x="10" y="42" font-size="10" fill="rgba(255,255,255,0.75)">ชั้นนอก</text>
+          <text id="line-tip-outer" x="144" y="42" text-anchor="end" font-size="11" font-weight="700" fill="#00b894">29.23</text>
+          <text x="10" y="60" font-size="10" fill="rgba(255,255,255,0.75)">ชั้นกลาง</text>
+          <text id="line-tip-mid" x="144" y="60" text-anchor="end" font-size="11" font-weight="700" fill="#e17055">21.31</text>
+          <text x="10" y="78" font-size="10" fill="rgba(255,255,255,0.75)">ชั้นใน</text>
+          <text id="line-tip-inner" x="144" y="78" text-anchor="end" font-size="11" font-weight="700" fill="#d63031">15.33</text>
+        </g>
+
+        <rect class="line-hit" data-idx="0" x="70" y="18" width="60" height="200" fill="transparent"></rect>
+        <rect class="line-hit" data-idx="1" x="158" y="18" width="60" height="200" fill="transparent"></rect>
+        <rect class="line-hit" data-idx="2" x="246" y="18" width="60" height="200" fill="transparent"></rect>
+        <rect class="line-hit" data-idx="3" x="334" y="18" width="60" height="200" fill="transparent"></rect>
+        <rect class="line-hit" data-idx="4" x="422" y="18" width="60" height="200" fill="transparent"></rect>
+        <rect class="line-hit" data-idx="5" x="510" y="18" width="60" height="200" fill="transparent"></rect>
+        <rect class="line-hit" data-idx="6" x="598" y="18" width="60" height="200" fill="transparent"></rect>
+        <rect class="line-hit" data-idx="7" x="686" y="18" width="60" height="200" fill="transparent"></rect>
+        <rect class="line-hit" data-idx="8" x="774" y="18" width="60" height="200" fill="transparent"></rect>
+
+        <text x="100" y="238" text-anchor="middle" fill="#64748b" font-size="11">2560</text>
+        <text x="188" y="238" text-anchor="middle" fill="#64748b" font-size="11">2561</text>
+        <text x="276" y="238" text-anchor="middle" fill="#64748b" font-size="11">2562</text>
+        <text x="364" y="238" text-anchor="middle" fill="#64748b" font-size="11">2563</text>
+        <text x="452" y="238" text-anchor="middle" fill="#64748b" font-size="11">2564</text>
+        <text x="540" y="238" text-anchor="middle" fill="#64748b" font-size="11">2565</text>
+        <text x="628" y="238" text-anchor="middle" fill="#64748b" font-size="11">2566</text>
+        <text x="716" y="238" text-anchor="middle" fill="#64748b" font-size="11">2567</text>
+        <text x="804" y="238" text-anchor="middle" fill="#64748b" font-size="11">2568</text>
+      </svg>
+    </div>
+    <div class="line-legend">
+      <span class="legend-item"><span class="legend-dot" style="background:#00b894"></span>พื้นที่ชั้นนอก</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#e17055"></span>พื้นที่ชั้นกลาง</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#d63031"></span>พื้นที่ชั้นใน</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title">ตารางเปรียบเทียบความเร็วเฉลี่ย (ปี 2560 - 2568)</div>
+    <table class="modern-table">
+      <thead>
+        <tr>
+          <th>กลุ่มพื้นที่</th>
+          <th>ปี 2560 (กม./ชม.)</th>
+          <th>ปี 2568 (กม./ชม.)</th>
+          <th>ผลต่าง (กม./ชม.)</th>
+          <th>ร้อยละการเปลี่ยนแปลง</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-zone="inner" data-trend="down">
+          <td style="font-weight: 600;">ชั้นใน</td>
+          <td>16.80</td>
+          <td>16.53</td>
+          <td class="text-trend-down">▼ -0.27</td>
+          <td class="text-trend-down">-1.61%</td>
+        </tr>
+        <tr data-zone="middle" data-trend="down">
+          <td style="font-weight: 600;">ชั้นกลาง</td>
+          <td>26.55</td>
+          <td>24.27</td>
+          <td class="text-trend-down">▼ -2.28</td>
+          <td class="text-trend-down">-8.59%</td>
+        </tr>
+        <tr data-zone="outer" data-trend="down">
+          <td style="font-weight: 600;">ชั้นนอก</td>
+          <td>32.51</td>
+          <td>28.81</td>
+          <td class="text-trend-down">▼ -3.70</td>
+          <td class="text-trend-down">-11.38%</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="bottom-grid">
+    <div>
+      <div class="section-title">ข้อค้นพบเชิงสถิติที่สำคัญ</div>
+      <ul class="insight-list">
+        <li><strong>พื้นที่ชั้นใน:</strong> ยังคงเผชิญภาวะวิกฤตจราจร โดยมีความเร็วเฉลี่ยต่ำอย่างต่อเนื่อง</li>
+        <li><strong>พื้นที่ชั้นกลาง:</strong> มีแนวโน้มความเร็วลดลงอย่างมีนัยสำคัญเมื่อเทียบกับอดีต</li>
+        <li><strong>พื้นที่ชั้นนอก:</strong> เป็นพื้นที่ที่ประสิทธิภาพการเดินทางลดลงมากที่สุดถึงร้อยละ 11.38</li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="section-title">ข้อเสนอแนะเชิงนโยบาย</div>
+      <ul class="policy-list">
+        <li>เร่งรัดการพัฒนาโครงข่ายรถไฟฟ้าสายรอง</li>
+        <li>บูรณาการจุดเชื่อมต่อระบบขนส่งสาธารณะ (Feeder)</li>
+        <li>ประยุกต์ใช้ระบบเทคโนโลยี Smart Traffic และ AI</li>
+        <li>ส่งเสริมการพัฒนาพื้นที่จุดจอดแล้วจร (Park & Ride)</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>
+      <strong>สำนักงานการจราจรและขนส่ง กรุงเทพมหานคร</strong><br>
+      กลุ่มงานสถิติและวิจัย กองนโยบายและแผน
+    </div>
+    <div style="text-align: right;">
+      ข้อมูล ณ วันที่ 31 ธันวาคม 2568<br>
+      © Prapawadee_W
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var zoneFilter = document.getElementById('zoneFilter');
+    var trendFilter = document.getElementById('trendFilter');
+    var tableSearch = document.getElementById('tableSearch');
+    var resetFilters = document.getElementById('resetFilters');
+    var printReport = document.getElementById('printReport');
+    var filterStatus = document.getElementById('filterStatus');
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.data-card'));
+    var tableRows = Array.prototype.slice.call(document.querySelectorAll('.modern-table tbody tr'));
+
+    function applyFilters() {
+      var zoneValue = zoneFilter.value;
+      var trendValue = trendFilter.value;
+      var searchValue = tableSearch.value.trim().toLowerCase();
+
+      cards.forEach(function (card) {
+        var zoneMatch = zoneValue === 'all' || card.getAttribute('data-zone') === zoneValue;
+        card.classList.toggle('is-hidden', !zoneMatch);
+      });
+
+      var visibleRows = 0;
+      tableRows.forEach(function (row) {
+        var zoneMatch = zoneValue === 'all' || row.getAttribute('data-zone') === zoneValue;
+        var trendMatch = trendValue === 'all' || row.getAttribute('data-trend') === trendValue;
+        var textMatch = searchValue === '' || row.textContent.toLowerCase().indexOf(searchValue) !== -1;
+        var show = zoneMatch && trendMatch && textMatch;
+        row.classList.toggle('is-hidden', !show);
+        if (show) visibleRows += 1;
+      });
+
+      var zoneText = zoneValue === 'all' ? 'ทุกโซน' : zoneFilter.options[zoneFilter.selectedIndex].text;
+      filterStatus.textContent = 'แสดงผล ' + visibleRows + ' รายการในตาราง | โซน: ' + zoneText;
+    }
+
+    zoneFilter.addEventListener('change', applyFilters);
+    trendFilter.addEventListener('change', applyFilters);
+    tableSearch.addEventListener('input', applyFilters);
+    resetFilters.addEventListener('click', function () {
+      zoneFilter.value = 'all';
+      trendFilter.value = 'all';
+      tableSearch.value = '';
+      applyFilters();
+    });
+    printReport.addEventListener('click', function () {
+      window.print();
+    });
+
+    var lineData = [
+      { year: '2560', x: 100, outer: 29.23, mid: 21.31, inner: 15.33 },
+      { year: '2561', x: 188, outer: 27.11, mid: 21.23, inner: 16.05 },
+      { year: '2562', x: 276, outer: 26.59, mid: 21.60, inner: 15.88 },
+      { year: '2563', x: 364, outer: 28.40, mid: 22.28, inner: 17.15 },
+      { year: '2564', x: 452, outer: 32.69, mid: 28.20, inner: 20.67 },
+      { year: '2565', x: 540, outer: 26.99, mid: 22.77, inner: 17.27 },
+      { year: '2566', x: 628, outer: 28.21, mid: 24.12, inner: 17.43 },
+      { year: '2567', x: 716, outer: 24.55, mid: 21.62, inner: 15.88 },
+      { year: '2568', x: 804, outer: 25.99, mid: 20.90, inner: 15.27 }
+    ];
+
+    var lineTip = document.getElementById('line-tip');
+    var lineGuide = document.getElementById('line-guide');
+    var lineTipYear = document.getElementById('line-tip-year');
+    var lineTipOuter = document.getElementById('line-tip-outer');
+    var lineTipMid = document.getElementById('line-tip-mid');
+    var lineTipInner = document.getElementById('line-tip-inner');
+    var lineHits = Array.prototype.slice.call(document.querySelectorAll('.line-hit'));
+    var lineDots = Array.prototype.slice.call(document.querySelectorAll('.line-dot'));
+
+    function showLineTip(idx) {
+      var d = lineData[idx];
+      lineGuide.setAttribute('x1', d.x);
+      lineGuide.setAttribute('x2', d.x);
+      lineGuide.setAttribute('opacity', '1');
+
+      lineTipYear.textContent = 'ปี พ.ศ. ' + d.year;
+      lineTipOuter.textContent = d.outer.toFixed(2) + ' กม./ชม.';
+      lineTipMid.textContent = d.mid.toFixed(2) + ' กม./ชม.';
+      lineTipInner.textContent = d.inner.toFixed(2) + ' กม./ชม.';
+
+      var tipX = d.x + 14;
+      if (tipX > 680) {
+        tipX = d.x - 168;
+      }
+      lineTip.setAttribute('transform', 'translate(' + tipX + ',34)');
+      lineTip.setAttribute('opacity', '1');
+
+      lineDots.forEach(function (dot) {
+        var isActive = parseInt(dot.getAttribute('data-idx'), 10) === idx;
+        dot.setAttribute('r', isActive ? '6' : '4');
+      });
+    }
+
+    function hideLineTip() {
+      lineGuide.setAttribute('opacity', '0');
+      lineTip.setAttribute('opacity', '0');
+      lineDots.forEach(function (dot) {
+        dot.setAttribute('r', '4');
+      });
+    }
+
+    lineHits.forEach(function (hit) {
+      var idx = parseInt(hit.getAttribute('data-idx'), 10);
+      hit.style.cursor = 'crosshair';
+      hit.addEventListener('mouseenter', function () {
+        showLineTip(idx);
+      });
+      hit.addEventListener('mouseleave', hideLineTip);
+      hit.addEventListener('touchstart', function (event) {
+        event.preventDefault();
+        showLineTip(idx);
+      }, { passive: false });
+      hit.addEventListener('touchend', hideLineTip);
+    });
+
+    applyFilters();
+  })();
+</script>
+
+</body>
+</html>
