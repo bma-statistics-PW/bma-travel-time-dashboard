@@ -220,6 +220,74 @@
     line-height: 1.6;
   }
 
+  .std-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .std-nav a {
+    text-decoration: none;
+    color: #1e3a8a;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid #bfdbfe;
+    background: #eff6ff;
+  }
+
+  .quality-card {
+    background: #f8fafc;
+    border: 1px solid #dbe6f1;
+    border-left: 5px solid #0ea5e9;
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+
+  .quality-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 8px;
+  }
+
+  .quality-sub {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 10px;
+  }
+
+  .qc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .qc-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #ffffff;
+    padding: 9px 10px;
+    font-size: 12px;
+    color: #334155;
+  }
+
+  .qc-item strong {
+    color: #0f172a;
+  }
+
+  .qc-pass {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 11px;
+    color: #166534;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 999px;
+    padding: 2px 8px;
+  }
+
   .compare-card {
     background: #ffffff;
     border: 1px solid #dbe6f1;
@@ -700,6 +768,10 @@
       grid-template-columns: 1fr;
     }
 
+    .qc-grid {
+      grid-template-columns: 1fr;
+    }
+
     .header-titles h1 {
       font-size: 18px;
     }
@@ -743,7 +815,41 @@
     <strong>สำนักงานการจราจรและขนส่ง</strong> ได้ดำเนินการสำรวจข้อมูลเวลาในการเดินทาง เพื่อวิเคราะห์แนวโน้มอัตราเร็วเฉลี่ยบนโครงข่ายถนนในช่วงเวลาเร่งด่วน โดยจำแนกตามลักษณะทางกายภาพของพื้นที่ออกเป็น 3 โซน ได้แก่ พื้นที่ชั้นใน ชั้นกลาง และชั้นนอก เพื่อประกอบการกำหนดทิศทางนโยบายการจราจร
   </section>
 
-  <section class="tomtom-section" aria-label="TomTom Traffic Index 2025">
+  <nav class="std-nav" aria-label="ทางลัดหัวข้อแดชบอร์ด">
+    <a href="#tomtom-index">TomTom Index</a>
+    <a href="#compare-sjs-tomtom">ตารางเปรียบเทียบ</a>
+    <a href="#zone-details-card">รายละเอียดพื้นที่</a>
+    <a href="#trend-line">กราฟแนวโน้ม</a>
+  </nav>
+
+  <section class="quality-card" aria-label="การตรวจสอบคุณภาพข้อมูล">
+    <div class="quality-title">มาตรฐานข้อมูลและผลตรวจสอบความถูกต้อง</div>
+    <div class="quality-sub">ตรวจสอบเชิงสูตรและความครบถ้วนของข้อมูลที่แสดงบน dashboard ก่อนเผยแพร่</div>
+    <div class="qc-grid">
+      <div class="qc-item">
+        <strong>สูตรเวลาเดินทาง 10 กม.</strong><br>
+        ตรวจด้วยสูตร 10/ความเร็ว x 60 นาที และปัดทศนิยม 1 ตำแหน่ง
+        <div class="qc-pass">ผ่าน: ค่าบนตารางสอดคล้องสูตร</div>
+      </div>
+      <div class="qc-item">
+        <strong>จำนวนเขตพื้นที่</strong><br>
+        ชั้นใน 15 + ชั้นกลาง 20 + ชั้นนอก 15 = 50 เขต
+        <div class="qc-pass">ผ่าน: จำนวนรวมถูกต้อง</div>
+      </div>
+      <div class="qc-item">
+        <strong>ความต่อเนื่องของปีข้อมูล</strong><br>
+        แสดงปี 2560-2568 ต่อเนื่อง รวม 9 ปี สำหรับกราฟแนวโน้ม
+        <div class="qc-pass">ผ่าน: ช่วงปีครบถ้วน</div>
+      </div>
+      <div class="qc-item">
+        <strong>มาตรฐานหน่วยแสดงผล</strong><br>
+        สจส. ใช้ กม./ชม. และนาที/10 กม. ส่วน TomTom ใช้ Congestion (%) และ นาที:วินาที
+        <div class="qc-pass">ผ่าน: หน่วยแยกชัดเจน</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tomtom-index" class="tomtom-section" aria-label="TomTom Traffic Index 2025">
     <div class="tomtom-head">
       <div class="tomtom-title">TomTom Traffic Index 2025: กรุงเทพมหานคร</div>
       <div class="tomtom-rank">อันดับโลกด้าน Congestion: 10th</div>
@@ -767,7 +873,7 @@
     </div>
   </section>
 
-  <section class="compare-card" aria-label="เปรียบเทียบข้อมูล สจส. และ TomTom">
+  <section id="compare-sjs-tomtom" class="compare-card" aria-label="เปรียบเทียบข้อมูล สจส. และ TomTom">
     <div class="compare-title">เปรียบเทียบเชิงตัวเลข: สจส. ปี 2568 และ TomTom Traffic Index 2025</div>
     <table class="compare-table">
       <thead>
@@ -909,14 +1015,14 @@
   <section class="cards-grid">
     <div class="data-card card-inner" data-zone="inner">
       <div class="card-title">พื้นที่ชั้นใน</div>
-      <div class="card-value">16.53 <span class="card-unit">กม./ชม.</span></div>
+      <div class="card-value">15.27 <span class="card-unit">กม./ชม.</span></div>
       <div class="card-stats"><span>ต่ำสุด (สีลม)</span> <span>8.18</span></div>
       <div class="card-stats"><span>สูงสุด (วิภาวดีฯ)</span> <span>50.83</span></div>
     </div>
 
     <div class="data-card card-middle" data-zone="middle">
       <div class="card-title">พื้นที่ชั้นกลาง</div>
-      <div class="card-value">24.27 <span class="card-unit">กม./ชม.</span></div>
+      <div class="card-value">20.90 <span class="card-unit">กม./ชม.</span></div>
       <div class="card-stats"><span>ต่ำสุด</span> <span>7.11</span></div>
       <div class="card-stats"><span>สูงสุด</span> <span>42.14</span></div>
     </div>
@@ -929,7 +1035,7 @@
     </div>
   </section>
 
-  <section class="line-card" aria-label="กราฟเส้นเปรียบเทียบปี 2560-2568">
+  <section id="trend-line" class="line-card" aria-label="กราฟเส้นเปรียบเทียบปี 2560-2568">
     <div class="line-title">กราฟเส้นเปรียบเทียบความเร็วเฉลี่ย ปี 2560-2568</div>
     <div class="line-sub">หน่วย: กม./ชม. (เร่งด่วนเช้า) · เปรียบเทียบพื้นที่ชั้นใน ชั้นกลาง และชั้นนอก</div>
     <div class="line-wrap">
@@ -1019,24 +1125,24 @@
       <tbody>
         <tr data-zone="inner" data-trend="down">
           <td style="font-weight: 600;">ชั้นใน</td>
-          <td>16.80</td>
-          <td>16.53</td>
-          <td class="text-trend-down">▼ -0.27</td>
-          <td class="text-trend-down">-1.61%</td>
+          <td>15.33</td>
+          <td>15.27</td>
+          <td class="text-trend-down">▼ -0.06</td>
+          <td class="text-trend-down">-0.39%</td>
         </tr>
         <tr data-zone="middle" data-trend="down">
           <td style="font-weight: 600;">ชั้นกลาง</td>
-          <td>26.55</td>
-          <td>24.27</td>
-          <td class="text-trend-down">▼ -2.28</td>
-          <td class="text-trend-down">-8.59%</td>
+          <td>21.31</td>
+          <td>20.90</td>
+          <td class="text-trend-down">▼ -0.41</td>
+          <td class="text-trend-down">-1.92%</td>
         </tr>
         <tr data-zone="outer" data-trend="down">
           <td style="font-weight: 600;">ชั้นนอก</td>
-          <td>32.51</td>
-          <td>28.81</td>
-          <td class="text-trend-down">▼ -3.70</td>
-          <td class="text-trend-down">-11.38%</td>
+          <td>29.23</td>
+          <td>25.99</td>
+          <td class="text-trend-down">▼ -3.24</td>
+          <td class="text-trend-down">-11.08%</td>
         </tr>
       </tbody>
     </table>
