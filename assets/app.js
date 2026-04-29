@@ -590,6 +590,47 @@
   });
 
   // ────────────────────────────────────────────────────────────────
+  // Data Validation
+  // ────────────────────────────────────────────────────────────────
+  function validateData(json) {
+    const issues = [];
+
+    // Check all 51 roads present
+    const roads = json.roads_2568 || [];
+    if (roads.length !== 51) {
+      issues.push(`Expected 51 roads, found ${roads.length}`);
+    }
+
+    // Check speed values and required fields for each road
+    const criticalFields = ['speed_am_in', 'speed_am_out', 'speed_pm_in', 'speed_pm_out'];
+    roads.forEach(road => {
+      criticalFields.forEach(field => {
+        const val = road[field];
+        if (val == null) {
+          issues.push(`Road "${road.name}" (seq ${road.seq}): null value in ${field}`);
+        } else if (typeof val !== 'number' || val < 0 || val > 100) {
+          issues.push(`Road "${road.name}" (seq ${road.seq}): invalid ${field} = ${val} (expected 0–100 km/h)`);
+        }
+      });
+      if (!road.name) issues.push(`Road seq ${road.seq}: missing name`);
+      if (!road.zone) issues.push(`Road "${road.name}" (seq ${road.seq}): missing zone`);
+    });
+
+    // Check 9 years of trend data
+    const trend = json.trend_inbound || [];
+    if (trend.length !== 9) {
+      issues.push(`Expected 9 years of trend data, found ${trend.length}`);
+    }
+
+    if (issues.length > 0) {
+      console.warn('[BMA] Data validation issues:', issues);
+    } else {
+      console.info('[BMA] Data validation passed: 51 roads, speed values OK, 9-year trend complete.');
+    }
+    return issues.length === 0;
+  }
+
+  // ────────────────────────────────────────────────────────────────
   // Init
   // ────────────────────────────────────────────────────────────────
   function init() {
@@ -598,6 +639,7 @@
       .then(r => { if (!r.ok) throw new Error('fetch failed'); return r.json(); })
       .then(json => {
         DATA = json;
+        validateData(DATA);
         if (DATA.zones) bindZones(DATA.zones);
         const stats = calcZoneStats();
         bindZoneAccordionStats(stats);

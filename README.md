@@ -79,6 +79,45 @@ python3 -m http.server 8080
 
 ---
 
+## 📊 Data Dictionary
+
+### `roads_2568` Array Schema
+
+| Field | Type | Description | Unit |
+|-------|------|-------------|------|
+| `seq` | number | Road sequence number (1–51) | — |
+| `name` | string | Road name (Thai) | — |
+| `segment` | string | Start–end description (Thai) | — |
+| `zone` | string | Urban zone: `inner` \| `middle` \| `outer` | — |
+| `length_km` | number | Road segment length | km |
+| `speed_am_in` | number | Morning inbound average speed | km/h |
+| `speed_am_out` | number | Morning outbound average speed | km/h |
+| `speed_pm_in` | number | Evening inbound average speed | km/h |
+| `speed_pm_out` | number | Evening outbound average speed | km/h |
+| `tt_am_in` | number | Morning inbound travel time | min/segment |
+| `tt_am_out` | number | Morning outbound travel time | min/segment |
+| `tt_pm_in` | number | Evening inbound travel time | min/segment |
+| `tt_pm_out` | number | Evening outbound travel time | min/segment |
+| `note_am_out` | string \| null | Special notes for morning outbound (e.g., "one-way street") | — |
+| `note_pm_out` | string \| null | Special notes for evening outbound | — |
+
+### Zone Definitions
+
+| Zone | Label | Road count | Description |
+|------|-------|-----------|-------------|
+| `inner` | พื้นที่ชั้นใน | 28 | Inner city / CBD area |
+| `middle` | พื้นที่ชั้นกลาง | 20 | Mid-ring / transitional urban area |
+| `outer` | พื้นที่ชั้นนอก | 7 | Outer suburbs |
+
+### Survey Periods
+
+- **Morning rush hour:** 07:00–09:00
+- **Evening rush hour:** 16:00–18:00
+- **Historical range:** 2560–2568 B.E. (2017–2025 C.E.)
+- **Annual update:** December each year
+
+---
+
 ## License
 
 โครงการนี้เป็นเอกสารทางการของกรุงเทพมหานคร · เผยแพร่เพื่อประโยชน์สาธารณะ
