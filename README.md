@@ -1,167 +1,101 @@
-# 🚗 Bangkok Travel Time & Speed Analysis Dashboard
-**Bangkok Metropolitan Administration (BMA)**
-> Statistics and Research Group · Policy and Planning Division · Traffic and Transportation Department
+# BMA Travel Time Dashboard (TH) — 2560–2568
+
+Dashboard นำเสนอผลการวิเคราะห์ **เวลาและความเร็วเฉลี่ยในการเดินทางในพื้นที่กรุงเทพมหานคร** ปี 2560–2568 ด้วยวิธี **Floating Car Method** (รถสำรวจวิ่งจริงตามกระแสจราจร) พร้อมเปรียบเทียบกับ TomTom Traffic Index 2025
+
+จัดทำโดย: **กลุ่มงานสถิติและวิจัย กองนโยบายและแผนงาน สำนักการจราจรและขนส่ง กรุงเทพมหานคร**
+© Prapawadee_W.
 
 ---
 
-## 🔗 Live Dashboard
-
-| Version | Link | Language |
-|---|---|---|
-| 🇹🇭 Thai | *https://BMA-Statistics-PW.github.io/BMA-travel-time-dashboard-TH/* | ภาษาไทย |
-| 🇬🇧 English | *https://BMA-Statistics-PW.github.io/BMA-travel-time-dashboard-EN/* | English |
-
----
-
-## 📊 About This Project
-
-This interactive dashboard presents a **9-year longitudinal analysis** of average travel speed and travel time across **50 major road segments** in Bangkok, classified into 3 urban zones, during morning and evening peak hours.
-
-It also benchmarks BMA survey findings against the **TomTom Traffic Index 2025** to provide international context.
-
-### Key Highlights
-
-- 🏙️ **Inner zone** inbound morning speed: **15.27 km/h** (39.3 min per 10 km)
-- 🌆 **Middle zone** inbound morning speed: **20.90 km/h**
-- 🌳 **Outer zone** inbound morning speed: **25.99 km/h**
-- 🌍 Bangkok ranked **10th most congested city globally** (TomTom 2025, Congestion Level 67.9%)
-- 📉 All zones show speeds **below 2017 baseline** levels in 2025
-- 🦠 **2021 peak** driven by COVID-19 traffic reduction — speeds have since declined
-
----
-
-## 🗂️ Data Overview
-
-| Parameter | Detail |
-|---|---|
-| **Survey Years** | 2017–2025 (Thai B.E. 2560–2568) |
-| **Road Segments** | 50 major arterial roads |
-| **Urban Zones** | Inner (28 roads) · Middle (20 roads) · Outer (7 roads) |
-| **Directions** | Inbound (toward CBD) · Outbound (away from CBD) |
-| **Morning Peak** | 07:00–09:00 (UTC+7) |
-| **Evening Peak** | 16:00–18:00 (UTC+7) |
-| **Speed Unit** | km/h (average travel speed) |
-| **Travel Time** | Derived: `(10 ÷ speed) × 60` minutes per 10 km |
-| **Data Source** | BMA official government field survey (non-GPS) |
-
-> **Note on calendar:** Thai Buddhist Era (B.E.) = Gregorian year + 543
-> (e.g., B.E. 2568 = A.D. 2025)
-
----
-
-## 📋 Dashboard Sections
-
-| # | Section | Description |
-|---|---|---|
-| 00 | Methodology | Survey scope, data collection framework, definitions |
-| 01 | Key Indicators | KPI cards — speed by zone, 2025 vs. 2017 baseline |
-| 02 | Annual Trend | Line chart: speed trend 2017–2025 across all zones |
-| 03 | Travel Time | Minutes per 10 km by zone and peak period |
-| 04 | Road Rankings | Top 5 fastest & slowest road segments |
-| 05 | Peak Comparison | Morning vs. Evening peak — inbound vs. outbound |
-| 06 | Key Findings | Summary insights and policy implications |
-| — | International Benchmark | TomTom Traffic Index 2025 vs. BMA data comparison |
-
----
-
-## ⚠️ Data Comparability Note
-
-BMA survey data and TomTom Traffic Index **are not directly comparable** due to:
-
-| Dimension | BMA Survey | TomTom Traffic Index |
-|---|---|---|
-| Road coverage | 50 arterial roads only | All roads + expressways |
-| Time window | Peak hours only (4 hrs/day) | 24 hours/day, 365 days/year |
-| Method | Field survey (speed measurement) | GPS probe data |
-| Direction | Inbound / Outbound separate | City-wide average |
-| Calendar | Thai Fiscal Year (B.E.) | Gregorian calendar year |
-
-TomTom data is included **for international context only**.
-
----
-
-## 🛠️ Tech Stack
+## โครงสร้างไฟล์
 
 ```
-HTML5 · CSS3 (CSS Variables, Grid, Flexbox)
-SVG (inline charts — no external chart library)
-Google Fonts: Sarabun (Thai + Latin)
-```
-
-> This dashboard is built as a **single self-contained HTML file** with no external JavaScript dependencies, ensuring fast load times and offline compatibility.
-
----
-
-## 🔄 Data Pipeline (XLSX -> JSON)
-
-The dashboard supports loading real data from `data/dashboard-data.json`.
-
-1. Put the source workbook in a local path (example: `source.xlsx`)
-2. Run converter script:
-
-```bash
-python scripts/xlsx_to_json.py --input C:\path\to\source.xlsx --output data/dashboard-data.json
-```
-
-3. Commit and push `data/dashboard-data.json`
-4. GitHub Pages will render the updated values automatically
-
-Current JSON fields used by the dashboard:
-
-- `zones.inner|middle|outer.speed_2560_in`
-- `zones.inner|middle|outer.speed_2568_in`
-- `zones.inner|middle|outer.delta_in`
-- `zones.inner|middle|outer.pct_in`
-- `trend_inbound[]` (for line-chart tooltip values)
-
----
-
-## 📁 Repository Structure
-
-```
-BMA-travel-time-dashboard-TH/
-├── index.html                  ← GitHub Pages entry point
+.
+├── index.html                  # หน้าหลัก dashboard
+├── assets/
+│   ├── styles.css              # CSS ทั้งหมด (responsive PC / tablet / mobile)
+│   ├── app.js                  # JS — โหลดข้อมูล, สร้าง chart, ตาราง, filter
+│   └── data.js                 # (deprecated) — ใช้ data/dashboard-data.json แทน
 ├── data/
-│   └── dashboard-data.json     ← Generated data payload for dashboard
-├── scripts/
-│   └── xlsx_to_json.py         ← XLSX to JSON converter
+│   └── dashboard-data.json     # ข้อมูลทั้งหมด (สร้างจาก XLSX ต้นฉบับ)
 └── README.md
 ```
 
 ---
 
-## 🏛️ Organization
+## วิธีนำขึ้น GitHub Pages
 
-**Bangkok Metropolitan Administration (BMA)**
-กรุงเทพมหานคร (กทม.)
+1. Push ไฟล์ทั้งหมดเข้า repo `BMA-travel-time-dashboard-TH` บน branch `main`
+2. ใน GitHub: **Settings → Pages → Source: `main` / `(root)`**
+3. รอประมาณ 1–2 นาที จะได้ URL: `https://bma-statistics-pw.github.io/BMA-travel-time-dashboard-TH/`
 
-**Traffic and Transportation Department**
-สำนักการจราจรและขนส่ง (สจส.)
+> **หมายเหตุ:** เนื่องจาก `app.js` ใช้ `fetch('data/dashboard-data.json')` ต้องเปิดผ่าน HTTP server (เช่น GitHub Pages) ไม่ใช่เปิดด้วย `file://` โดยตรง
 
-**Statistics and Research Group — Policy and Planning Division**
-กลุ่มงานสถิติและวิจัย · กองนโยบายและแผนงาน
+### ทดสอบในเครื่อง
 
-**© Prapawadee_W.**
+```bash
+# Python 3
+cd /path/to/site
+python3 -m http.server 8080
+# เปิด http://localhost:8080
+```
 
----
-
-## 📜 Data Sources & References
-
-- **Primary:** Average Speed Survey on Major Roads, Traffic and Transportation Department BMA , 2017–2025
-- **International Reference:** [TomTom Traffic Index 2025 — Bangkok](https://www.tomtom.com/traffic-index/bangkok-traffic/)
-
-> Road segment boundaries and distances were updated in the 2025 survey edition to reflect current road conditions and infrastructure changes.
+หรือใช้ VSCode Live Server, `npx serve`, ฯลฯ
 
 ---
 
-## 🔗 Related Dashboards
+## ฟีเจอร์
 
-| Project | Description | Link |
-|---|---|---|
-| EV Passenger Boat | Klong Phadung Krung Kasem electric boat ridership analysis | [View →](https://BMA-Statistics-PW.github.io/BMA-EV_Passenger-boat/) |
-| Rail Transit Statistics | MRT / BTS / ARL passenger volume analysis | *(coming soon)* |
+| ส่วน | คำอธิบาย |
+|---|---|
+| **Hero** | หัวข้อหลัก + ระบุวิธีสำรวจ (Floating Car Method) |
+| **Method Card** | อธิบาย Floating Car Method พร้อม metadata |
+| **TomTom Index** | สถิติระดับโลก (อันดับ 10, Congestion 67.9%) |
+| **เปรียบเทียบ สจส. vs TomTom** | ตารางเทียบ 6 ตัวชี้วัด (รวมแถววิธีการสำรวจ) |
+| **3 KPI Cards** | ความเร็ว ขาเข้า/ขาออก พร้อม min/max ของแต่ละโซน |
+| **Trend Chart** | กราฟเส้น 9 ปี · สลับขาเข้า/ขาออก · COVID-19 marker · Tooltip |
+| **ตารางถนน 51 สาย** | filter ตามโซน · ค้นหา · เรียงคอลัมน์ · color-coded ความเร็ว |
+| **BAU Scenario** | คาดการณ์ปี 2569 จากแนวโน้ม 3 ปีล่าสุด |
+| **เปรียบเทียบ 2560 vs 2568** | ตาราง delta + % เปลี่ยนแปลง |
+| **Insights & Policy** | ข้อค้นพบเชิงสถิติ + ข้อเสนอแนะเชิงนโยบาย |
 
 ---
 
-**© Prapawadee_W.**
-*Last updated: 12-04-2026*
+## Responsive
+
+- **PC ≥ 1200px** — A4 layout 1320px max width, 3 columns
+- **Tablet 768–1199px** — 2 columns, padding ลดลง
+- **Mobile ≤ 767px** — 1 column, ปุ่มและ font ปรับขนาด, ตารางสามารถ scroll แนวนอน
+- **Print** — สำหรับพิมพ์รายงาน (ซ่อนปุ่ม interactive)
+
+---
+
+## ข้อมูล
+
+**แหล่งข้อมูลหลัก:** ไฟล์ Excel `รายงานสรุปผลการวิเคราะห์เวลาในการเดินทางในพื้นที่กรุงเทพมหานคร ปี 2560–2568.xlsx`
+
+**Sheets ที่ใช้:**
+- `Report` — สรุปอัตราเร็วเฉลี่ย 9 ปี รายโซน รายทิศทาง (เร่งด่วน เฉลี่ยเช้า+เย็น)
+- `avr-speed_2568` — รายละเอียด 51 ถนน × เช้า/เย็น × ขาเข้า/ขาออก
+- `traveltime_2568` — เวลาเดินทาง (นาที) 51 ถนน
+- `urban_2560-2568` — 28 ถนนชั้นใน × 9 ปี
+- `suburban_2560-2568` — 20 ถนนชั้นกลาง × 9 ปี
+- `rural_2560-2568` — 7 ถนนชั้นนอก × 9 ปี
+
+**Reference:** [TomTom Traffic Index 2025 — Bangkok](https://www.tomtom.com/traffic-index/bangkok-traffic/)
+
+---
+
+## ข้อสังเกตสำคัญ
+
+1. **51 ถนน (ไม่ใช่ 50)** ใน sheet `avr-speed_2568` มีลำดับที่ 1–51 (เพิ่ม "อโศกดินแดง" ในรายการ)
+2. **ตัวเลขใน Report sheet** เป็นค่าเฉลี่ย "เร่งด่วน" = (am + pm) / 2 ไม่ใช่ "เร่งด่วนเช้า" เพียงอย่างเดียว
+3. **บางถนนเดินรถทางเดียว** เช่น เยาวราช, สามเสน — ขาออกแสดงเป็น "เดินรถทางเดียว"
+4. **หลานหลวง ขาออก** = "ทางรถมวลชน"
+5. **เพชรเกษม** ใน `avr-speed_2568` ครอบคลุมช่วง "สุดเขตกรุงเทพฯ ถึง วงเวียนใหญ่" ซึ่งกินทั้ง zone นอกและกลาง — จัดเป็น `outer` ใน dashboard
+
+---
+
+## License
+
+โครงการนี้เป็นเอกสารทางการของกรุงเทพมหานคร · เผยแพร่เพื่อประโยชน์สาธารณะ
