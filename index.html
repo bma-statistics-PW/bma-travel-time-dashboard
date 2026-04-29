@@ -51,41 +51,53 @@
     min-height: 297mm;
     background: #FFFFFF;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    border-top: 10px solid var(--primary-color);
-    padding: 40px 50px;
+    overflow: hidden;
+    padding: 0 0 40px;
     display: flex;
     flex-direction: column;
     gap: 25px;
   }
-  /* 3. HEADER: ส่วนหัวที่ดูเป็นทางการ */
-  .header {
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 15px;
+  .a4-body {
+    padding: 0 50px;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 16px;
+    flex-direction: column;
+    gap: 25px;
   }
-  .header-titles h1 {
-    font-size: 24px;
-    color: var(--primary-color);
-    font-weight: 700;
-    line-height: 1.3;
+  /* 3. HERO HEADER */
+  .report-hero {
+    background: linear-gradient(135deg, #0b2545 0%, #1a4a7e 55%, #0e6b7a 100%);
+    padding: 44px 50px 40px;
+    text-align: center;
+    color: #fff;
   }
-  .header-titles h2 {
-    font-size: 20px;
-    color: var(--text-muted);
-    font-weight: 400;
-    margin-top: 4px;
-  }
-  .header-badge {
-    background: var(--primary-color);
-    color: white;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 16px;
+  .hero-badge {
+    display: inline-block;
+    border: 1.5px solid var(--accent-color);
+    color: var(--accent-color);
+    font-size: 12px;
     font-weight: 600;
-    white-space: nowrap;
+    letter-spacing: 0.1em;
+    padding: 5px 18px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .hero-title {
+    font-size: 30px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.4;
+    margin-bottom: 14px;
+  }
+  .hero-title .hl { color: var(--accent-color); }
+  .hero-meta {
+    font-size: 14px;
+    color: rgba(255,255,255,0.72);
+    margin-bottom: 8px;
+    letter-spacing: 0.03em;
+  }
+  .hero-org {
+    font-size: 13px;
+    color: rgba(255,255,255,0.52);
   }
 
   /* 4. INTRO SECTION: นำเข้าสู่เนื้อหา */
@@ -156,69 +168,114 @@
     display: none !important;
   }
 
-  .tomtom-section {
-    background: linear-gradient(135deg, #fff7f7 0%, #ffffff 100%);
-    border: 1px solid #ffd7d7;
-    border-left: 5px solid #df1b12;
-    border-radius: 10px;
-    padding: 16px;
-  }
-
-  .tomtom-head {
+  /* TomTom section – redesigned */
+  .section-eyebrow {
     display: flex;
-    justify-content: space-between;
-    gap: 12px;
     align-items: center;
-    margin-bottom: 10px;
-    flex-wrap: wrap;
-  }
-
-  .tomtom-title {
-    color: #b91c1c;
-    font-size: 16px;
+    gap: 8px;
+    font-size: 11px;
     font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #1e40af;
+    text-transform: uppercase;
+    margin-bottom: 6px;
   }
-
-  .tomtom-rank {
-    background: #df1b12;
-    color: #fff;
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 700;
+  .section-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 3px;
+    background: #1e40af;
+    border-radius: 2px;
+    flex-shrink: 0;
   }
-
-  .tomtom-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-
-  .tomtom-stat {
-    border: 1px solid #ffd7d7;
-    border-radius: 8px;
-    padding: 10px;
-    background: #fff;
-  }
-
-  .tomtom-value {
-    color: #b91c1c;
+  .section-heading {
     font-size: 20px;
     font-weight: 700;
-    line-height: 1.2;
+    color: var(--primary-color);
+    margin-bottom: 4px;
   }
-
+  .section-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .tomtom-section {
+    /* outer wrapper – no border */ }
+  .tomtom-card {
+    border: 1.5px solid #fecaca;
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: linear-gradient(145deg, #fff7f7, #ffffff);
+  }
+  .tomtom-brand {
+    background: #df1b12;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 900;
+    line-height: 1.3;
+    padding: 10px 8px;
+    border-radius: 8px;
+    text-align: center;
+    letter-spacing: 0.06em;
+    min-width: 52px;
+    flex-shrink: 0;
+  }
+  .tomtom-body { flex: 1; }
+  .tomtom-city {
+    font-size: 14px;
+    font-weight: 700;
+    color: #b91c1c;
+    margin-bottom: 10px;
+  }
+  .tomtom-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .tomtom-stat {
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: 8px 10px;
+    background: #fff;
+    text-align: center;
+  }
+  .tomtom-value {
+    color: #b91c1c;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
   .tomtom-label {
     color: #647687;
-    font-size: 13px;
+    font-size: 11.5px;
+    margin-top: 2px;
+    line-height: 1.4;
   }
-
+  .tomtom-sub-label {
+    color: #94a3b8;
+    font-size: 11px;
+    margin-top: 2px;
+  }
+  .tomtom-stats-row2 {
+    display: flex;
+    gap: 8px;
+  }
+  .tomtom-stats-row2 .tomtom-stat { flex: 1; }
   .tomtom-note {
     margin-top: 10px;
     color: #7f1d1d;
-    font-size: 13px;
+    font-size: 12.5px;
     line-height: 1.6;
+    background: #fff5f5;
+    border-radius: 6px;
+    padding: 8px 10px;
   }
+  .tomtom-note-icon { margin-right: 4px; }
 
   .std-nav {
     display: flex;
@@ -826,12 +883,19 @@
 
 <div class="a4-canvas">
 
-  <header class="header">
-    <div class="header-titles">
-      <h1>รายงานการวิเคราะห์ข้อมูลเวลาและอัตราเร็วเฉลี่ยในการเดินทาง<br>พื้นที่กรุงเทพมหานคร</h1>
-      <h2>Analysis of Travel Time and Average Travel Speed (2017–2025)</h2>
-    </div>
+  <!-- HERO HEADER -->
+  <header class="report-hero">
+    <div class="hero-badge">📋 รายงานการจราจร &nbsp;·&nbsp; กรุงเทพมหานคร</div>
+    <h1 class="hero-title">
+      รายงานสรุปผลการวิเคราะห์<br>
+      <span class="hl">เวลาและความเร็วเฉลี่ยในการเดินทาง</span><br>
+      ในพื้นที่กรุงเทพมหานคร
+    </h1>
+    <div class="hero-meta">ช่วงเวลาเร่งด่วน &nbsp;·&nbsp; ปี พ.ศ. 2560–2568 &nbsp;·&nbsp; 50 สายถนน &nbsp;·&nbsp; 3 โซนพื้นที่</div>
+    <div class="hero-org">กลุ่มงานสถิติและวิจัย · กองนโยบายและแผนงาน · สำนักการจราจรและขนส่ง · กรุงเทพมหานคร</div>
   </header>
+
+  <div class="a4-body">
 
   <section class="intro-box">
     <strong>สำนักงานการจราจรและขนส่ง</strong> ได้ดำเนินการสำรวจข้อมูลเวลาในการเดินทาง เพื่อวิเคราะห์แนวโน้มอัตราเร็วเฉลี่ยบนโครงข่ายถนนในช่วงเวลาเร่งด่วน โดยจำแนกตามลักษณะทางกายภาพของพื้นที่ออกเป็น 3 โซน ได้แก่ พื้นที่ชั้นใน ชั้นกลาง และชั้นนอก เพื่อประกอบการกำหนดทิศทางนโยบายการจราจร
@@ -845,26 +909,49 @@
   </nav>
 
   <section id="tomtom-index" class="tomtom-section" aria-label="TomTom Traffic Index 2025">
-    <div class="tomtom-head">
-      <div class="tomtom-title">TomTom Traffic Index 2025: กรุงเทพมหานคร</div>
-      <div class="tomtom-rank">อันดับโลกด้าน Congestion: 10th</div>
-    </div>
-    <div class="tomtom-grid">
-      <div class="tomtom-stat">
-        <div class="tomtom-value">67.9%</div>
-        <div class="tomtom-label">Congestion Level (+1.3 pp จากปี 2024)</div>
+    <div class="section-eyebrow">TomTom Traffic Index 2025</div>
+    <div class="section-heading">มุมมองระดับโลก: กรุงเทพฯ ในดัชนีการจราจร TomTom</div>
+    <div class="section-sub">ข้อมูลจาก GPS ครอบคลุมระยะทางกว่า 3.65 ล้านล้าน กม. ทั่วโลก ปี ค.ศ. 2025</div>
+
+    <div class="tomtom-card">
+      <div class="tomtom-brand">TOM<br>TOM<br><span style="letter-spacing:0.04em">TRAFFIC</span><br>INDEX</div>
+      <div class="tomtom-body">
+        <div class="tomtom-city">🌐 กรุงเทพมหานคร — TomTom Traffic Index 2025</div>
+        <div class="tomtom-stats-grid">
+          <div class="tomtom-stat">
+            <div class="tomtom-value">10th</div>
+            <div class="tomtom-label">อันดับโลก<br>ด้านความแออัดการจราจร<br>(Congestion)</div>
+          </div>
+          <div class="tomtom-stat">
+            <div class="tomtom-value">67.9%</div>
+            <div class="tomtom-label">Congestion Level</div>
+            <div class="tomtom-sub-label">สูงขึ้น +1.3 pp จากปี 2024</div>
+          </div>
+          <div class="tomtom-stat">
+            <div class="tomtom-value">22:59</div>
+            <div class="tomtom-label">นาที / 10 กม. (เฉลี่ย)</div>
+            <div class="tomtom-sub-label">+36 วินาที จากปี 2024</div>
+          </div>
+          <div class="tomtom-stat">
+            <div class="tomtom-value">25:45</div>
+            <div class="tomtom-label">นาที / 10 กม.<br>เร่งด่วนเข้า · Congestion 88.4%</div>
+          </div>
+          <div class="tomtom-stat">
+            <div class="tomtom-value">31:25</div>
+            <div class="tomtom-label">นาที / 10 กม.<br>เร่งด่วนเย็น · Congestion 126.5%</div>
+          </div>
+        </div>
+        <div class="tomtom-stats-row2">
+          <div class="tomtom-stat">
+            <div class="tomtom-value">115</div>
+            <div class="tomtom-label">ชั่วโมง / ปี</div>
+            <div class="tomtom-sub-label">เวลาสูญเสียช่วงเร่งด่วน (≈ 4 วัน 19 ชม.)</div>
+          </div>
+        </div>
+        <div class="tomtom-note">
+          <span class="tomtom-note-icon">⚠️</span> <strong>กรุงเทพฯ ติดอันดับ 10 ของโลกด้าน Congestion</strong> โดยเวลาเดินทางมากกว่าสภาพไหลลื่นถึง <strong>67.9%</strong> ข้อมูล TomTom ครอบคลุมทุกสายทางรวมทั้งวัน 24 ชม. 365 วัน จึงไม่สามารถเปรียบเทียบโดยตรงกับข้อมูล สจส. ที่สำรวจเฉพาะ 50 ถนนหลัก ช่วงเวลาเร่งด่วนเท่านั้น
+        </div>
       </div>
-      <div class="tomtom-stat">
-        <div class="tomtom-value">22:59</div>
-        <div class="tomtom-label">นาที/10 กม. (ค่าเฉลี่ยทั้งวัน)</div>
-      </div>
-      <div class="tomtom-stat">
-        <div class="tomtom-value">115 ชม./ปี</div>
-        <div class="tomtom-label">เวลาที่เสียในช่วงเร่งด่วน</div>
-      </div>
-    </div>
-    <div class="tomtom-note">
-      ข้อมูล TomTom แสดงภาพรวมระดับเมืองจาก GPS Big Data ตลอด 24 ชั่วโมง และยังคงแสดงแยกจากผลสำรวจภาคสนามของ สจส. เพื่อใช้ประกอบการวิเคราะห์ร่วมกัน
     </div>
   </section>
 
@@ -1265,6 +1352,8 @@
       วิเคราะห์และจัดทำโดย © Prapawadee_W.<br>
     </div>
   </footer>
+
+  </div><!-- /.a4-body -->
 
 </div>
 
