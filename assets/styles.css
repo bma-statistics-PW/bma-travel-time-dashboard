@@ -722,7 +722,7 @@ strong { font-weight: 600; }
 
 .zone-summary-left { display: flex; align-items: center; gap: var(--sp-3); }
 .zone-icon { font-size: 1.5rem; flex-shrink: 0; }
-.zone-summary-text {}
+.zone-summary-text { min-width: 0; }
 .zone-summary-title { font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: var(--sp-2); }
 .zone-summary-count { font-size: 0.75em; color: var(--clr-text-muted); font-weight: 400; }
 .zone-summary-meta { font-size: 0.78rem; color: var(--clr-text-muted); }

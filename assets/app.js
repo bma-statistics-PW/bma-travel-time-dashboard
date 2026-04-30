@@ -276,8 +276,7 @@
       const zone = card.dataset.zone;
       let show = activeZoneFilter === 'all' || activeZoneFilter === zone;
       if (activeTrendFilter === 'down') {
-        // inner/middle/outer all have delta_in < 0, so keep all; outer only truly down
-        // use data-trend attribute on modern-table rows as proxy
+        // Hide zones whose inbound speed delta is non-negative (not declining)
         const zoneData = DATA.zones[zone];
         if (zoneData && zoneData.delta_in >= 0) show = false;
       }
