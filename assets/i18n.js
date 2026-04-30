@@ -270,11 +270,11 @@
       if (val !== key) el.textContent = val;
     });
 
-    // data-i18n-html → innerHTML
+    // data-i18n-html → sanitized innerHTML (only safe formatting tags)
     document.querySelectorAll('[data-i18n-html]').forEach(el => {
       const key = el.getAttribute('data-i18n-html');
       const val = t(key);
-      if (val !== key) el.innerHTML = val;
+      if (val !== key) setSafeHTML(el, val);
     });
 
     // data-i18n-attr="attr:key[,attr2:key2]"
@@ -286,6 +286,41 @@
         if (val !== key) el.setAttribute(attr, val);
       });
     });
+  }
+
+  /**
+   * Set element HTML from a trusted static dictionary string.
+   * Strips any tag not in the safe allowlist and removes event-handler attributes
+   * before insertion, to satisfy defence-in-depth expectations.
+   */
+  function setSafeHTML(el, html) {
+    // Allow only non-executable formatting tags; strip everything else.
+    const SAFE_TAGS = /^\/?(strong|em|b|i|small|br|span|abbr)$/i;
+    const parser = new DOMParser();
+    const doc = parser.parseFromString('<body>' + html + '</body>', 'text/html');
+    // Walk all elements and remove unsafe ones (replace with their children)
+    const walk = node => {
+      const children = Array.from(node.childNodes);
+      children.forEach(child => {
+        if (child.nodeType === 1 /* ELEMENT_NODE */) {
+          if (!SAFE_TAGS.test(child.tagName)) {
+            // Replace tag with its text content
+            const text = document.createTextNode(child.textContent);
+            child.parentNode.replaceChild(text, child);
+          } else {
+            // Remove any event-handler attributes
+            Array.from(child.attributes).forEach(attr => {
+              if (/^on/i.test(attr.name)) child.removeAttribute(attr.name);
+            });
+            walk(child);
+          }
+        }
+      });
+    };
+    walk(doc.body);
+
+    el.innerHTML = '';
+    Array.from(doc.body.childNodes).forEach(n => el.appendChild(document.importNode(n, true)));
   }
 
   function setLang(lang) {
