@@ -25,11 +25,54 @@
   }
 
   function onDataReady() {
+    renderZoneSummaryStats();
     renderTrendChart(chartDir);
     renderRoadTables();
     renderBAU();
     setupFilters();
     setupAccordions();
+  }
+
+  /* ════════════════════════════════════════════════════
+     ZONE SUMMARY STATS  (accordion header values)
+     ════════════════════════════════════════════════════ */
+  function renderZoneSummaryStats() {
+    if (!dashData) return;
+    const lang = document.documentElement.getAttribute('data-lang') || 'th';
+    const unitRoad = lang === 'th' ? 'ถนน' : 'roads';
+
+    ['inner', 'middle', 'outer'].forEach(zone => {
+      const roads = dashData.roads_2568.filter(r => r.zone === zone);
+      if (!roads.length) return;
+
+      // Count
+      const countEl = document.querySelector(`[data-count="${zone}"]`);
+      if (countEl) countEl.textContent = roads.length + ' ' + unitRoad;
+
+      // Averages per time/direction
+      const periods = { 'am-in': 'speed_am_in', 'am-out': 'speed_am_out', 'pm-in': 'speed_pm_in', 'pm-out': 'speed_pm_out' };
+      const avgs = {};
+      Object.entries(periods).forEach(([key, field]) => {
+        const vals = roads.map(r => r[field]).filter(v => v !== null && v !== undefined);
+        avgs[key] = vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+      });
+
+      // Range (min–max of AM-in)
+      const amInVals = roads.map(r => r.speed_am_in).filter(v => v !== null && v !== undefined);
+      const rMin = Math.min(...amInVals).toFixed(0);
+      const rMax = Math.max(...amInVals).toFixed(0);
+
+      // Update DOM
+      const avgEl = document.querySelector(`[data-avg="${zone}-am-in"]`);
+      if (avgEl) avgEl.textContent = avgs['am-in'].toFixed(2);
+      const rangeEl = document.querySelector(`[data-range="${zone}"]`);
+      if (rangeEl) rangeEl.textContent = `${rMin}–${rMax}`;
+
+      Object.entries(avgs).forEach(([key, val]) => {
+        const el = document.querySelector(`[data-stat="${zone}-${key}"]`);
+        if (el) el.textContent = val.toFixed(2);
+      });
+    });
   }
 
   /* ════════════════════════════════════════════════════
