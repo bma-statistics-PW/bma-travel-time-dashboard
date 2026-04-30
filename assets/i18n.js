@@ -299,11 +299,10 @@
     const SAFE_TAGS  = new Set(['strong', 'em', 'b', 'i', 'small', 'br', 'span', 'abbr']);
     const SAFE_ATTRS = new Set(['class', 'title']);
 
-    /** Decode the handful of named/numeric entities used in the dictionaries. */
+    /** Decode HTML entities in a single pass to avoid chained double-unescaping. */
+    const ENTITY_MAP = { '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'", '&nbsp;': '\u00a0' };
     function decodeEntities(str) {
-      return str
-        .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-        .replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&nbsp;/g, '\u00a0');
+      return str.replace(/&(?:amp|lt|gt|quot|#39|nbsp);/g, m => ENTITY_MAP[m] !== undefined ? ENTITY_MAP[m] : m);
     }
 
     /** Tokenise `source` into text and tag tokens. */
