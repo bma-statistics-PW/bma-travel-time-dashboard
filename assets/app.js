@@ -378,8 +378,16 @@
     });
   }
 
-  // ── 14. Main init on DOMContentLoaded ────────────────────────────────────
-  document.addEventListener('DOMContentLoaded', () => {
+  // ── 14. Main init — fire now if DOM already ready, else wait ─────────────
+  function onReady(fn) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', fn, { once: true });
+    } else {
+      fn();
+    }
+  }
+
+  onReady(() => {
     // Populate zone tables
     zones.forEach(zone => renderSortedZone(zone));
 
