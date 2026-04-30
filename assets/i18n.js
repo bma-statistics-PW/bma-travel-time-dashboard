@@ -270,7 +270,7 @@
       if (val !== key) el.textContent = val;
     });
 
-    // data-i18n-html → sanitized innerHTML (only safe formatting tags)
+    // data-i18n-html → safe HTML via pure DOM construction (no innerHTML)
     document.querySelectorAll('[data-i18n-html]').forEach(el => {
       const key = el.getAttribute('data-i18n-html');
       const val = t(key);
@@ -289,38 +289,66 @@
   }
 
   /**
-   * Set element HTML from a trusted static dictionary string.
-   * Strips any tag not in the safe allowlist and removes event-handler attributes
-   * before insertion, to satisfy defence-in-depth expectations.
+   * Render HTML-formatted dictionary strings into `el` using pure DOM APIs.
+   * No innerHTML is used — elements are created with createElement/createTextNode,
+   * preventing any XSS from dictionary content even in a defence-in-depth context.
+   * Allowed tags: strong, em, b, i, small, br, span, abbr.
+   * Allowed attributes on those tags: class, title.
    */
   function setSafeHTML(el, html) {
-    // Allow only non-executable formatting tags; strip everything else.
-    const SAFE_TAGS = /^\/?(strong|em|b|i|small|br|span|abbr)$/i;
-    const parser = new DOMParser();
-    const doc = parser.parseFromString('<body>' + html + '</body>', 'text/html');
-    // Walk all elements and remove unsafe ones (replace with their children)
-    const walk = node => {
-      const children = Array.from(node.childNodes);
-      children.forEach(child => {
-        if (child.nodeType === 1 /* ELEMENT_NODE */) {
-          if (!SAFE_TAGS.test(child.tagName)) {
-            // Replace tag with its text content
-            const text = document.createTextNode(child.textContent);
-            child.parentNode.replaceChild(text, child);
-          } else {
-            // Remove any event-handler attributes
-            Array.from(child.attributes).forEach(attr => {
-              if (/^on/i.test(attr.name)) child.removeAttribute(attr.name);
-            });
-            walk(child);
-          }
-        }
-      });
-    };
-    walk(doc.body);
+    const SAFE_TAGS  = new Set(['strong', 'em', 'b', 'i', 'small', 'br', 'span', 'abbr']);
+    const SAFE_ATTRS = new Set(['class', 'title']);
 
-    el.innerHTML = '';
-    Array.from(doc.body.childNodes).forEach(n => el.appendChild(document.importNode(n, true)));
+    /** Decode the handful of named/numeric entities used in the dictionaries. */
+    function decodeEntities(str) {
+      return str
+        .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&nbsp;/g, '\u00a0');
+    }
+
+    /** Tokenise `source` into text and tag tokens. */
+    function tokenize(source) {
+      const tokens = [];
+      // Match <tag [attrs]> or </tag>
+      const re = /<(\/?)([a-zA-Z][a-zA-Z0-9]*)([^>]*)>/g;
+      let last = 0, m;
+      while ((m = re.exec(source)) !== null) {
+        if (m.index > last) tokens.push({ type: 'text', val: source.slice(last, m.index) });
+        tokens.push({ type: 'tag', closing: m[1] === '/', name: m[2].toLowerCase(), raw: m[3] });
+        last = re.lastIndex;
+      }
+      if (last < source.length) tokens.push({ type: 'text', val: source.slice(last) });
+      return tokens;
+    }
+
+    /** Parse safe attributes from a raw attribute string (e.g. ' class="foo"'). */
+    function parseAttrs(raw, targetEl) {
+      const re = /\s([a-zA-Z][a-zA-Z0-9-]*)="([^"]*)"/g;
+      let m;
+      while ((m = re.exec(raw)) !== null) {
+        if (SAFE_ATTRS.has(m[1].toLowerCase())) {
+          targetEl.setAttribute(m[1].toLowerCase(), m[2]);
+        }
+      }
+    }
+
+    // Build DOM tree from tokens
+    el.textContent = '';               // clear existing content (no innerHTML)
+    const stack = [el];
+    tokenize(html).forEach(tok => {
+      const parent = stack[stack.length - 1];
+      if (tok.type === 'text') {
+        parent.appendChild(document.createTextNode(decodeEntities(tok.val)));
+      } else if (!tok.closing && SAFE_TAGS.has(tok.name)) {
+        const child = document.createElement(tok.name);
+        parseAttrs(tok.raw, child);
+        parent.appendChild(child);
+        if (tok.name !== 'br') stack.push(child);  // <br> is void, no closing tag
+      } else if (tok.closing && SAFE_TAGS.has(tok.name) && stack.length > 1) {
+        stack.pop();
+      }
+      // Unknown/unsafe tags: silently drop (their text content will still be appended on 'text' tokens)
+    });
   }
 
   function setLang(lang) {
