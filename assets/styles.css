@@ -4,8 +4,8 @@
 
 /* ── CSS custom properties ── */
 :root {
-  --font-body: 'IBM Plex Sans Thai', 'Sarabun', sans-serif;
-  --font-head: 'Noto Serif Display', 'Sarabun', serif;
+  --font-body: 'Sarabun', sans-serif;
+  --font-head: 'Sarabun', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
 
   --clr-bg:         #f7f8fa;
