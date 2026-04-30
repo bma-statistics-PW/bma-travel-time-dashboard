@@ -129,6 +129,89 @@
   const CHART_COLORS = { inner: '#d63031', middle: '#e17055', outer: '#00b894' };
   let currentChartDir = 'in';
 
+  function ensureTrendTooltip() {
+    const wrap = document.querySelector('.line-wrap');
+    if (!wrap) return null;
+    let tip = wrap.querySelector('.trend-tooltip');
+    if (!tip) {
+      tip = document.createElement('div');
+      tip.className = 'trend-tooltip';
+      tip.setAttribute('aria-hidden', 'true');
+      wrap.appendChild(tip);
+    }
+    return tip;
+  }
+
+  function getTrendTooltipHtml(yearIndex, direction) {
+    const year = reportSummary.inner[yearIndex]?.year;
+    if (year === undefined) return '';
+
+    const lang = typeof I18N !== 'undefined' ? I18N.getCurrentLang() : 'th';
+    const zoneLabels = {
+      th: { outer: 'พื้นที่ชั้นนอก', middle: 'พื้นที่ชั้นกลาง', inner: 'พื้นที่ชั้นใน', direction: direction === 'in' ? 'ขาเข้า' : 'ขาออก' },
+      en: { outer: 'Outer zone', middle: 'Middle zone', inner: 'Inner zone', direction: direction === 'in' ? 'Inbound' : 'Outbound' }
+    };
+    const labels = zoneLabels[lang] || zoneLabels.th;
+    const rows = ['outer', 'middle', 'inner'].map(zone => {
+      const value = Number(reportSummary[zone][yearIndex][direction]).toFixed(2);
+      return `<div class="trend-tooltip-row"><span class="trend-tooltip-key"><span class="trend-tooltip-dot" style="background:${CHART_COLORS[zone]}"></span>${labels[zone]}</span><strong>${value} km/h</strong></div>`;
+    }).join('');
+
+    return `<div class="trend-tooltip-year">${lang === 'th' ? `ปี ${year}` : `Year ${year}`}</div><div class="trend-tooltip-dir">${labels.direction}</div>${rows}`;
+  }
+
+  function bindTrendChartInteractions(pointsByYear, direction, pad, chartH) {
+    const svg = document.getElementById('trend-chart');
+    const wrap = document.querySelector('.line-wrap');
+    const tooltip = ensureTrendTooltip();
+    if (!svg || !wrap || !tooltip || !pointsByYear.length) return;
+
+    const hideTooltip = () => {
+      tooltip.classList.remove('is-visible');
+      tooltip.setAttribute('aria-hidden', 'true');
+      svg.querySelectorAll('.trend-hit').forEach(el => el.classList.remove('is-active'));
+    };
+
+    const showTooltip = (yearIndex, clientX) => {
+      const point = pointsByYear[yearIndex];
+      if (!point) return;
+
+      tooltip.innerHTML = getTrendTooltipHtml(yearIndex, direction);
+      tooltip.classList.add('is-visible');
+      tooltip.setAttribute('aria-hidden', 'false');
+
+      svg.querySelectorAll('.trend-hit').forEach(el => {
+        el.classList.toggle('is-active', Number(el.dataset.idx) === yearIndex);
+      });
+
+      const wrapRect = wrap.getBoundingClientRect();
+      const leftFromPoint = point.x * (wrapRect.width / 860);
+      const tooltipWidth = tooltip.offsetWidth || 170;
+      let left = leftFromPoint + 14;
+      if (left + tooltipWidth > wrapRect.width - 8) {
+        left = leftFromPoint - tooltipWidth - 14;
+      }
+      left = Math.max(8, left);
+
+      const top = Math.max(8, (pad.top + 8) * (wrapRect.height / 290));
+      tooltip.style.left = `${left}px`;
+      tooltip.style.top = `${top}px`;
+    };
+
+    svg.querySelectorAll('.trend-hit').forEach(hit => {
+      const idx = Number(hit.dataset.idx);
+      hit.addEventListener('mouseenter', event => showTooltip(idx, event.clientX));
+      hit.addEventListener('mousemove', event => showTooltip(idx, event.clientX));
+      hit.addEventListener('mouseleave', hideTooltip);
+      hit.addEventListener('focus', event => showTooltip(idx, event.clientX || 0));
+      hit.addEventListener('blur', hideTooltip);
+      hit.addEventListener('touchstart', () => showTooltip(idx, 0), { passive: true });
+      hit.addEventListener('touchend', hideTooltip, { passive: true });
+    });
+
+    svg.addEventListener('mouseleave', hideTooltip);
+  }
+
   function drawTrendChart(direction) {
     const svg = document.getElementById('trend-chart');
     if (!svg) return;
@@ -145,6 +228,7 @@
 
     const xScale = i => pad.left + (i / (years.length - 1)) * chartW;
     const yScale = v => pad.top + chartH - ((v - minV) / (maxV - minV)) * chartH;
+    const pointsByYear = years.map((year, index) => ({ year, x: xScale(index) }));
 
     let out = '';
 
@@ -163,6 +247,15 @@
       out += `<line x1="${x.toFixed(1)}" y1="${pad.top}" x2="${x.toFixed(1)}" y2="${(pad.top + chartH).toFixed(1)}" stroke="var(--clr-grid,#e2e8f0)" stroke-width="0.5" stroke-dasharray="3,3"/>`;
       out += `<text x="${x.toFixed(1)}" y="${(vH - 8).toFixed(1)}" text-anchor="middle" font-size="11" fill="var(--clr-axis,#718096)">${yr}</text>`;
     });
+
+    // COVID-19 annotation on year 2564
+    const covidIndex = years.indexOf(2564);
+    if (covidIndex !== -1) {
+      const covidX = xScale(covidIndex);
+      out += `<line x1="${covidX.toFixed(1)}" y1="${pad.top}" x2="${covidX.toFixed(1)}" y2="${(pad.top + chartH).toFixed(1)}" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,5" opacity="0.95"/>`;
+      out += `<rect x="${(covidX - 34).toFixed(1)}" y="${(pad.top + 6).toFixed(1)}" width="68" height="20" rx="10" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>`;
+      out += `<text x="${covidX.toFixed(1)}" y="${(pad.top + 20).toFixed(1)}" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">COVID-19</text>`;
+    }
 
     // Zone lines and dots
     zones.forEach(zone => {
@@ -185,7 +278,18 @@
       });
     });
 
+    // Hover targets per year column
+    years.forEach((yr, i) => {
+      const currentX = xScale(i);
+      const prevX = i === 0 ? pad.left : xScale(i - 1);
+      const nextX = i === years.length - 1 ? pad.left + chartW : xScale(i + 1);
+      const width = ((nextX - prevX) / 2);
+      const x = i === 0 ? pad.left - 8 : currentX - width / 2;
+      out += `<rect class="trend-hit" data-idx="${i}" x="${x.toFixed(1)}" y="${pad.top}" width="${(i === 0 || i === years.length - 1 ? width + 8 : width).toFixed(1)}" height="${chartH.toFixed(1)}" fill="transparent" tabindex="0" aria-label="${yr}"/>`;
+    });
+
     svg.innerHTML = out;
+    bindTrendChartInteractions(pointsByYear, direction, pad, chartH);
   }
 
   // ── 8. Compute BAU projections ────────────────────────────────────────────
