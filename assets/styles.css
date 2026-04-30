@@ -4,9 +4,9 @@
 
 /* ── CSS custom properties ── */
 :root {
-  --font-body: 'IBM Plex Sans Thai', 'Sarabun', sans-serif;
-  --font-head: 'Noto Serif Display', 'Sarabun', serif;
-  --font-mono: 'IBM Plex Mono', monospace;
+  --font-body: 'Sarabun', sans-serif;
+  --font-head: 'Sarabun', sans-serif;
+  --font-mono: 'Sarabun', monospace;
 
   --clr-bg:         #f7f8fa;
   --clr-canvas:     #ffffff;
@@ -401,7 +401,13 @@ strong { font-weight: 600; }
   border-radius: var(--radius-md);
   padding: var(--sp-3);
 }
-.tomtom-value { font-size: 1.8rem; font-weight: 800; font-family: var(--font-mono); line-height: 1; margin-bottom: 4px; }
+.tomtom-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  line-height: 1;
+  margin-bottom: 4px;
+}
 .tomtom-label { font-size: 0.75rem; opacity: 0.85; line-height: 1.3; }
 .tomtom-sub-label { font-size: 0.7rem; opacity: 0.65; margin-top: 3px; }
 .tomtom-note {
@@ -675,6 +681,7 @@ strong { font-weight: 600; }
   transform: translateY(4px);
   transition: opacity 0.12s ease, transform 0.12s ease;
   z-index: 2;
+  font-family: var(--font-body);
 }
 
 .trend-tooltip.is-visible {
@@ -802,7 +809,11 @@ strong { font-weight: 600; }
 .zsm-dot.am-out { background: #63b3ed; }
 .zsm-dot.pm-in  { background: #fc8181; }
 .zsm-dot.pm-out { background: #feb2b2; }
-.zsm-val { font-family: var(--font-mono); font-weight: 600; font-size: 0.75rem; }
+.zsm-val {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.75rem;
+}
 
 .zone-chevron {
   font-size: 0.7rem;
@@ -1050,4 +1061,3 @@ strong { font-weight: 600; }
   [data-theme="dark"] { --clr-bg: #fff; --clr-canvas: #fff; --clr-text: #000; }
   a[href]::after { content: ""; }
 }
-
