@@ -5,6 +5,10 @@
 (function () {
   'use strict';
 
+  /* ── Constants ───────────────────────────────────── */
+  // BAU projection target year (Buddhist Era 2569 = CE 2026)
+  const BAU_YEAR = 2569;
+
   /* ── State ───────────────────────────────────────── */
   let dashData = null;
   let chartDir = 'in';
@@ -287,15 +291,28 @@
     const state = sortState[zone];
     if (state) {
       roads = [...roads].sort((a, b) => {
-        let av = a[state.col], bv = b[state.col];
-        if (av === null || av === undefined) av = state.dir === 'asc' ? Infinity : -Infinity;
-        if (bv === null || bv === undefined) bv = state.dir === 'asc' ? Infinity : -Infinity;
+        const av = nullableVal(a[state.col], state.dir);
+        const bv = nullableVal(b[state.col], state.dir);
         if (typeof av === 'string') return state.dir === 'asc' ? av.localeCompare(bv, 'th') : bv.localeCompare(av, 'th');
         return state.dir === 'asc' ? av - bv : bv - av;
       });
     }
 
     tbody.innerHTML = roads.map(r => roadRowHTML(r)).join('');
+  }
+
+  /** Return a sort-safe value: null/undefined become ±Infinity based on sort direction. */
+  function nullableVal(v, dir) {
+    if (v === null || v === undefined) return dir === 'asc' ? Infinity : -Infinity;
+    return v;
+  }
+
+  /** Escape special HTML characters in text strings from JSON data. */
+  function escHTML(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
   }
 
   function speedClass(v) {
@@ -308,8 +325,8 @@
 
   function fmtSpd(v, note) {
     if (v === null || v === undefined) {
-      const t = note ? ` title="${note}"` : '';
-      return `<span class="spd-na"${t}>—</span>`;
+      const titleAttr = note ? ` title="${escHTML(note)}"` : '';
+      return `<span class="spd-na"${titleAttr}>—</span>`;
     }
     return `<span class="${speedClass(v)}">${v.toFixed(2)}</span>`;
   }
@@ -335,11 +352,12 @@
   }
 
   function roadRowHTML(r) {
-    return `<tr data-zone="${r.zone}" data-seq="${r.seq}">
+    // Escape text content from JSON to prevent XSS in generated table HTML
+    return `<tr data-zone="${escHTML(r.zone)}" data-seq="${r.seq}">
       <td class="td-seq">${r.seq}</td>
       <td class="td-name">
-        <div class="road-name">${r.name}</div>
-        <div class="road-seg">${r.segment}</div>
+        <div class="road-name">${escHTML(r.name)}</div>
+        <div class="road-seg">${escHTML(r.segment)}</div>
       </td>
       <td class="td-num">${r.length_km.toFixed(2)}</td>
       <td class="td-spd">${fmtSpd(r.speed_am_in,  null)}</td>
@@ -397,7 +415,7 @@
       const denom = npt * sumX2 - sumX * sumX;
       const slope     = denom !== 0 ? (npt * sumXY - sumX * sumY) / denom : 0;
       const intercept = (sumY - slope * sumX) / npt;
-      const proj      = slope * 2569 + intercept;
+      const proj      = slope * BAU_YEAR + intercept;
       const tTime     = proj > 0 ? (10 / proj * 60).toFixed(1) : '—';
 
       const container = document.querySelector(`#scenarioGrid [data-zone="${zone}"]`);

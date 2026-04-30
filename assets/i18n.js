@@ -253,7 +253,9 @@
   /* ── Core functions ──────────────────────────────── */
   function t(key, lang) {
     const l = lang || currentLang;
-    return dict[l][key] !== undefined ? dict[l][key] : (dict.th[key] !== undefined ? dict.th[key] : key);
+    if (dict[l] && dict[l][key] !== undefined) return dict[l][key];
+    if (dict.th[key] !== undefined) return dict.th[key];
+    return key;
   }
 
   let currentLang = localStorage.getItem(STORAGE_KEY) || 'th';
@@ -302,7 +304,7 @@
     /** Decode HTML entities in a single pass to avoid chained double-unescaping. */
     const ENTITY_MAP = { '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'", '&nbsp;': '\u00a0' };
     function decodeEntities(str) {
-      return str.replace(/&(?:amp|lt|gt|quot|#39|nbsp);/g, m => ENTITY_MAP[m] !== undefined ? ENTITY_MAP[m] : m);
+      return str.replace(/&(?:amp|lt|gt|quot|#39|nbsp);/g, m => ENTITY_MAP[m] || m);
     }
 
     /** Tokenise `source` into text and tag tokens. */
