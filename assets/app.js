@@ -6,7 +6,7 @@
   let DATA;
   try {
     DATA = await fetch('data/dashboard-data.json').then(r => {
-      if (!r.ok) throw new Error('fetch failed');
+      if (!r.ok) throw new Error(`HTTP ${r.status} fetching data/dashboard-data.json`);
       return r.json();
     });
   } catch (e) {
@@ -53,7 +53,9 @@
   // ── 4. Build table rows ───────────────────────────────────────────────────
   function buildTableRows(filteredRoads) {
     if (!filteredRoads.length) {
-      return `<tr><td colspan="8" style="text-align:center;padding:1rem;color:var(--clr-muted)">ไม่พบข้อมูล</td></tr>`;
+      const lang = typeof I18N !== 'undefined' ? I18N.getCurrentLang() : 'th';
+      const msg = lang === 'th' ? 'ไม่พบข้อมูล' : 'No data found';
+      return `<tr><td colspan="8" style="text-align:center;padding:1rem;color:var(--clr-muted)">${msg}</td></tr>`;
     }
     return filteredRoads.map(r => {
       const sc = field => speedClass(r[field]);
@@ -118,7 +120,8 @@
         setEl(`[data-range="${zone}"]`, `${mn}–${mx}`);
       }
 
-      setEl(`[data-count="${zone}"]`, `${zoneRoads.length} ถนน`);
+      const lang = typeof I18N !== 'undefined' ? I18N.getCurrentLang() : 'th';
+      setEl(`[data-count="${zone}"]`, lang === 'th' ? `${zoneRoads.length} ถนน` : `${zoneRoads.length} roads`);
     });
   }
 

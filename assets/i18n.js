@@ -363,6 +363,7 @@ const I18N = (function () {
     document.querySelectorAll('[data-i18n-attr]').forEach(el => {
       const spec = el.getAttribute('data-i18n-attr');
       const colonIdx = spec.indexOf(':');
+      if (colonIdx === -1) return;
       const attr = spec.slice(0, colonIdx);
       const key = spec.slice(colonIdx + 1);
       if (d[key] !== undefined) el.setAttribute(attr, d[key]);

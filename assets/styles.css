@@ -787,7 +787,7 @@ strong { font-weight: 600; }
 .rt-table .td-seq { width: 40px; }
 .rt-table .td-len { width: 65px; }
 .rt-table .td-mini { width: 80px; }
-.rt-table tbody tr:nth-child(even) { background: color-mix(in srgb, var(--clr-bg) 60%, var(--clr-canvas)); }
+.rt-table tbody tr:nth-child(even) { background: var(--clr-bg); }
 .rt-table tbody tr:hover { background: #ebf8ff; }
 [data-theme="dark"] .rt-table tbody tr:hover { background: #1a2d42; }
 
