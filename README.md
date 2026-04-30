@@ -53,8 +53,8 @@ python3 -m http.server 8080
 
 ## Responsive
 
-- **PC ≥ 1200px** — A4 layout 1320px max width, 3 columns
-- **Tablet 768–1199px** — 2 columns, padding ลดลง
+- **PC ≥ 1200px** — A4 layout up to 1400px max width, 3 columns, full padding
+- **Tablet 768–1199px** — 3 columns, padding ลดลง; scenario grid ลดเป็น 2 columns
 - **Mobile ≤ 767px** — 1 column, ปุ่มและ font ปรับขนาด, ตารางสามารถ scroll แนวนอน
 - **Print** — สำหรับพิมพ์รายงาน (ซ่อนปุ่ม interactive)
 
