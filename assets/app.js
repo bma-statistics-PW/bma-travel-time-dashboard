@@ -362,7 +362,7 @@
       text.setAttribute('font-family', 'IBM Plex Mono,monospace');
       text.setAttribute('fill', 'currentColor');
       text.setAttribute('opacity', '0.6');
-      /* Convert BE to CE for English */
+      /* Convert B.E. to C.E. for English (Buddhist Era is 543 years ahead of Common Era) */
       text.textContent = currentLang === 'en' ? (yr - 543) : yr;
       svg.appendChild(text);
     });
@@ -427,6 +427,7 @@
 
         /* Hover events */
         circle.addEventListener('mouseenter', (e) => {
+          /* Convert B.E. to C.E. for English (Buddhist Era is 543 years ahead of Common Era) */
           const yr = currentLang === 'en' ? (d.year - 543) : d.year;
           const txt = `${yr}: ${d[s.key].toFixed(2)} km/h`;
           const cx = xScale(d.year);
