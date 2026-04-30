@@ -134,7 +134,7 @@ strong { font-weight: 600; }
   box-shadow: 0 2px 8px rgba(0,0,0,.3);
 }
 .utility-inner {
-  max-width: 960px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: var(--sp-2) var(--sp-4);
   display: flex;
@@ -185,7 +185,7 @@ strong { font-weight: 600; }
 
 /* ── A4 canvas ── */
 .a4-canvas {
-  max-width: 960px;
+  max-width: 1400px;
   margin: var(--sp-6) auto;
   background: var(--clr-canvas);
   border-radius: var(--radius-lg);
@@ -194,7 +194,10 @@ strong { font-weight: 600; }
 }
 
 .a4-body {
-  padding: var(--sp-6) var(--sp-8);
+  padding: var(--sp-8) var(--sp-10);
+}
+@media (max-width: 1200px) {
+  .a4-body { padding: var(--sp-6) var(--sp-8); }
 }
 @media (max-width: 768px) {
   .a4-body { padding: var(--sp-4); }
@@ -925,6 +928,7 @@ strong { font-weight: 600; }
   gap: var(--sp-4);
   margin-bottom: var(--sp-4);
 }
+@media (max-width: 1200px) { .scenario-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 768px) { .scenario-grid { grid-template-columns: 1fr; } }
 
 .scenario-item {
