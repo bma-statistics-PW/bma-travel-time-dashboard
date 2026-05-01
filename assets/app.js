@@ -217,7 +217,7 @@
     if (!svg) return;
     currentChartDir = direction;
     const vW = 860, vH = 360;
-    const pad = { left: 65, right: 30, top: 25, bottom: 45 };
+    const pad = { left: 65, right: 48, top: 25, bottom: 45 };
     const chartW = vW - pad.left - pad.right;
     const chartH = vH - pad.top - pad.bottom;
 
@@ -233,9 +233,10 @@
     let out = '';
 
     // Grid lines
-    const yTicks = 6;
+    const yStep = 5;
+    const yTicks = (maxV - minV) / yStep; // = 9 ticks
     for (let i = 0; i <= yTicks; i++) {
-      const v = minV + ((maxV - minV) / yTicks) * i;
+      const v = minV + yStep * i;
       const y = yScale(v);
       out += `<line x1="${pad.left}" y1="${y.toFixed(1)}" x2="${vW - pad.right}" y2="${y.toFixed(1)}" stroke="var(--clr-grid,#e2e8f0)" stroke-width="1"/>`;
       out += `<text x="${pad.left - 6}" y="${(y + 4).toFixed(1)}" text-anchor="end" font-size="11" fill="var(--clr-axis,#718096)">${v.toFixed(0)}</text>`;
