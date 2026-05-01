@@ -185,20 +185,21 @@ strong { font-weight: 600; }
 
 /* ── A4 canvas ── */
 .a4-canvas {
-  max-width: 960px;
-  margin: var(--sp-6) auto;
-  background: var(--clr-canvas);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  max-width: 1280px;      /* กว้างขึ้น */
+  margin: 0 auto;         /* ชิดขอบบน */
+  background: var(--clr-bg);  /* พื้นหลังกลืนกับ bg */
+  border-radius: 0;       /* ไม่มีมุมโค้ง */
+  box-shadow: none;       /* ไม่มีเงา */
   overflow: hidden;
 }
 
 .a4-body {
-  padding: var(--sp-6) var(--sp-8);
+  padding: var(--sp-6) var(--sp-10);  /* เพิ่ม padding แนวนอน */
 }
+
 @media (max-width: 768px) {
   .a4-body { padding: var(--sp-4); }
-  .a4-canvas { margin: var(--sp-2); border-radius: var(--radius-md); }
+  .a4-canvas { margin: 0; }
 }
 
 /* ── Hero section ── */
