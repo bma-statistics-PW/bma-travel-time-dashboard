@@ -437,19 +437,23 @@ strong { font-weight: 600; }
 }
 .ctable-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .compare-table {
-  font-size: 0.83rem;
+  font-size: 0.95rem;
 }
 .compare-table th, .compare-table td {
   border: 1px solid var(--clr-border);
-  padding: var(--sp-2) var(--sp-3);
-  text-align: left;
-  vertical-align: top;
+  padding: var(--sp-3) var(--sp-4);   /* เพิ่ม padding ให้โปร่งขึ้น */
+  text-align: center;                  /* กึ่งกลางทุก cell */
+  vertical-align: middle;              /* กึ่งกลางแนวตั้งด้วย */
 }
 .compare-table thead th {
   background: #2b6cb0;
   color: #fff;
   font-weight: 600;
   text-align: center;
+}
+.compare-table tbody th {
+  text-align: left;     /* ชื่อตัวชี้วัดยังชิดซ้าย */
+  vertical-align: top;
 }
 [data-theme="dark"] .compare-table thead th { background: #2c5282; }
 .compare-table tbody tr:nth-child(even) { background: var(--clr-bg); }
