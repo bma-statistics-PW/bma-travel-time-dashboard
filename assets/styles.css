@@ -134,7 +134,7 @@ strong { font-weight: 600; }
   box-shadow: 0 2px 8px rgba(0,0,0,.3);
 }
 .utility-inner {
-  max-width: 960px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: var(--sp-2) var(--sp-4);
   display: flex;
@@ -657,6 +657,12 @@ strong { font-weight: 600; }
 .dir-btn.active { background: var(--clr-accent); color: #fff; border-color: var(--clr-accent); }
 .dir-btn:hover:not(.active) { background: var(--clr-bg); }
 
+@media (max-width: 480px) {
+  .dir-btn {
+    padding: 6px 20px;
+    font-size: 0.9rem;
+  }
+}
 .line-wrap {
   width: 100%;
   overflow-x: auto;
@@ -703,6 +709,10 @@ strong { font-weight: 600; }
 .trend-tooltip.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+[data-theme="dark"] .trend-tooltip {
+  background: rgba(15, 23, 42, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .trend-tooltip-year {
