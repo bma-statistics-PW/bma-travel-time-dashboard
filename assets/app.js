@@ -193,7 +193,7 @@
       }
       left = Math.max(8, left);
 
-      const top = Math.max(8, (pad.top + 8) * (wrapRect.height / 290));
+      const top = Math.max(8, (pad.top + 8) * (wrapRect.height / 360));
       tooltip.style.left = `${left}px`;
       tooltip.style.top = `${top}px`;
     };
@@ -216,7 +216,7 @@
     const svg = document.getElementById('trend-chart');
     if (!svg) return;
     currentChartDir = direction;
-    const vW = 860, vH = 290;
+    const vW = 860, vH = 360;
     const pad = { left: 65, right: 30, top: 25, bottom: 45 };
     const chartW = vW - pad.left - pad.right;
     const chartH = vH - pad.top - pad.bottom;
