@@ -185,11 +185,11 @@ strong { font-weight: 600; }
 
 /* ── A4 canvas ── */
 .a4-canvas {
-  max-width: 1280px;      /* กว้างขึ้น */
-  margin: 0 auto;         /* ชิดขอบบน */
-  background: var(--clr-bg);  /* พื้นหลังกลืนกับ bg */
-  border-radius: 0;       /* ไม่มีมุมโค้ง */
-  box-shadow: none;       /* ไม่มีเงา */
+  max-width: 1200px;      /* กว้างกว่าเดิม */
+  margin: var(--sp-4) auto;
+  background: var(--clr-canvas);
+  border-radius: var(--radius-md);   /* มุมโค้งน้อยลง */
+  box-shadow: var(--shadow-sm);      /* เงาเบาลงมาก */
   overflow: hidden;
 }
 
