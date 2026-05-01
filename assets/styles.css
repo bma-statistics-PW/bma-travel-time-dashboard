@@ -662,7 +662,22 @@ strong { font-weight: 600; }
   -webkit-overflow-scrolling: touch;
   position: relative;
 }
-.line-wrap svg { display: block; min-width: 420px; }
+
+.line-wrap svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 860px;   /* ป้องกันกราฟขยายเกินบน PC จอใหญ่ */
+  margin: 0 auto;
+}
+
+/* Mobile: scroll แนวนอนแทนบีบกราฟ */
+@media (max-width: 600px) {
+  .line-wrap svg {
+    min-width: 520px;
+    max-width: none;
+  }
+}
 
 .trend-hit { cursor: crosshair; outline: none; }
 .trend-hit.is-active { fill: rgba(245, 158, 11, 0.08); }
