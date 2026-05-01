@@ -214,7 +214,7 @@ strong { font-weight: 600; }
   background: var(--clr-hero-bg);
   background-image: linear-gradient(135deg, #0A2E5C 0%, #13447a 60%, #1a3c6e 100%);
   color: var(--clr-hero-text);
-  padding: var(--sp-10) var(--sp-8) var(--sp-8);
+  padding: var(--sp-12) var(--sp-10) var(--sp-10);   /* เดิม sp-10 sp-8 sp-8 */
   position: relative;
   overflow: hidden;
 }
@@ -639,7 +639,7 @@ strong { font-weight: 600; }
 .line-card {
   background: var(--clr-canvas);
   border-radius: var(--radius-lg);
-  padding: var(--sp-6);
+  padding: var(--sp-8);   /* เดิม var(--sp-6) */
   box-shadow: var(--shadow-md);
   margin-bottom: var(--section-gap);
 }
