@@ -223,8 +223,8 @@
 
     const years = reportSummary.inner.map(d => d.year);
     const allVals = zones.flatMap(z => reportSummary[z].map(d => d[direction]));
-    const minV = Math.floor(Math.min(...allVals) - 2);
-    const maxV = Math.ceil(Math.max(...allVals) + 2);
+    const minV = 0;
+    const maxV = 45;
 
     const xScale = i => pad.left + (i / (years.length - 1)) * chartW;
     const yScale = v => pad.top + chartH - ((v - minV) / (maxV - minV)) * chartH;
