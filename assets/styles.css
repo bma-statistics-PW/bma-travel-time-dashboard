@@ -134,7 +134,7 @@ strong { font-weight: 600; }
   box-shadow: 0 2px 8px rgba(0,0,0,.3);
 }
 .utility-inner {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: var(--sp-2) var(--sp-4);
   display: flex;
@@ -185,16 +185,22 @@ strong { font-weight: 600; }
 
 /* ── A4 canvas ── */
 .a4-canvas {
-  max-width: 1200px;      /* กว้างกว่าเดิม */
-  margin: var(--sp-4) auto;
+  max-width: 100%;
+  margin: 0;
   background: var(--clr-canvas);
-  border-radius: var(--radius-md);   /* มุมโค้งน้อยลง */
-  box-shadow: var(--shadow-sm);      /* เงาเบาลงมาก */
+  border-radius: 0;
+  box-shadow: none;
   overflow: hidden;
 }
 
 .a4-body {
-  padding: var(--sp-6) var(--sp-10);  /* เพิ่ม padding แนวนอน */
+  max-width: 1400px;      /* content ไม่กว้างเกินจนอ่านยาก */
+  margin: 0 auto;         /* จัดกึ่งกลาง */
+  padding: var(--sp-6) var(--sp-10);
+}
+
+@media (max-width: 1024px) {
+  .a4-body { padding: var(--sp-6); }
 }
 
 @media (max-width: 768px) {
