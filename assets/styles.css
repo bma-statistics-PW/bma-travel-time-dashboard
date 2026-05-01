@@ -47,6 +47,7 @@
   --sp-8: 2rem;
   --sp-10: 2.5rem;
   --sp-12: 3rem;
+  --section-gap: 3.5rem;   /* ✅ เพิ่มใหม่ — ระยะห่างระหว่าง section */
 
   color-scheme: light;
 }
@@ -76,7 +77,7 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.65;
   background: var(--clr-bg);
   color: var(--clr-text);
@@ -270,7 +271,7 @@ strong { font-weight: 600; }
   border-left: 4px solid var(--clr-accent);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
   padding: var(--sp-4) var(--sp-6);
-  margin-bottom: var(--sp-6);
+  margin-bottom: var(--section-gap);
   font-size: 0.93rem;
   color: var(--clr-text);
 }
@@ -286,7 +287,7 @@ strong { font-weight: 600; }
   background: linear-gradient(135deg, #ebf8ff 0%, #e6fffa 100%);
   border-radius: var(--radius-lg);
   padding: var(--sp-6);
-  margin-bottom: var(--sp-6);
+  margin-bottom: var(--section-gap);
   box-shadow: var(--shadow-sm);
   align-items: flex-start;
 }
@@ -368,7 +369,7 @@ strong { font-weight: 600; }
 
 /* ── TomTom section ── */
 .tomtom-section {
-  margin-bottom: var(--sp-8);
+  margin-bottom: var(--section-gap);
 }
 .tomtom-card {
   display: flex;
@@ -428,7 +429,7 @@ strong { font-weight: 600; }
 
 /* ── Compare card ── */
 .compare-card {
-  margin-bottom: var(--sp-8);
+  margin-bottom: var(--section-gap);
 }
 .compare-title {
   font-size: 1.1rem;
@@ -485,7 +486,7 @@ strong { font-weight: 600; }
   padding: var(--sp-3) var(--sp-4);
   font-size: 0.8rem;
   color: #744210;
-  margin-bottom: var(--sp-8);
+  margin-bottom: var(--section-gap);
   line-height: 1.5;
 }
 [data-theme="dark"] .source-note {
@@ -496,7 +497,7 @@ strong { font-weight: 600; }
 
 /* ── Zone district card ── */
 .zone-district-card {
-  margin-bottom: var(--sp-8);
+  margin-bottom: var(--section-gap);
 }
 .zone-district-header {
   display: flex;
@@ -598,7 +599,7 @@ strong { font-weight: 600; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--sp-4);
-  margin-bottom: var(--sp-8);
+  margin-bottom: var(--section-gap);
 }
 @media (max-width: 900px) { .cards-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 600px) { .cards-grid { grid-template-columns: 1fr; } }
@@ -640,7 +641,7 @@ strong { font-weight: 600; }
   border-radius: var(--radius-lg);
   padding: var(--sp-6);
   box-shadow: var(--shadow-md);
-  margin-bottom: var(--sp-8);
+  margin-bottom: var(--section-gap);
 }
 .line-toolbar {
   display: flex;
@@ -950,7 +951,7 @@ strong { font-weight: 600; }
   border-radius: var(--radius-lg);
   padding: var(--sp-6);
   box-shadow: var(--shadow-md);
-  margin-bottom: var(--sp-8);
+  margin-bottom: var(--section-gap);
   border-top: 4px solid #553c9a;
 }
 .scenario-title { font-size: 1.1rem; font-weight: 700; margin-bottom: var(--sp-2); }
@@ -981,7 +982,7 @@ strong { font-weight: 600; }
 /* ── Modern comparison table ── */
 .modern-table {
   font-size: 0.88rem;
-  margin-bottom: var(--sp-8);
+  margin-bottom: var(--section-gap);
   box-shadow: var(--shadow-sm);
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -1011,7 +1012,7 @@ strong { font-weight: 600; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--sp-8);
-  margin-bottom: var(--sp-8);
+  margin-bottom: var(--section-gap);
 }
 @media (max-width: 768px) { .bottom-grid { grid-template-columns: 1fr; } }
 
