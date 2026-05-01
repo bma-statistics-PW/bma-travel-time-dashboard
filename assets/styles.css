@@ -130,13 +130,13 @@ strong { font-weight: 600; }
   z-index: 100;
   background: var(--clr-utility-bg);
   color: var(--clr-utility-text);
-  font-size: 0.8rem;
+  font-size: 0.95rem;              /* ใหญ่ขึ้นจาก 0.8rem */
   box-shadow: 0 2px 8px rgba(0,0,0,.3);
 }
 .utility-inner {
   max-width: 1400px;
   margin: 0 auto;
-  padding: var(--sp-2) var(--sp-4);
+  padding: var(--sp-3) var(--sp-6);   /* เพิ่ม padding สูงขึ้นและกว้างขึ้น */
   display: flex;
   align-items: center;
   justify-content: space-between;
